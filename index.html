@@ -343,48 +343,50 @@
             }\n              </section>\n            </div>`;
           content.appendChild(art);
 
-          // Fill tables
-          const hRows = (api.headers || []).map((h) => [
-            `<span class='font-mono'>${escapeHTML(h.name || '')}</span>`,
-            escapeHTML(h.value || ''),
-            h.required ? 'O' : 'X',
-            escapeHTML(h.description || ''),
-          ]);
-          document
-            .getElementById(`tbl-h-${api.id}`)
-            .appendChild(
-              createTable(
-                ['Name', 'Value', 'Required', 'Description'],
-                hRows.length ? hRows : [['-', '-', '-', '-']]
-              )
-            );
+            // Fill tables
+            const hRows = (api.headers || []).map((h) => [
+              `<span class='font-mono'>${escapeHTML(h.name || '')}</span>`,
+              escapeHTML(h.value || ''),
+              h.required ? 'O' : 'X',
+              escapeHTML(h.description || ''),
+            ]);
+            document
+              .getElementById(`tbl-h-${api.id}`)
+              .appendChild(
+                createTable(
+                  ['Name', 'Value', 'Required', 'Description'],
+                  hRows.length ? hRows : [['-', '-', '-', '-']]
+                )
+              );
 
-          const pRows = (api.parameters || []).map((p) => [
-            `<span class='font-mono'>${escapeHTML(p.name || '')}</span>`,
-            escapeHTML(p.type || ''),
-            p.required ? 'O' : 'X',
-            escapeHTML(p.description || ''),
-          ]);
-          document
-            .getElementById(`tbl-p-${api.id}`)
-            .appendChild(
-              createTable(
-                ['Name', 'Type', 'Required', 'Description'],
-                pRows.length ? pRows : [['-', '-', '-', '-']]
-              )
-            );
+            const pRows = (api.parameters || []).map((p) => [
+              `<span class='font-mono'>${escapeHTML(p.name || '')}</span>`,
+              escapeHTML(p.type || ''),
+              p.required ? 'O' : 'X',
+              escapeHTML(p.description || ''),
+            ]);
+            document
+              .getElementById(`tbl-p-${api.id}`)
+              .appendChild(
+                createTable(
+                  ['Name', 'Type', 'Required', 'Description'],
+                  pRows.length ? pRows : [['-', '-', '-', '-']]
+                )
+              );
 
-          // Status list
-          const resWrap = document.getElementById(`reslist-${api.id}`);
-          (api.responses || []).forEach((r) => {
-            const div = document.createElement('div');
-            div.className =
-              'border border-line rounded-lg p-4 bg-mint-50/30 flex items-start gap-3';
-            div.innerHTML = `<span class='font-mono text-sm px-2 py-0.5 rounded border border-line bg-white'>${escapeHTML(
-              r.status || ''
-            )}</span><p class='text-sm'>${escapeHTML(r.description || '')}</p>`;
-            resWrap.appendChild(div);
-          });
+            // Status list
+            const resWrap = document.getElementById(`reslist-${api.id}`);
+            (api.responses || []).forEach((r) => {
+              const div = document.createElement('div');
+              div.className =
+                'border border-line rounded-lg p-4 bg-mint-50/30 flex items-start gap-3';
+              div.innerHTML = `<span class='font-mono text-sm px-2 py-0.5 rounded border border-line bg-white'>${escapeHTML(
+                r.status || ''
+              )}</span><p class='text-sm'>${escapeHTML(
+                r.description || ''
+              )}</p>`;
+              resWrap.appendChild(div);
+            });
 
           // JSON examples
           if (api.requestExample !== null) {

@@ -1,0 +1,90 @@
+{
+  "id": "peer-consumption-comparison",
+  "title": "특정 월 또래 평균 소비 & 카테고리 조회",
+  "description": "현재 로그인한 사용자의 소비 패턴을 같은 연령대의 또래 사용자들과 비교하여 분석 결과를 제공합니다.",
+  "method": "GET",
+  "endpoint": "/api/peer/",
+  "headers": [
+    {
+      "name": "Authorization",
+      "value": "Bearer {token}",
+      "required": true,
+      "description": "JWT 액세스 토큰"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "start",
+      "type": "string",
+      "required": false,
+      "description": "비교 분석 시작일 (yyyy-MM-dd)"
+    },
+    {
+      "name": "end",
+      "type": "string",
+      "required": false,
+      "description": "비교 분석 종료일 (yyyy-MM-dd)"
+    }
+  ],
+  "requestExample": null,
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "또래 대비 소비 패턴 조회 성공"
+    },
+    {
+      "status": "401 Unauthorized",
+      "description": "인증 실패 (토큰 없음/만료)"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "조회 중 오류 발생"
+    }
+  ],
+  "responseExample": {
+    "peerAvgTotalExpense": 440995,
+    "categoryComparisons": [
+      {
+        "categoryId": 7,
+        "categoryName": "이체",
+        "avgExpense": 215915.3333
+      },
+      {
+        "categoryId": 2,
+        "categoryName": "주거/통신",
+        "avgExpense": 129366.9091
+      },
+      {
+        "categoryId": 5,
+        "categoryName": "쇼핑",
+        "avgExpense": 103340.1429
+      },
+      {
+        "categoryId": 6,
+        "categoryName": "문화/여가",
+        "avgExpense": 44290.75
+      },
+      {
+        "categoryId": 4,
+        "categoryName": "교통",
+        "avgExpense": 24998
+      },
+      {
+        "categoryId": 3,
+        "categoryName": "식비",
+        "avgExpense": 16271.6923
+      },
+      {
+        "categoryId": 1,
+        "categoryName": "카페/간식",
+        "avgExpense": 5870.1667
+      },
+      {
+        "categoryId": 8,
+        "categoryName": "기타",
+        "avgExpense": 0
+      }
+    ]
+  },
+  "curlExample": "curl -X GET 'https://api.banklab.app/api/peer/?start=2024-07-01&end=2024-07-31' -H \"Authorization: Bearer {token}\""
+}
