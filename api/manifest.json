@@ -18,6 +18,17 @@
         "transactionBycategory",
         "peer-comparison"
       ]
+    },
+    {
+      "name": "금융계산기",
+      "path": "calculator",
+      "apis": [
+        "deposit-calculator",
+        "savings-calculator",
+        "loan-calculator",
+        "annuity-calculator",
+        "get-profile"
+      ]
     }
   ]
 }
