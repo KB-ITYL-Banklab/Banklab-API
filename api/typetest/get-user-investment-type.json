@@ -1,0 +1,42 @@
+{
+  "id": "get-user-investment-type",
+  "title": "사용자 투자 유형 조회",
+  "description": "JWT 토큰을 통해 사용자 정보를 추출하여 해당 사용자의 투자 유형을 조회합니다.",
+  "method": "GET",
+  "endpoint": "/api/typetest/user-type",
+  "headers": [
+    {
+      "name": "Authorization",
+      "value": "Bearer {token}",
+      "required": true,
+      "description": "JWT 액세스 토큰 (사용자 ID 포함)"
+    }
+  ],
+  "parameters": [],
+  "requestExample": {},
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "투자 유형 조회 성공"
+    },
+    {
+      "status": "401 Unauthorized",
+      "description": "인증 실패 또는 토큰 없음/만료"
+    },
+    {
+      "status": "404 Not Found",
+      "description": "해당 사용자의 투자유형 정보 없음"
+    }
+  ],
+  "responseExample": {
+    "userId": 1,
+    "investmentTypeId": 3,
+    "investmentTypeName": "공격형",
+    "investmentTypeDesc": "높은 수익률을 기대하며 위험을 감수할 수 있는 성향입니다. 주식, ETF, 레버리지 상품 등 변동성이 큰 상품에도 관심이 많습니다.",
+    "cumulativeViews": 1,
+    "message": "투자유형 조회 성공",
+    "updatedAt": "2025-08-08T09:34:44",
+    "recommendedProducts": null
+  },
+  "curlExample": "curl -X GET https://api.banklab.app/api/typetest/user-type \\\n  -H \"Authorization: Bearer {token}\""
+}
