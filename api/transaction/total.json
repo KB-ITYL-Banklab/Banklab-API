@@ -1,0 +1,144 @@
+{
+  "categories": [
+    {
+      "name": "거래 내역 및 소비 분석",
+      "apis": []
+    },
+    {
+      "name": "AI (Gemini)",
+      "apis": [
+        {
+          "id": "gemini-ask",
+          "title": "Gemini 텍스트 생성",
+          "description": "Google Gemini 모델에 프롬프트를 보내 텍스트 응답을 생성합니다.",
+          "method": "GET",
+          "endpoint": "/api/gemini/ask",
+          "headers": [],
+          "parameters": [
+            {
+              "name": "prompt",
+              "type": "string",
+              "required": true,
+              "description": "Gemini 모델에 전달할 프롬프트"
+            }
+          ],
+          "requestExample": null,
+          "responses": [
+            {
+              "status": "200 OK",
+              "description": "텍스트 생성 성공"
+            }
+          ],
+          "responseExample": "This is a sample response from Gemini.",
+          "curlExample": "curl -X GET 'https://api.banklab.app/api/gemini/ask?prompt=Hello%20World'"
+        },
+        {
+          "id": "gemini-classify-categories",
+          "title": "거래 내역 카테고리 분류",
+          "description": "거래 내역 설명 목록을 Gemini를 사용하여 카테고리로 분류합니다.",
+          "method": "POST",
+          "endpoint": "/api/gemini/classify",
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json",
+              "required": true,
+              "description": "요청 본문 JSON"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "descriptions",
+              "type": "array[string]",
+              "required": true,
+              "description": "분류할 거래 내역 설명의 배열"
+            }
+          ],
+          "requestExample": ["스타벅스", "카카오택시", "CGV 영화관람"],
+          "responses": [
+            {
+              "status": "200 OK",
+              "description": "카테고리 분류 성공"
+            }
+          ],
+          "responseExample": ["식비", "교통", "문화/여가"],
+          "curlExample": "curl -X POST https://api.banklab.app/api/gemini/classify -H \"Content-Type: application/json\" -d '[\"스타벅스\",\"카카오택시\",\"CGV 영화관람\"]'"
+        }
+      ]
+    },
+    {
+      "name": "또래 소비 비교",
+      "apis": [
+        {
+          "id": "peer-consumption-comparison",
+          "title": "또래 대비 소비 패턴 비교",
+          "description": "현재 로그인한 사용자의 소비 패턴을 같은 연령대의 또래 사용자들과 비교하여 분석 결과를 제공합니다.",
+          "method": "GET",
+          "endpoint": "/api/peer/",
+          "headers": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {token}",
+              "required": true,
+              "description": "JWT 액세스 토큰"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "start",
+              "type": "string",
+              "required": false,
+              "description": "비교 분석 시작일 (yyyy-MM-dd)"
+            },
+            {
+              "name": "end",
+              "type": "string",
+              "required": false,
+              "description": "비교 분석 종료일 (yyyy-MM-dd)"
+            }
+          ],
+          "requestExample": null,
+          "responses": [
+            {
+              "status": "200 OK",
+              "description": "또래 대비 소비 패턴 조회 성공"
+            },
+            {
+              "status": "401 Unauthorized",
+              "description": "인증 실패 (토큰 없음/만료)"
+            },
+            {
+              "status": "500 Internal Server Error",
+              "description": "조회 중 오류 발생"
+            }
+          ],
+          "responseExample": {
+            "success": true,
+            "message": "또래 평균을 가져오는데 성공했습니다.",
+            "data": {
+              "peer": {
+                "userAverage": 1500000.0,
+                "peerAverage": 1200000.0,
+                "categoryComparisons": [
+                  {
+                    "categoryName": "식비",
+                    "userTotal": 600000.0,
+                    "peerAverage": 500000.0
+                  },
+                  {
+                    "categoryName": "교통",
+                    "userTotal": 150000.0,
+                    "peerAverage": 180000.0
+                  }
+                ]
+              }
+            },
+            "email": "user@example.com",
+            "memberId": 1
+          },
+          "curlExample": "curl -X GET 'https://api.banklab.app/api/peer/?start=2024-07-01&end=2024-07-31' -H \"Authorization: Bearer {token}\""
+        }
+      ]
+    }
+  ]
+}

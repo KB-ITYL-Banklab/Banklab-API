@@ -1,0 +1,101 @@
+{
+  "id": "transaction-summary",
+  "title": "소비 내역 요약 조회",
+  "description": "지정된 기간 동안의 총 수입, 총 지출 및 카테고리별 지출 내역을 요약하여 조회합니다.",
+  "method": "GET",
+  "endpoint": "/api/analysis/summary",
+  "headers": [
+    {
+      "name": "Authorization",
+      "value": "Bearer {token}",
+      "required": true,
+      "description": "JWT 액세스 토큰"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "start",
+      "type": "string",
+      "required": false,
+      "description": "조회 시작일 (yyyy-MM-dd)"
+    },
+    {
+      "name": "end",
+      "type": "string",
+      "required": false,
+      "description": "조회 종료일 (yyyy-MM-dd)"
+    }
+  ],
+  "requestExample": null,
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "소비 내역 요약 조회 성공"
+    },
+    {
+      "status": "401 Unauthorized",
+      "description": "인증 실패 (토큰 없음/만료)"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "조회 중 오류 발생"
+    }
+  ],
+  "responseExample": {
+    "data": {
+      "summaries": [
+        {
+          "account": "Total",
+          "monthlySummary": {
+            "totalIncome": 102563,
+            "totalExpense": 690400
+          },
+          "dailyExpense": [
+            {
+              "date": "2025-08-01",
+              "totalExpense": 21600
+            },
+            {
+              "date": "2025-08-02",
+              "totalExpense": 7300
+            },
+            {
+              "date": "2025-08-03",
+              "totalExpense": 0
+            }
+          ],
+          "weeklyExpense": [
+            {
+              "weekNumber": 1,
+              "yearMonth": "2025-08",
+              "startDate": "2025-08-01",
+              "endDate": "2025-08-02",
+              "totalExpense": 28900
+            },
+            {
+              "weekNumber": 2,
+              "yearMonth": "2025-08",
+              "startDate": "2025-08-03",
+              "endDate": "2025-08-09",
+              "totalExpense": 648700
+            }
+          ],
+          "categoryExpense": [
+            {
+              "categoryId": 2,
+              "categoryName": "주거/통신",
+              "totalExpense": 607500,
+              "expenseDays": 1,
+              "avgExpense": null
+            }
+          ]
+        }
+      ]
+    },
+    "success": true,
+    "message": "집계 테이블 조회에 성공했습니다.",
+    "email": "admin@example.com",
+    "memberId": 1
+  },
+  "curlExample": "curl -X GET 'https://api.banklab.app/api/analysis/summary?start=2024-01-01&end=2024-01-31' -H \"Authorization: Bearer {token}\""
+}

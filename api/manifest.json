@@ -1,0 +1,19 @@
+{
+  "categories": [
+    {
+      "name": "계좌 관리",
+      "path": "accounts",
+      "apis": ["account-link"]
+    },
+    {
+      "name": "거래 내역 관리",
+      "path": "transaction",
+      "apis": ["get-transaction", "status-transaction"]
+    },
+    {
+      "name": "소비 분석",
+      "path": "analysis",
+      "apis": ["transaction-summary", "transactionBycategory"]
+    }
+  ]
+}
