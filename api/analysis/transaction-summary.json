@@ -1,6 +1,6 @@
 {
   "id": "transaction-summary",
-  "title": "소비 내역 요약 조회",
+  "title": "특정 월 소비 통합 조회",
   "description": "지정된 기간 동안의 총 수입, 총 지출 및 카테고리별 지출 내역을 요약하여 조회합니다.",
   "method": "GET",
   "endpoint": "/api/analysis/summary",

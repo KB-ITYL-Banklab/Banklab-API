@@ -13,7 +13,11 @@
     {
       "name": "소비 분석",
       "path": "analysis",
-      "apis": ["transaction-summary", "transactionBycategory"]
+      "apis": [
+        "transaction-summary",
+        "transactionBycategory",
+        "peer-comparison"
+      ]
     }
   ]
 }
