@@ -76,6 +76,22 @@
     .t-quote {
       color: #9ca3af;
     }
+
+    /* --- Custom Styles --- */
+    /* Active TOC link style */
+    #toc a.active {
+      background-color: #E6F2F2;
+      /* mint-100 */
+      font-weight: 600;
+      /* semibold */
+      color: #52B9B9;
+      /* mint-600 */
+    }
+
+    /* Accordion button rotation */
+    .acc-rot svg {
+      transform: rotate(180deg);
+    }
   </style>
 </head>
 
@@ -95,7 +111,7 @@
   <!-- Body -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
     <!-- Sidebar -->
-    <aside class="lg:col-span-3">
+    <aside class="lg:col-span-3 lg:sticky lg:top-24 lg:self-start">
       <div class="bg-white rounded-xl shadow-soft border border-line">
         <div class="p-4 border-b border-line font-medium">목차</div>
         <nav id="toc" class="p-2 space-y-1"></nav>
@@ -246,6 +262,8 @@
         }
 
         renderContent(data);
+        // Initial call to set active link
+        updateActiveLink();
 
       } catch (error) {
         console.error("API 명세서를 불러오는 중 오류가 발생했습니다:", error);
@@ -260,24 +278,39 @@
       data.categories.forEach((cat, ci) => {
         // Sidebar accordion
         const wrap = document.createElement('div');
-        wrap.className = 'border-b border-line';
+        if (ci < data.categories.length - 1) {
+          wrap.className = 'border-b border-line';
+        }
+
         const btn = document.createElement('button');
         btn.className =
           'w-full flex items-center justify-between px-3 py-2 hover:bg-mint-50 rounded-lg';
-        btn.innerHTML = `<span class='font-medium'>${escapeHTML(cat.name)}</span><svg class='w-4 h-4 transition-transform' viewBox='0 0 20 20' fill='currentColor'><path fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z' clip-rule='evenodd'/></svg>`;
+        btn.innerHTML = `<span class='font-medium text-lg'>${escapeHTML(cat.name)}</span><svg class='w-5 h-5 transition-transform text-gray-400' viewBox='0 0 20 20' fill='currentColor'><path fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z' clip-rule='evenodd'/></svg>`;
+
         const list = document.createElement('div');
-        list.className = 'pl-3 pb-3 hidden';
+        list.className = 'pl-3 pt-1 pb-3 space-y-1';
+
+        // Open first category by default
+        if (ci !== 0) {
+          list.classList.add('hidden');
+        } else {
+          btn.classList.add('acc-rot');
+        }
+
+
         cat.apis.forEach((api) => {
           const a = document.createElement('a');
-          a.className = 'block px-3 py-1.5 rounded hover:bg-mint-50';
+          a.className = 'block px-3 py-1.5 rounded-lg hover:bg-mint-50 text-gray-600';
           a.href = `#api-${api.id}`;
           a.textContent = api.title;
           list.appendChild(a);
         });
+
         btn.addEventListener('click', () => {
           list.classList.toggle('hidden');
           btn.classList.toggle('acc-rot');
         });
+
         wrap.appendChild(btn);
         wrap.appendChild(list);
         toc.appendChild(wrap);
@@ -286,7 +319,7 @@
         cat.apis.forEach((api) => {
           const art = document.createElement('article');
           art.id = `api-${api.id}`;
-          art.className = 'bg-white rounded-2xl shadow-soft border border-line';
+          art.className = 'bg-white rounded-2xl shadow-soft border border-line scroll-mt-20';
           art.innerHTML = `\n            <header class='p-6 border-b border-line space-y-3'>\n              <p class='text-sm text-gray-500'>${escapeHTML(cat.name)}</p>\n              <h2 class='text-2xl font-semibold'>${escapeHTML(api.title)}</h2>\n              ${api.description
             ? `<p class='text-gray-600 leading-relaxed'>${escapeHTML(
               api.description
@@ -368,16 +401,57 @@
       });
     }
 
+    // --- Scroll Spy ---
+    function updateActiveLink() {
+      const sections = document.querySelectorAll('#content article');
+      const tocLinks = document.querySelectorAll('#toc a');
+      let current = '';
+
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        // Header height (h-16 -> 4rem) + gap (py-6 -> 1.5rem) + extra offset
+        if (window.pageYOffset >= sectionTop - 100) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      tocLinks.forEach(link => {
+        link.classList.remove('active');
+        const linkHref = link.getAttribute('href');
+        if (linkHref === `#${current}`) {
+          link.classList.add('active');
+
+          // Open accordion if the active link is inside a collapsed one
+          const parentList = link.closest('div');
+          if (parentList && parentList.classList.contains('hidden')) {
+            parentList.classList.remove('hidden');
+            parentList.previousElementSibling.classList.add('acc-rot');
+          }
+        }
+      });
+    }
+
+
     // Smooth scroll
     document.addEventListener('click', (e) => {
       const a = e.target.closest('a[href^="#api-"]');
       if (!a) return;
       e.preventDefault();
-      document
-        .querySelector(a.getAttribute('href'))
-        ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const targetElement = document.querySelector(a.getAttribute('href'));
+      if (targetElement) {
+        targetElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+        // Update hash in URL without jumping
+        history.pushState(null, null, a.getAttribute('href'));
+      }
     });
 
+    // Update active link on scroll
+    window.addEventListener('scroll', updateActiveLink);
+
+    // --- Initial Load ---
     render();
   </script>
 
