@@ -1,0 +1,133 @@
+{
+  "id": "creditloan-detail",
+  "title": "신용대출 상품 상세 조회",
+  "description": "공시 제출월, 금융회사 코드, 금융상품 코드를 경로 파라미터로 받아 신용대출 상품 상세 정보를 조회합니다.",
+  "method": "GET",
+  "endpoint": "/api/creditloan/{dclsMonth}/{finCoNo}/{finPrdtCd}",
+  "headers": [
+    {
+      "name": "Authorization",
+      "value": "Bearer {token}",
+      "required": true,
+      "description": "JWT 액세스 토큰"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "dclsMonth",
+      "type": "string",
+      "required": true,
+      "description": "공시 제출월 [YYYYMM]"
+    },
+    {
+      "name": "finCoNo",
+      "type": "string",
+      "required": true,
+      "description": "금융회사 코드"
+    },
+    {
+      "name": "finPrdtCd",
+      "type": "string",
+      "required": true,
+      "description": "금융상품 코드"
+    }
+  ],
+  "requestExample": {},
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "신용대출 상품 상세 정보 조회 성공"
+    },
+    {
+      "status": "401 Unauthorized",
+      "description": "인증 실패 (토큰 없음/만료)"
+    },
+    {
+      "status": "404 Not Found",
+      "description": "해당 신용대출 상품이 존재하지 않음"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "서버 오류"
+    }
+  ],
+  "responseExample": {
+    "dclsMonth": "202507",
+    "finCoNo": "0010001",
+    "finPrdtCd": "CR0001A",
+    "finPrdtNm": "개인신용대출 우대고객",
+    "korCoNm": "우리은행",
+    "productType": "CREDITLOAN",
+    "joinWay": "영업점,인터넷,스마트폰",
+    "crdtPrdtType": "1",
+    "crdtPrdtTypeNm": "일반신용대출",
+    "cbName": "KCB",
+    "dclsStrtDay": "2025-07-21",
+    "options": [
+      {
+        "id": 1,
+        "crdt_prdt_type": "1",
+        "crdt_lend_rate_type": "A",
+        "crdt_lend_rate_type_nm": "대출금리",
+        "crdt_grad_1": 4.4,
+        "crdt_grad_4": 5.04,
+        "crdt_grad_5": 6.16,
+        "crdt_grad_6": 7.09,
+        "crdt_grad_10": 8.53,
+        "crdt_grad_11": 9.25,
+        "crdt_grad_12": 10.06,
+        "crdt_grad_13": 8.81,
+        "crdt_grad_avg": 4.68
+      },
+      {
+        "id": 2,
+        "crdt_prdt_type": "1",
+        "crdt_lend_rate_type": "B",
+        "crdt_lend_rate_type_nm": "기준금리",
+        "crdt_grad_1": 2.58,
+        "crdt_grad_4": 2.62,
+        "crdt_grad_5": 2.65,
+        "crdt_grad_6": 2.7,
+        "crdt_grad_10": 2.63,
+        "crdt_grad_11": 2.61,
+        "crdt_grad_12": 3.34,
+        "crdt_grad_13": 2.58,
+        "crdt_grad_avg": 2.59
+      },
+      {
+        "id": 3,
+        "crdt_prdt_type": "1",
+        "crdt_lend_rate_type": "C",
+        "crdt_lend_rate_type_nm": "가산금리",
+        "crdt_grad_1": 2.68,
+        "crdt_grad_4": 3.11,
+        "crdt_grad_5": 3.93,
+        "crdt_grad_6": 4.77,
+        "crdt_grad_10": 6.47,
+        "crdt_grad_11": 7.49,
+        "crdt_grad_12": 7.92,
+        "crdt_grad_13": 7.31,
+        "crdt_grad_avg": 2.89
+      },
+      {
+        "id": 4,
+        "crdt_prdt_type": "1",
+        "crdt_lend_rate_type": "D",
+        "crdt_lend_rate_type_nm": "가감조정금리",
+        "crdt_grad_1": 0.86,
+        "crdt_grad_4": 0.69,
+        "crdt_grad_5": 0.42,
+        "crdt_grad_6": 0.38,
+        "crdt_grad_10": 0.57,
+        "crdt_grad_11": 0.85,
+        "crdt_grad_12": 1.2,
+        "crdt_grad_13": 1.08,
+        "crdt_grad_avg": 0.8
+      }
+    ],
+    "optionCount": 4,
+    "minRate": 0.8,
+    "maxRate": 4.68
+  },
+  "curlExample": "curl -X GET \"https://api.example.com/api/creditloan/202507/0010001/CR0001A\" \\\n  -H \"Authorization: Bearer {token}\""
+}

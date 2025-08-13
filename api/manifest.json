@@ -3,8 +3,18 @@
     {
       "name": "계좌 관리",
       "path": "accounts",
+      "apis": ["account-link"]
+    },
+    {
+      "name": "상품",
+      "path": "products",
       "apis": [
-        "account-link"
+        "deposit-detail",
+        "savings-detail",
+        "creditloan-detail",
+        "annuity-detail",
+        "mortgage-loan-detail",
+        "renthouse-loan-detail"
       ]
     }
   ]

@@ -1,0 +1,95 @@
+{
+  "id": "renthouse-loan-detail",
+  "title": "전세자금대출 상품 상세 조회",
+  "description": "금융회사 코드, 상품 코드, 공시 제출월을 기준으로 전세자금대출 상품의 상세 정보를 조회합니다.",
+  "method": "GET",
+  "endpoint": "/api/renthouse-loan/{dclsMonth}/{finCoNo}/{finPrdtCd}",
+  "parameters": [
+    {
+      "name": "dclsMonth",
+      "type": "string",
+      "required": true,
+      "description": "공시 제출월 [YYYYMM]"
+    },
+    {
+      "name": "finCoNo",
+      "type": "string",
+      "required": true,
+      "description": "금융회사 코드"
+    },
+    {
+      "name": "finPrdtCd",
+      "type": "string",
+      "required": true,
+      "description": "금융상품 코드"
+    }
+  ],
+  "requestExample": {},
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "상품 정보 조회 성공"
+    },
+    {
+      "status": "404 Not Found",
+      "description": "상품 정보를 찾을 수 없음"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "서버 오류"
+    }
+  ],
+  "responseExample": {
+    "dclsMonth": "202507",
+    "finCoNo": "0010001",
+    "finPrdtCd": "10561",
+    "korCoNm": "우리은행",
+    "finPrdtNm": "우리전세론(주택금융보증)",
+    "productType": "RENTHOUSE",
+    "joinWay": "영업점,모집인",
+    "loanInciExpn": "- 인지세 : 해당세액의 50%(대출금액 5천만원 이하시 없음)\n- 보증료",
+    "erlyRpayFee": "- 고정금리 : 중도상환대출금×0.52%×잔존기간÷대출기간\n- 변동금리 : 중도상환대출금×0.37%×잔존기간÷대출기간",
+    "dlyRate": "- 적용금리+ 3%\n(가계대출 최고연체이자율 : 12%)",
+    "loanLmt": "최대4.44억원",
+    "dclsStrtDay": "2025-07-20",
+    "dclsEndDay": "2026-07-19",
+    "optionCount": 4,
+    "minRate": 3.51,
+    "maxRate": 4.29,
+    "options": [
+      {
+        "id": 1,
+        "rpay_type_nm": "분할상환방식",
+        "lend_rate_type_nm": "변동금리",
+        "lend_rate_min": 3.51,
+        "lend_rate_max": 4.21,
+        "lend_rate_avg": null
+      },
+      {
+        "id": 2,
+        "rpay_type_nm": "분할상환방식",
+        "lend_rate_type_nm": "고정금리",
+        "lend_rate_min": 3.59,
+        "lend_rate_max": 4.29,
+        "lend_rate_avg": 3.88
+      },
+      {
+        "id": 3,
+        "rpay_type_nm": "만기일시상환방식",
+        "lend_rate_type_nm": "변동금리",
+        "lend_rate_min": 3.51,
+        "lend_rate_max": 4.21,
+        "lend_rate_avg": 4.1
+      },
+      {
+        "id": 4,
+        "rpay_type_nm": "만기일시상환방식",
+        "lend_rate_type_nm": "고정금리",
+        "lend_rate_min": 3.59,
+        "lend_rate_max": 4.29,
+        "lend_rate_avg": 4.0
+      }
+    ]
+  },
+  "curlExample": "curl -X GET https://api.banklab.app/api/renthouse-loan/202507/0010001/10561"
+}

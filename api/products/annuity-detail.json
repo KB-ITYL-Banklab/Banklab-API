@@ -1,0 +1,114 @@
+{
+  "id": "annuity-detail",
+  "title": "연금저축보험 상품 상세 조회",
+  "description": "금융회사 코드, 금융상품 코드, 공시제출월을 기준으로 연금저축보험의 세부 정보를 조회합니다.",
+  "method": "GET",
+  "endpoint": "/api/annuity/{dclsMonth}/{finCoNo}/{finPrdtCd}",
+  "parameters": [
+    {
+      "name": "dclsMonth",
+      "type": "string",
+      "required": true,
+      "description": "공시 제출월 [YYYYMM]"
+    },
+    {
+      "name": "finCoNo",
+      "type": "string",
+      "required": true,
+      "description": "금융회사 코드"
+    },
+    {
+      "name": "finPrdtCd",
+      "type": "string",
+      "required": true,
+      "description": "금융상품 코드"
+    }
+  ],
+  "requestExample": {},
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "상품 정보 조회 성공"
+    },
+    {
+      "status": "404 Not Found",
+      "description": "상품 정보를 찾을 수 없음"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "서버 오류"
+    }
+  ],
+  "responseExample": {
+    "dclsMonth": "202010",
+    "finCoNo": "0010628",
+    "finPrdtCd": "2920",
+    "finPrdtNm": "연금저축손해보험 롯데 행복한동행 연금보험(2004)",
+    "korCoNm": "롯데손해보험주식회사",
+    "joinWay": "기타",
+    "pnsnKind": "3",
+    "pnsnKindNm": "연금저축보험(손해)",
+    "prdtType": "201",
+    "prdtTypeNm": "금리연동형",
+    "saleStrtDay": "20200401",
+    "mntnCnt": 363,
+    "dclsStrtDay": "2020-10-31",
+    "avgPrftRate": -2.55,
+    "dclsRate": 1.6,
+    "guarRate": "경과기간 5년이하:1.25%\n경과기간 10년이하:1.0%\n경과기간 10년초과:0.3%",
+    "btrmPrftRate1": 1.6,
+    "btrmPrftRate2": 1.65,
+    "btrmPrftRate3": 1.7,
+    "optionCount": 48,
+    "minRecpAmt": 86274,
+    "maxRecpAmt": 1227248,
+    "options": [
+      {
+        "id": 1,
+        "pnsn_recp_trm_nm": "10년 확정",
+        "pnsn_entr_age_nm": "30세",
+        "mon_paym_atm_nm": "100,000원",
+        "paym_prd_nm": "10년",
+        "pnsn_strt_age_nm": "60세",
+        "pnsn_recp_amt": 193520
+      },
+      {
+        "id": 25,
+        "pnsn_recp_trm_nm": "20년 확정",
+        "pnsn_entr_age_nm": "30세",
+        "mon_paym_atm_nm": null,
+        "paym_prd_nm": null,
+        "pnsn_strt_age_nm": "60세",
+        "pnsn_recp_amt": 850901
+      },
+      {
+        "id": 47,
+        "pnsn_recp_trm_nm": "20년 확정",
+        "pnsn_entr_age_nm": "40세",
+        "mon_paym_atm_nm": "300,000원",
+        "paym_prd_nm": "20년",
+        "pnsn_strt_age_nm": "60세",
+        "pnsn_recp_amt": 477712
+      },
+      {
+        "id": 24,
+        "pnsn_recp_trm_nm": "10년 확정",
+        "pnsn_entr_age_nm": "40세",
+        "mon_paym_atm_nm": "300,000원",
+        "paym_prd_nm": "20년",
+        "pnsn_strt_age_nm": "65세",
+        "pnsn_recp_amt": 961218
+      },
+      {
+        "id": 48,
+        "pnsn_recp_trm_nm": "20년 확정",
+        "pnsn_entr_age_nm": "40세",
+        "mon_paym_atm_nm": "300,000원",
+        "paym_prd_nm": "20년",
+        "pnsn_strt_age_nm": "65세",
+        "pnsn_recp_amt": 539647
+      }
+    ]
+  },
+  "curlExample": "curl -X GET https://api.banklab.app/api/annuity/202010/0010628/2920"
+}
