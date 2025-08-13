@@ -1,0 +1,95 @@
+{
+  "id": "deposit-calculator",
+  "title": "예금 계산기",
+  "description": "예금 원금, 금리, 기간, 이자 계산 방식을 기준으로 세전/세후 수익과 만기 금액을 계산합니다.",
+  "method": "POST",
+  "endpoint": "/api/calculator/deposit",
+  "headers": [
+    {
+      "name": "Content-Type",
+      "value": "application/json",
+      "required": true,
+      "description": "요청 본문은 JSON 형식이어야 합니다."
+    }
+  ],
+  "parameters": [
+    {
+      "name": "principal",
+      "type": "number",
+      "required": true,
+      "description": "예치 금액 (원)"
+    },
+    {
+      "name": "rate",
+      "type": "number",
+      "required": true,
+      "description": "연 이율 (%)"
+    },
+    {
+      "name": "termMonths",
+      "type": "integer",
+      "required": true,
+      "description": "예치 기간 (개월)"
+    },
+    {
+      "name": "isCompound",
+      "type": "boolean",
+      "required": true,
+      "description": "복리 여부 (true: 복리, false: 단리)"
+    }
+  ],
+  "requestExample": {
+    "principal": 10000000,
+    "rate": 3.5,
+    "termMonths": 12,
+    "isCompound": false
+  },
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "계산 성공"
+    },
+    {
+      "status": "400 Bad Request",
+      "description": "입력 값 오류 (예: 음수 값)"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "서버 내부 오류"
+    }
+  ],
+  "responseExample": {
+    "inputConditions": {
+      "principal": 10000000,
+      "rate": 3.5,
+      "termMonths": 12,
+      "isCompound": false,
+      "rateType": "단리"
+    },
+    "results": {
+      "totalInterest": 350000,
+      "generalTax": {
+        "categoryName": "일반과세",
+        "maturityAmount": 10296100,
+        "afterTaxInterest": 296100,
+        "taxAmount": 53900,
+        "taxRate": 15.4
+      },
+      "preferentialTax": {
+        "categoryName": "세금우대",
+        "maturityAmount": 10316750,
+        "afterTaxInterest": 316750,
+        "taxAmount": 33250,
+        "taxRate": 9.5
+      },
+      "exemptTax": {
+        "categoryName": "비과세",
+        "maturityAmount": 10350000,
+        "afterTaxInterest": 350000,
+        "taxAmount": 0,
+        "taxRate": 0.0
+      }
+    }
+  },
+  "curlExample": "curl -X POST https://api.banklab.app/api/calculator/deposit \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"principal\":10000000,\"rate\":3.5,\"termMonths\":12,\"isCompound\":false}'"
+}

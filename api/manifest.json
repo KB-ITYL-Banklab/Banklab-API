@@ -6,6 +6,31 @@
       "apis": ["account-link"]
     },
     {
+      "name": "거래 내역 관리",
+      "path": "transaction",
+      "apis": ["get-transaction", "status-transaction"]
+    },
+    {
+      "name": "소비 분석",
+      "path": "analysis",
+      "apis": [
+        "transaction-summary",
+        "transactionBycategory",
+        "peer-comparison"
+      ]
+    },
+    {
+      "name": "금융계산기",
+      "path": "calculator",
+      "apis": [
+        "deposit-calculator",
+        "savings-calculator",
+        "loan-calculator",
+        "annuity-calculator",
+        "get-profile"
+      ]
+    },
+    {
       "name": "상품",
       "path": "products",
       "apis": [
