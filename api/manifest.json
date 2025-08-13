@@ -29,6 +29,18 @@
         "annuity-calculator",
         "get-profile"
       ]
+    },
+    {
+      "name": "상품",
+      "path": "products",
+      "apis": [
+        "deposit-detail",
+        "savings-detail",
+        "creditloan-detail",
+        "annuity-detail",
+        "mortgage-loan-detail",
+        "renthouse-loan-detail"
+      ]
     }
   ]
 }
