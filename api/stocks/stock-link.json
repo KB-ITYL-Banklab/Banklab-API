@@ -98,5 +98,5 @@
     "success": true,
     "message": "증권계좌 연동이 완료되었습니다."
   },
-  "curlExample": "curl -X POST https://api.banklab.app/api/stock/link \n  -H \"Content-Type: application/json\" \n  -H \"Authorization: Bearer {token}\" \n  -d '{\"stockCode\":\"0003\",\"stockId\":\"myStockId123\",\"stockPassword\":\"myStockPassword!\",\"account\":\"12345678901\",\"accountPassword\":\"1234\"}'"
+  "curlExample": "curl -X POST https://api.banklab.app/api/stock/link \n  -H \"Content-Type: application/json\" \n  -H \"Authorization: Bearer {token}\" \n  -d '{\"stockCode\":\"0243\",\"stockId\":\"myStockId123\",\"stockPassword\":\"myStockPassword!\",\"account\":\"12345678901\",\"accountPassword\":\"1234\"}'"
 }

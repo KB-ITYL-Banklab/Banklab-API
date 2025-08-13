@@ -82,5 +82,5 @@
     "success": true,
     "message": "보유종목 정보 새로고침 완료"
   },
-  "curlExample": "curl -X PUT https://api.banklab.app/api/stock/refresh \n  -H \"Content-Type: application/json\" \n  -H \"Authorization: Bearer {token}\" \n  -d '{\"account\":\"12345678901\",\"connectedId\":\"abcd1234efgh5678\",\"stockCode\":\"0003\"}'"
+  "curlExample": "curl -X PUT https://api.banklab.app/api/stock/refresh \n  -H \"Content-Type: application/json\" \n  -H \"Authorization: Bearer {token}\" \n  -d '{\"account\":\"12345678901\",\"connectedId\":\"abcd1234efgh5678\",\"stockCode\":\"0243\"}'"
 }
