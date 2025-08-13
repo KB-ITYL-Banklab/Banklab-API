@@ -1,0 +1,55 @@
+{
+  "id": "account-list",
+  "title": "계좌 목록 조회",
+  "description": "사용자의 연동된 계좌 목록을 조회합니다.",
+  "method": "GET",
+  "endpoint": "/api/account/list",
+  "headers": [
+    {
+      "name": "Authorization",
+      "value": "Bearer {token}",
+      "required": true,
+      "description": "JWT 액세스 토큰"
+    }
+  ],
+  "parameters": [],
+  "requestExample": null,
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "계좌 목록 조회 성공"
+    },
+    {
+      "status": "401 Unauthorized",
+      "description": "인증 실패 (토큰 없음/만료)"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "계좌 목록 조회 중 오류 발생"
+    }
+  ],
+  "responseExample": {
+    "data": {
+      "accounts": [
+        {
+          "id": 1,
+          "connectedId": "abcd1234efgh5678",
+          "organization": "0004",
+          "resAccount": "12345678901234",
+          "resAccountName": "KB멋진통장",
+          "resAccountDisplay": "123456-78-901234",
+          "resAccountBalance": "548261",
+          "resAccountDeposit": "11",
+          "resAccountEndDate": "",
+          "resAccountStartDate": "20250801"
+        }
+      ],
+      "count": 1
+    },
+    "success": true,
+    "message": "계좌 목록 조회 완료",
+    "email": "admin@example.com",
+    "memberId": 1
+  },
+  "curlExample": "curl -X GET https://api.banklab.app/api/account/list -H \"Authorization: Bearer {token}\""
+}

@@ -1,0 +1,80 @@
+{
+  "id": "account-refresh",
+  "title": "계좌 잔액 새로고침",
+  "description": "커넥티드 아이디로 계좌 잔액을 새로고침합니다.",
+  "method": "PUT",
+  "endpoint": "/api/account/refresh",
+  "headers": [
+    {
+      "name": "Content-Type",
+      "value": "application/json",
+      "required": true,
+      "description": "요청 본문 JSON"
+    },
+    {
+      "name": "Authorization",
+      "value": "Bearer {token}",
+      "required": true,
+      "description": "JWT 액세스 토큰"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "bankCode",
+      "type": "string",
+      "required": true,
+      "description": "은행 코드"
+    },
+    {
+      "name": "connectedId",
+      "type": "string",
+      "required": true,
+      "description": "커넥티드 아이디"
+    }
+  ],
+  "requestExample": {
+    "bankCode": "0004",
+    "connectedId": "abcd1234efgh5678"
+  },
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "계좌 잔액 새로고침 완료"
+    },
+    {
+      "status": "401 Unauthorized",
+      "description": "인증 실패 (토큰 없음/만료)"
+    },
+    {
+      "status": "403 Forbidden",
+      "description": "해당 계좌에 대한 권한이 없습니다."
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "계좌 잔액 새로고침 중 오류 발생"
+    }
+  ],
+  "responseExample": {
+    "data": {
+      "accounts": [
+        {
+          "id": 1,
+          "connectedId": "abcd1234efgh5678",
+          "organization": "0004",
+          "resAccount": "12345678901234",
+          "resAccountName": "KB멋진통장",
+          "resAccountDisplay": "123456-78-901234",
+          "resAccountBalance": "600000",
+          "resAccountDeposit": "11",
+          "resAccountEndDate": "",
+          "resAccountStartDate": "20250801"
+        }
+      ]
+    },
+    "success": true,
+    "message": "계좌 잔액 새로고침 완료",
+    "email": "admin@example.com",
+    "memberId": 1
+  },
+  "curlExample": "curl -X PUT https://api.banklab.app/api/account/refresh -H \"Content-Type: application/json\" -H \"Authorization: Bearer {token}\" -d '{\"bankCode\":\"0004\",\"connectedId\":\"abcd1234efgh5678\"}'"
+}

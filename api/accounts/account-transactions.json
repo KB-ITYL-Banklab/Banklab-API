@@ -1,0 +1,86 @@
+{
+  "id": "account-transactions",
+  "title": "계좌 거래내역 상세 조회",
+  "description": "특정 계좌의 기간별 거래내역 상세 정보를 조회합니다.",
+  "method": "GET",
+  "endpoint": "/api/account/{accountId}/transactions",
+  "headers": [
+    {
+      "name": "Authorization",
+      "value": "Bearer {token}",
+      "required": true,
+      "description": "JWT 액세스 토큰"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "accountId",
+      "type": "long",
+      "in": "path",
+      "required": true,
+      "description": "조회할 계좌의 ID"
+    },
+    {
+      "name": "start",
+      "type": "string",
+      "in": "query",
+      "required": false,
+      "description": "조회 시작일 (YYYY-MM-DD)"
+    },
+    {
+      "name": "end",
+      "type": "string",
+      "in": "query",
+      "required": false,
+      "description": "조회 종료일 (YYYY-MM-DD)"
+    }
+  ],
+  "requestExample": null,
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "거래내역 조회 완료"
+    },
+    {
+      "status": "401 Unauthorized",
+      "description": "인증 실패 (토큰 없음/만료)"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "거래내역 조회 중 오류 발생"
+    }
+  ],
+  "responseExample": {
+    "data": {
+      "accountId": 1,
+      "transactions": [
+        {
+          "transactionDate": "2025-08-12",
+          "transactionTime": "15:30:00",
+          "type": "출금",
+          "amount": "50000",
+          "balance": "498261",
+          "description": "온라인 쇼핑"
+        },
+        {
+          "transactionDate": "2025-08-11",
+          "transactionTime": "09:00:00",
+          "type": "입금",
+          "amount": "100000",
+          "balance": "548261",
+          "description": "월급"
+        }
+      ],
+      "count": 2,
+      "period": {
+        "start": "2025-08-01T00:00:00.000+00:00",
+        "end": "2025-08-31T23:59:59.000+00:00"
+      }
+    },
+    "success": true,
+    "message": "거래내역 조회 완료",
+    "email": "admin@example.com",
+    "memberId": 1
+  },
+  "curlExample": "curl -X GET 'https://api.banklab.app/api/account/1/transactions?start=2025-08-01&end=2025-08-31' -H \"Authorization: Bearer {token}\""
+}
