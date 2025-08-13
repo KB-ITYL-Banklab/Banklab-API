@@ -1,0 +1,80 @@
+{
+  "id": "stock-detail",
+  "title": "보유종목 상세정보 조회",
+  "description": "보유종목 ID로 기본정보와 시계열 데이터를 조회합니다.",
+  "method": "GET",
+  "endpoint": "/api/stock/{stockId}/detail",
+  "headers": [
+    {
+      "name": "Authorization",
+      "value": "Bearer {token}",
+      "required": true,
+      "description": "JWT 액세스 토큰"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "stockId",
+      "type": "number",
+      "required": true,
+      "description": "보유종목 ID (경로 매개변수)"
+    },
+    {
+      "name": "limit",
+      "type": "number",
+      "required": false,
+      "description": "시계열 데이터 조회 개수 (기본값: 30)"
+    }
+  ],
+  "requestExample": null,
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "보유종목 상세정보 조회 성공"
+    },
+    {
+      "status": "401 Unauthorized",
+      "description": "인증 실패 (토큰 없음/만료)"
+    },
+    {
+      "status": "404 Not Found",
+      "description": "보유종목을 찾을 수 없음"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "보유종목 상세정보 조회 중 오류 발생"
+    }
+  ],
+  "responseExample": {
+    "data": {
+      "stockInfo": {
+        "id": 1,
+        "resItemName": "삼성전자",
+        "resItemCode": "005930",
+        "quantity": "10",
+        "presentAmt": "75000",
+        "purchaseAmount": "700000",
+        "valuationAmt": "750000",
+        "valuationPL": "50000",
+        "earningsRate": "7.14",
+        "accountCurrency": "KRW",
+        "productType": "주식"
+      },
+      "timeSeriesData": [
+        {
+          "date": "2025-08-13",
+          "closePrice": "75000",
+          "openPrice": "74500",
+          "highPrice": "75500",
+          "lowPrice": "74000",
+          "volume": "1000000"
+        }
+      ],
+      "timeSeriesCount": 1,
+      "timeSeriesLimit": 30
+    },
+    "success": true,
+    "message": "보유종목 상세정보 조회 완료"
+  },
+  "curlExample": "curl -X GET https://api.banklab.app/api/stock/1/detail?limit=30 \n  -H \"Authorization: Bearer {token}\""
+}

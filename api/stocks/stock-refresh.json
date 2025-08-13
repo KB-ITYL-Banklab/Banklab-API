@@ -1,0 +1,86 @@
+{
+  "id": "stock-refresh",
+  "title": "보유종목 정보 새로고침",
+  "description": "커넥티드 아이디로 보유종목 정보를 새로고침합니다.",
+  "method": "PUT",
+  "endpoint": "/api/stock/refresh",
+  "headers": [
+    {
+      "name": "Content-Type",
+      "value": "application/json",
+      "required": true,
+      "description": "요청 본문 JSON"
+    },
+    {
+      "name": "Authorization",
+      "value": "Bearer {token}",
+      "required": true,
+      "description": "JWT 액세스 토큰"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "account",
+      "type": "string",
+      "required": true,
+      "description": "계좌번호"
+    },
+    {
+      "name": "connectedId",
+      "type": "string",
+      "required": true,
+      "description": "연동 ID"
+    },
+    {
+      "name": "stockCode",
+      "type": "string",
+      "required": true,
+      "description": "증권사 코드"
+    }
+  ],
+  "requestExample": {
+    "account": "12345678901",
+    "connectedId": "abcd1234efgh5678",
+    "stockCode": "0243"
+  },
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "보유종목 정보 새로고침 성공"
+    },
+    {
+      "status": "401 Unauthorized",
+      "description": "인증 실패 (토큰 없음/만료)"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "보유종목 정보 새로고침 중 오류 발생"
+    }
+  ],
+  "responseExample": {
+    "data": {
+      "stocks": [
+        {
+          "id": 1,
+          "memberId": 1,
+          "connectedId": "abcd1234efgh5678",
+          "organization": "0243",
+          "resAccount": "12345678901",
+          "resItemName": "삼성전자",
+          "resItemCode": "005930",
+          "resQuantity": "10",
+          "resPresentAmt": "76000",
+          "resPurchaseAmount": "700000",
+          "resValuationAmt": "760000",
+          "resValuationPL": "60000",
+          "resEarningsRate": "8.57",
+          "resProductType": "주식",
+          "resAccountCurrency": "KRW"
+        }
+      ]
+    },
+    "success": true,
+    "message": "보유종목 정보 새로고침 완료"
+  },
+  "curlExample": "curl -X PUT https://api.banklab.app/api/stock/refresh \n  -H \"Content-Type: application/json\" \n  -H \"Authorization: Bearer {token}\" \n  -d '{\"account\":\"12345678901\",\"connectedId\":\"abcd1234efgh5678\",\"stockCode\":\"0003\"}'"
+}

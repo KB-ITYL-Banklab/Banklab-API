@@ -35,7 +35,11 @@
       "description": "조회 종료일 (YYYY-MM-DD)"
     }
   ],
-  "requestExample": null,
+  "requestExample": {
+    "accountId": 1,
+    "start": "2025-08-11",
+    "end": "2025-08-12"
+  },
   "responses": [
     {
       "status": "200 OK",
@@ -78,9 +82,7 @@
       }
     },
     "success": true,
-    "message": "거래내역 조회 완료",
-    "email": "admin@example.com",
-    "memberId": 1
+    "message": "거래내역 조회 완료"
   },
   "curlExample": "curl -X GET 'https://api.banklab.app/api/account/1/transactions?start=2025-08-01&end=2025-08-31' -H \"Authorization: Bearer {token}\""
 }

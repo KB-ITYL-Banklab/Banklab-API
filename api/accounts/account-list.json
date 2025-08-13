@@ -47,9 +47,7 @@
       "count": 1
     },
     "success": true,
-    "message": "계좌 목록 조회 완료",
-    "email": "admin@example.com",
-    "memberId": 1
+    "message": "계좌 목록 조회 완료"
   },
   "curlExample": "curl -X GET https://api.banklab.app/api/account/list -H \"Authorization: Bearer {token}\""
 }

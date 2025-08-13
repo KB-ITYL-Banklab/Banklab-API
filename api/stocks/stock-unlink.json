@@ -1,0 +1,66 @@
+{
+  "id": "stock-unlink",
+  "title": "증권계좌 연동 해제",
+  "description": "로그인한 사용자의 커넥티드 아이디를 삭제하고 증권계좌 연동을 해제합니다.",
+  "method": "DELETE",
+  "endpoint": "/api/stock/unlink",
+  "headers": [
+    {
+      "name": "Content-Type",
+      "value": "application/json",
+      "required": true,
+      "description": "요청 본문 JSON"
+    },
+    {
+      "name": "Authorization",
+      "value": "Bearer {token}",
+      "required": true,
+      "description": "JWT 액세스 토큰"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "account",
+      "type": "string",
+      "required": true,
+      "description": "계좌번호"
+    },
+    {
+      "name": "connectedId",
+      "type": "string",
+      "required": true,
+      "description": "연동 ID"
+    },
+    {
+      "name": "stockCode",
+      "type": "string",
+      "required": true,
+      "description": "증권사 코드"
+    }
+  ],
+  "requestExample": {
+    "account": "12345678901",
+    "connectedId": "abcd1234efgh5678",
+    "stockCode": "0243"
+  },
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "증권계좌 연동 해제 성공"
+    },
+    {
+      "status": "401 Unauthorized",
+      "description": "인증 실패 (토큰 없음/만료)"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "증권계좌 연동 해제 중 오류 발생"
+    }
+  ],
+  "responseExample": {
+    "data": null,
+    "success": true,
+    "message": "증권계좌 연동 해제가 완료되었습니다."
+  },
+  "curlExample": "curl -X DELETE https://api.banklab.app/api/stock/unlink \n  -H \"Content-Type: application/json\" \n  -H \"Authorization: Bearer {token}\" \n  -d '{\"account\":\"12345678901\",\"connectedId\":\"abcd1234efgh5678\",\"stockCode\":\"0243\"}'"
+}

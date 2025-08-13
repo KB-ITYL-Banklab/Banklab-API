@@ -12,6 +12,22 @@
       ]
     },
     {
+      "name": "증권 관리",
+      "path": "stocks",
+      "apis": [
+        "stock-link",
+        "stock-list",
+        "stock-refresh",
+        "stock-unlink",
+        "stock-detail"
+      ]
+    },
+    {
+      "name": "현금 관리",
+      "path": "cash",
+      "apis": ["cash-get", "cash-set"]
+    },
+    {
       "name": "소비 분석",
       "path": "analysis",
       "apis": [

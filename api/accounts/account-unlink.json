@@ -57,9 +57,7 @@
   "responseExample": {
     "data": null,
     "success": true,
-    "message": "계좌 연동 해제가 완료되었습니다.",
-    "email": "admin@example.com",
-    "memberId": 1
+    "message": "계좌 연동 해제가 완료되었습니다."
   },
   "curlExample": "curl -X DELETE https://api.banklab.app/api/account/unlink -H \"Content-Type: application/json\" -H \"Authorization: Bearer {token}\" -d '{\"bankCode\":\"0004\",\"connectedId\":\"abcd1234efgh5678\"}'"
 }

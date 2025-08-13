@@ -1,7 +1,7 @@
 {
   "id": "account-refresh",
   "title": "계좌 잔액 새로고침",
-  "description": "커넥티드 아이디로 계좌 잔액을 새로고침합니다.",
+  "description": "사용자 계좌의 잔액을 새로고침합니다.",
   "method": "PUT",
   "endpoint": "/api/account/refresh",
   "headers": [
@@ -72,9 +72,7 @@
       ]
     },
     "success": true,
-    "message": "계좌 잔액 새로고침 완료",
-    "email": "admin@example.com",
-    "memberId": 1
+    "message": "계좌 잔액 새로고침 완료"
   },
   "curlExample": "curl -X PUT https://api.banklab.app/api/account/refresh -H \"Content-Type: application/json\" -H \"Authorization: Bearer {token}\" -d '{\"bankCode\":\"0004\",\"connectedId\":\"abcd1234efgh5678\"}'"
 }
