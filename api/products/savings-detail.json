@@ -1,0 +1,95 @@
+{
+  "id": "savings-detail",
+  "title": "적금 상품 상세보기",
+  "description": "공시 제출월, 금융회사 코드, 금융상품 코드를 경로 파라미터로 받아 적금 상품 상세 정보를 조회합니다.",
+  "method": "GET",
+  "endpoint": "/api/savings/{dclsMonth}/{finCoNo}/{finPrdtCd}",
+  "headers": [
+    {
+      "name": "Authorization",
+      "value": "Bearer {token}",
+      "required": true,
+      "description": "JWT 액세스 토큰"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "dclsMonth",
+      "type": "string",
+      "required": true,
+      "description": "공시 제출월 [YYYYMM]"
+    },
+    {
+      "name": "finCoNo",
+      "type": "string",
+      "required": true,
+      "description": "금융회사 코드"
+    },
+    {
+      "name": "finPrdtCd",
+      "type": "string",
+      "required": true,
+      "description": "금융상품 코드"
+    }
+  ],
+  "requestExample": null,
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "적금 상품 상세 정보 조회 성공"
+    },
+    {
+      "status": "401 Unauthorized",
+      "description": "인증 실패 (토큰 없음/만료)"
+    },
+    {
+      "status": "404 Not Found",
+      "description": "해당 적금 상품이 존재하지 않음"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "서버 오류"
+    }
+  ],
+  "responseExample": {
+    "dclsMonth": "202507",
+    "finCoNo": "0010001",
+    "finPrdtCd": "WR0001F",
+    "finPrdtNm": "우리SUPER주거래적금",
+    "korCoNm": "우리은행",
+    "productType": "SAVINGS",
+    "joinWay": "영업점,인터넷,스마트폰,전화(텔레뱅킹)",
+    "mtrtInt": "만기 후\n- 1개월이내 : 만기시점약정이율×50%\n- 1개월초과 6개월이내: 만기시점약정이율×30%\n- 6개월초과 : 만기시점약정이율×20%\n\n※ 만기시점 약정이율 : 일반정기적금 금리",
+    "spclCnd": "1. 거래실적 인정기간 동안 우리은행 입출식 계좌에서 아래 각 항목별 실적이 있는 월 수가 계약기간의 1/2이상인 경우\n가. 급여/연금 이체 : 연 0.7%p\n나. 공과금 자동이체 출금 실적 : 0.3%p\n다. 우리카드사 신용/체크카드 결제금액 10만원 이상 출금 : 연 0.3%p\n2. 우리은행 상품서비스 마케팅 동의 항목 중 전화(휴대폰) 및 SMS항목을 모두 동의한 후 만기해지시점까지 유지 : 연 0.1%p\n3. 이 상품 가입 시 금리우대쿠폰을 적용한 경우",
+    "joinDeny": 1,
+    "joinMember": "실명의 개인",
+    "etcNote": "1. 가입기간 : 1년/2년/3년\n2. 가입금액 : 월 50만원 이내",
+    "dclsStrtDay": "2025-08-04",
+    "options": [
+      {
+        "id": 1,
+        "intr_rate_type": "S",
+        "intr_rate_type_nm": "단리",
+        "rsrv_type": "S",
+        "rsrv_type_nm": "정액적립식",
+        "save_trm": "12",
+        "intr_rate": 2.15,
+        "intr_rate2": 3.55
+      },
+      {
+        "id": 4,
+        "intr_rate_type": "S",
+        "intr_rate_type_nm": "단리",
+        "rsrv_type": "F",
+        "rsrv_type_nm": "자유적립식",
+        "save_trm": "12",
+        "intr_rate": 2.15,
+        "intr_rate2": 3.55
+      }
+    ],
+    "optionCount": 6,
+    "minRate": 2.15,
+    "maxRate": 3.55
+  },
+  "curlExample": "curl -X GET \"https://api.example.com/api/savings/202507/0010001/WR0001F\" \\\n  -H \"Authorization: Bearer {token}\""
+}

@@ -1,0 +1,81 @@
+{
+  "id": "transaction-details-by-category",
+  "title": "카테고리별 상세 거래 내역 조회",
+  "description": "특정 카테고리에 해당하는 상세 거래 내역 목록을 기간별로 조회합니다.",
+  "method": "GET",
+  "endpoint": "/api/analysis/summary/category/{categoryId}",
+  "headers": [
+    {
+      "name": "Authorization",
+      "value": "Bearer {token}",
+      "required": true,
+      "description": "JWT 액세스 토큰"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "categoryId",
+      "type": "long",
+      "required": true,
+      "description": "조회할 카테고리의 ID (Path Variable)"
+    },
+    {
+      "name": "start",
+      "type": "string",
+      "required": false,
+      "description": "조회 시작일 (yyyy-MM-dd)"
+    },
+    {
+      "name": "end",
+      "type": "string",
+      "required": false,
+      "description": "조회 종료일 (yyyy-MM-dd)"
+    }
+  ],
+  "requestExample": null,
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "카테고리별 상세 거래 내역 조회 성공"
+    },
+    {
+      "status": "401 Unauthorized",
+      "description": "인증 실패 (토큰 없음/만료)"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "조회 중 오류 발생"
+    }
+  ],
+  "responseExample": {
+    "data": {
+      "transactions": [
+        {
+          "memberId": 1,
+          "resAccount": "110568497184",
+          "resAccountIn": 0,
+          "resAccountOut": 1600,
+          "resAfterTranBalance": 84063,
+          "resAccountTrDate": "2025-08-13",
+          "resAccountTrTime": "08:43:21",
+          "resAccountDesc3": "대표인증_3"
+        },
+        {
+          "memberId": 1,
+          "resAccount": "110568497184",
+          "resAccountIn": 0,
+          "resAccountOut": 1800,
+          "resAfterTranBalance": 85260,
+          "resAccountTrDate": "2025-08-11",
+          "resAccountTrTime": "18:31:44",
+          "resAccountDesc3": "컴포즈커피(홍"
+        }
+      ]
+    },
+    "success": true,
+    "message": "카테고리별 거래 내역 조회에 성공했습니다.",
+    "email": "admin@example.com",
+    "memberId": 1
+  },
+  "curlExample": "curl -X GET 'https://api.banklab.app/api/analysis/summary/category/1?start=2024-01-01&end=2024-01-31' -H \"Authorization: Bearer {token}\""
+}
