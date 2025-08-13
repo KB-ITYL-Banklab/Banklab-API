@@ -13,7 +13,7 @@
     }
   ],
   "parameters": [],
-  "requestExample": {},
+  "requestExample": null,
   "responses": [
     {
       "status": "200 OK",
