@@ -1,0 +1,65 @@
+{
+  "id": "get-all-investment-products",
+  "title": "투자 유형 기반 전체 상품 조회",
+  "description": "사용자 정보를 통해 해당 투자 성향에 맞는 전체 금융 상품 목록을 반환합니다. 추천 상품 외의 모든 관련 상품이 포함됩니다.",
+  "method": "GET",
+  "endpoint": "/api/typetest/result/all",
+  "headers": [
+    {
+      "name": "Authorization",
+      "value": "Bearer {token}",
+      "required": true,
+      "description": "JWT 액세스 토큰 (사용자 정보 포함)"
+    }
+  ],
+  "parameters": [],
+  "requestExample": {},
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "해당 투자 유형의 전체 금융 상품 조회 성공"
+    },
+    {
+      "status": "401 Unauthorized",
+      "description": "인증 실패 또는 토큰 없음/만료"
+    },
+    {
+      "status": "404 Not Found",
+      "description": "투자 유형 정보 또는 관련 상품 없음"
+    }
+  ],
+  "responseExample": {
+    "userId": 1,
+    "investmentTypeId": 1,
+    "investmentTypeName": "안전형",
+    "investmentTypeDesc": "원금 손실을 극도로 꺼리는 성향입니다. 예적금, 국채 등 안정적인 상품 위주로 운용하는 것이 적합합니다. 장기보다는 단기 운용을 선호합니다.",
+    "message": "전체 상품 조회 완료",
+    "recommendedProducts": [
+      {
+        "productId": 31,
+        "productType": "DEPOSIT",
+        "productName": "NH올원e예금",
+        "companyName": "농협은행주식회사",
+        "riskLevel": "LOW",
+        "riskReason": "NH올원e예금은 정기예금 상품으로 기본적인 예금 상품에 해당하며, 우대조건이나 가입제한, 금리변동 등의 복잡한 조건이 없어 위험도가 낮습니다.",
+        "interestRate": "연 2.35~2.55%",
+        "dclsMonth": "202507",
+        "finCoNo": "0013175",
+        "finPrdtCd": "10-003-1384-0001"
+      },
+      {
+        "productId": 25,
+        "productType": "DEPOSIT",
+        "productName": "IBK굴리기통장(정기예금)",
+        "companyName": "중소기업은행",
+        "riskLevel": "LOW",
+        "riskReason": "IBK굴리기통장은 정기예금 상품으로 기본적인 예금 상품에 해당하며, 우대조건이나 가입제한, 금리변동 등의 복잡한 조건이 없어 위험도가 낮습니다.",
+        "interestRate": "연 2.19~2.31%",
+        "dclsMonth": "202507",
+        "finCoNo": "0010026",
+        "finPrdtCd": "01211310142"
+      }
+    ]
+  },
+  "curlExample": "curl -X GET https://api.banklab.app/api/typetest/result/all \\\n  -H \"Authorization: Bearer {token}\""
+}

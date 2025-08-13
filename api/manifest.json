@@ -20,14 +20,14 @@
       ]
     },
     {
-      "name": "금융계산기",
-      "path": "calculator",
+      "name": "유형검사",
+      "path": "typetest",
       "apis": [
-        "deposit-calculator",
-        "savings-calculator",
-        "loan-calculator",
-        "annuity-calculator",
-        "get-profile"
+        "question-list",
+        "submit-answers",
+        "get-user-investment-type",
+        "get-investment-type-result",
+        "get-all-investment-products"
       ]
     },
     {
@@ -40,6 +40,17 @@
         "annuity-detail",
         "mortgage-loan-detail",
         "renthouse-loan-detail"
+      ]
+    },
+    {
+      "name": "금융계산기",
+      "path": "calculator",
+      "apis": [
+        "deposit-calculator",
+        "savings-calculator",
+        "loan-calculator",
+        "annuity-calculator",
+        "get-profile"
       ]
     }
   ]
