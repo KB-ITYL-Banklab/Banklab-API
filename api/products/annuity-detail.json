@@ -24,7 +24,7 @@
       "description": "금융상품 코드"
     }
   ],
-  "requestExample": {},
+  "requestExample": null,
   "responses": [
     {
       "status": "200 OK",
