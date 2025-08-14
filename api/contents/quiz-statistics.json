@@ -1,0 +1,55 @@
+{
+  "id": "quiz-statistics",
+  "title": "퀴즈 통계 조회",
+  "description": "전체 사용자들의 퀴즈 통계 정보를 조회합니다. 평균 점수, 참여율 등의 데이터를 제공합니다.",
+  "method": "GET",
+  "endpoint": "/api/quiz/statistics",
+  "headers": [
+    {
+      "name": "Accept",
+      "value": "application/json",
+      "required": false,
+      "description": "응답 형식 지정"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "period",
+      "type": "string",
+      "required": false,
+      "description": "통계 기간 (daily, weekly, monthly, 기본값: daily)"
+    }
+  ],
+  "requestExample": null,
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "퀴즈 통계 조회 성공"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "서버 오류 발생"
+    }
+  ],
+  "responseExample": {
+    "success": true,
+    "data": {
+      "totalParticipants": 1250,
+      "averageScore": 78.5,
+      "totalQuizzes": 150,
+      "completionRate": 85.2,
+      "topScorers": [
+        {
+          "username": "user1",
+          "score": 95
+        },
+        {
+          "username": "user2",
+          "score": 92
+        }
+      ]
+    },
+    "message": "퀴즈 통계 조회 성공"
+  },
+  "curlExample": "curl -X GET \"http://localhost:8080/api/quiz/statistics?period=daily\""
+}

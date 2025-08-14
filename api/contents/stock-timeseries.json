@@ -1,0 +1,89 @@
+{
+  "id": "stock-timeseries",
+  "title": "주식 시계열 데이터 조회",
+  "description": "특정 주식의 시계열 데이터를 조회합니다. 일봉, 주봉, 월봉 데이터를 제공하여 차트 구성에 활용할 수 있습니다.",
+  "method": "GET",
+  "endpoint": "/api/stocks/{stockCode}/timeseries",
+  "headers": [
+    {
+      "name": "Accept",
+      "value": "application/json",
+      "required": false,
+      "description": "응답 형식 지정"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "stockCode",
+      "type": "string",
+      "required": true,
+      "description": "조회할 주식 코드 (Path Variable)"
+    },
+    {
+      "name": "period",
+      "type": "string",
+      "required": false,
+      "description": "조회 기간 (D: 일봉, W: 주봉, M: 월봉, 기본값: D)"
+    },
+    {
+      "name": "count",
+      "type": "integer",
+      "required": false,
+      "description": "조회할 데이터 개수 (기본값: 30, 최대: 200)"
+    }
+  ],
+  "requestExample": null,
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "주식 시계열 데이터 조회 성공"
+    },
+    {
+      "status": "400 Bad Request",
+      "description": "잘못된 파라미터 값"
+    },
+    {
+      "status": "404 Not Found",
+      "description": "해당 주식 코드가 존재하지 않음"
+    },
+    {
+      "status": "503 Service Unavailable",
+      "description": "외부 API 서비스 이용 불가"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "서버 오류 발생"
+    }
+  ],
+  "responseExample": {
+    "success": true,
+    "data": {
+      "stockCode": "005930",
+      "stockName": "삼성전자",
+      "period": "D",
+      "timeseries": [
+        {
+          "date": "2025-08-13",
+          "open": "71,800",
+          "high": "73,200",
+          "low": "71,500",
+          "close": "72,500",
+          "volume": "12,345,678",
+          "adjustedClose": "72,500"
+        },
+        {
+          "date": "2025-08-12",
+          "open": "70,500",
+          "high": "72,000",
+          "low": "70,200",
+          "close": "71,300",
+          "volume": "10,876,543",
+          "adjustedClose": "71,300"
+        }
+      ],
+      "count": 2
+    },
+    "message": "주식 시계열 데이터 조회 성공"
+  },
+  "curlExample": "curl -X GET \"http://localhost:8080/api/stocks/005930/timeseries?period=D&count=30\""
+}

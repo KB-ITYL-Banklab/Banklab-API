@@ -1,0 +1,79 @@
+{
+  "id": "news",
+  "title": "뉴스 검색",
+  "description": "키워드를 기반으로 관련 뉴스를 검색합니다. 실시간 뉴스 정보를 제공하여 최신 경제 동향을 파악할 수 있습니다.",
+  "method": "GET",
+  "endpoint": "/api/news/search",
+  "headers": [
+    {
+      "name": "Accept",
+      "value": "application/json",
+      "required": false,
+      "description": "응답 형식 지정"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "query",
+      "type": "string",
+      "required": true,
+      "description": "검색할 뉴스 키워드"
+    },
+    {
+      "name": "display",
+      "type": "integer",
+      "required": false,
+      "description": "검색 결과 개수 (기본값: 10, 최대: 100)"
+    },
+    {
+      "name": "start",
+      "type": "integer",
+      "required": false,
+      "description": "검색 시작 위치 (기본값: 1)"
+    },
+    {
+      "name": "sort",
+      "type": "string",
+      "required": false,
+      "description": "정렬 방법 (sim: 정확도순, date: 날짜순, 기본값: date)"
+    }
+  ],
+  "requestExample": null,
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "뉴스 검색 성공"
+    },
+    {
+      "status": "400 Bad Request",
+      "description": "필수 파라미터 누락 또는 잘못된 파라미터 값"
+    },
+    {
+      "status": "503 Service Unavailable",
+      "description": "외부 API 서비스 이용 불가"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "서버 오류 발생"
+    }
+  ],
+  "responseExample": {
+    "success": true,
+    "data": {
+      "items": [
+        {
+          "title": "국내 <b>경제</b> 성장률 전망 상향 조정",
+          "originallink": "https://example.com/news/1",
+          "link": "https://example.com/redirect/1",
+          "description": "<b>경제</b> 전문가들이 올해 국내 경제 성장률을 기존 전망치보다 상향 조정했다고 발표했습니다.",
+          "pubDate": "Wed, 13 Aug 2025 09:30:00 +0900"
+        }
+      ],
+      "total": 1,
+      "start": 1,
+      "display": 10
+    },
+    "message": "뉴스 검색 성공"
+  },
+  "curlExample": "curl -X GET \"http://localhost:8080/api/news/search?query=경제&display=10&start=1&sort=date\""
+}

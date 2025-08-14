@@ -1,0 +1,61 @@
+{
+  "id": "upbit-crypto",
+  "title": "업비트 암호화폐 정보 조회",
+  "description": "업비트 거래소의 특정 암호화폐 정보를 조회합니다. 실시간 시세, 거래량, 시가총액 등의 정보를 제공합니다.",
+  "method": "GET",
+  "endpoint": "/api/upbit/{market}",
+  "headers": [
+    {
+      "name": "Accept",
+      "value": "application/json",
+      "required": false,
+      "description": "응답 형식 지정"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "market",
+      "type": "string",
+      "required": true,
+      "description": "마켓 코드 (예: KRW-BTC, KRW-ETH) (Path Variable)"
+    }
+  ],
+  "requestExample": null,
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "암호화폐 정보 조회 성공"
+    },
+    {
+      "status": "404 Not Found",
+      "description": "해당 마켓이 존재하지 않음"
+    },
+    {
+      "status": "503 Service Unavailable",
+      "description": "업비트 API 서비스 이용 불가"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "서버 오류 발생"
+    }
+  ],
+  "responseExample": {
+    "success": true,
+    "data": {
+      "market": "KRW-BTC",
+      "korean_name": "비트코인",
+      "english_name": "Bitcoin",
+      "trade_price": 95500000,
+      "change": "RISE",
+      "change_price": 1200000,
+      "change_rate": 0.0127,
+      "acc_trade_volume_24h": 245.78945612,
+      "acc_trade_price_24h": 23456789000,
+      "highest_52_week_price": 103000000,
+      "lowest_52_week_price": 38000000,
+      "timestamp": "2025-08-13T15:30:00Z"
+    },
+    "message": "암호화폐 정보 조회 성공"
+  },
+  "curlExample": "curl -X GET http://localhost:8080/api/upbit/KRW-BTC"
+}
