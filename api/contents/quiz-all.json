@@ -1,0 +1,66 @@
+{
+  "id": "quiz-all",
+  "title": "전체 퀴즈 조회",
+  "description": "등록된 모든 퀴즈를 페이지네이션과 함께 조회합니다. 관리자나 학습 목적으로 전체 퀴즈 데이터를 확인할 수 있습니다.",
+  "method": "GET",
+  "endpoint": "/api/quiz/all",
+  "headers": [
+    {
+      "name": "Authorization",
+      "value": "Bearer {token}",
+      "required": false,
+      "description": "JWT 액세스 토큰 (선택사항)"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "page",
+      "type": "integer",
+      "required": false,
+      "description": "페이지 번호 (기본값: 0)"
+    },
+    {
+      "name": "size",
+      "type": "integer",
+      "required": false,
+      "description": "페이지 크기 (기본값: 10)"
+    }
+  ],
+  "requestExample": null,
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "전체 퀴즈 조회 성공"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "서버 오류 발생"
+    }
+  ],
+  "responseExample": {
+    "success": true,
+    "data": {
+      "content": [
+        {
+          "id": 49,
+          "quizType": "OX퀴즈",
+          "question": "회사가 자본금과 주식의 수를 줄여 자본을 감소시킬 때 자본금의 감소로 발생한 환급 또는 소멸된 주식의 보상액을 주주에게 지급하는 것을 유상감자라고 한다.",
+          "option1": null,
+          "option2": null,
+          "option3": null,
+          "option4": null,
+          "answer": "1",
+          "explanation": "회사가 주식 수를 줄여 자본을 감소시킬 때 회사에서 자본금의 감소로 발생한 환급 또는 소멸된 주식의 대가를 주주에게 지급하는 것을 말한다.",
+          "options": [],
+          "oxquiz": true
+        }
+      ],
+      "totalElements": 100,
+      "totalPages": 10,
+      "size": 10,
+      "number": 0
+    },
+    "message": "전체 퀴즈 조회 성공"
+  },
+  "curlExample": "curl -X GET \"http://localhost:8080/api/quiz/all?page=0&size=10\""
+}

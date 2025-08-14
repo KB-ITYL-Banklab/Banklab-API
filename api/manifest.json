@@ -3,7 +3,8 @@
     {
       "name": "계좌 관리",
       "path": "accounts",
-      "apis": [ "account-link",
+      "apis": [
+        "account-link",
         "account-list",
         "account-refresh",
         "account-transactions",
@@ -72,6 +73,31 @@
         "loan-calculator",
         "annuity-calculator",
         "get-profile"
+      ]
+    },
+    {
+      "name": "경제콘텐츠",
+      "path": "contents",
+      "apis": [
+        "exchange-rate",
+        "finance-quiz",
+        "finance-terms",
+        "finance-terms-detail",
+        "finance-terms-keyword",
+        "finance-terms-list",
+        "finance-terms-random",
+        "gold-price",
+        "news",
+        "quiz-all",
+        "quiz-daily-result",
+        "quiz-statistics",
+        "quiz-user-stats",
+        "stocks",
+        "stocks-save-data",
+        "stock-timeseries",
+        "upbit-crypto",
+        "upbit-search",
+        "upbit-top-coins-by-type"
       ]
     }
   ]

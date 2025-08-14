@@ -1,0 +1,70 @@
+{
+  "id": "quiz-user-stats",
+  "title": "사용자별 퀴즈 통계",
+  "description": "특정 사용자의 퀴즈 참여 기록과 통계를 조회합니다. 개인의 학습 진도와 성과를 확인할 수 있습니다.",
+  "method": "GET",
+  "endpoint": "/api/quiz/user/statistics",
+  "headers": [
+    {
+      "name": "Authorization",
+      "value": "Bearer {token}",
+      "required": true,
+      "description": "JWT 액세스 토큰 (필수)"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "userId",
+      "type": "long",
+      "required": false,
+      "description": "조회할 사용자 ID (미입력시 토큰의 사용자 정보 사용)"
+    },
+    {
+      "name": "period",
+      "type": "string",
+      "required": false,
+      "description": "통계 기간 (daily, weekly, monthly, 기본값: monthly)"
+    }
+  ],
+  "requestExample": null,
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "사용자 퀴즈 통계 조회 성공"
+    },
+    {
+      "status": "401 Unauthorized",
+      "description": "인증 토큰이 없거나 유효하지 않음"
+    },
+    {
+      "status": "404 Not Found",
+      "description": "해당 사용자가 존재하지 않음"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "서버 오류 발생"
+    }
+  ],
+  "responseExample": {
+    "success": true,
+    "data": {
+      "userId": 12345,
+      "username": "testuser",
+      "totalQuizzesAttempted": 45,
+      "totalQuizzesCompleted": 42,
+      "averageScore": 82.3,
+      "highestScore": 100,
+      "lowestScore": 60,
+      "streakDays": 7,
+      "lastQuizDate": "2025-08-13",
+      "monthlyProgress": {
+        "August": {
+          "quizzesCompleted": 15,
+          "averageScore": 85.2
+        }
+      }
+    },
+    "message": "사용자 퀴즈 통계 조회 성공"
+  },
+  "curlExample": "curl -X GET \"http://localhost:8080/api/quiz/user/statistics?period=monthly\" -H \"Authorization: Bearer {token}\""
+}

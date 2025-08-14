@@ -1,0 +1,52 @@
+{
+  "id": "finance-quiz",
+  "title": "경제 퀴즈",
+  "description": "경제 퀴즈를 제공하고 사용자 답변을 검증합니다. 오늘의 퀴즈 3문제를 제공하며, 사용자별 퀴즈 통계를 관리합니다.",
+  "method": "GET",
+  "endpoint": "/api/quiz/today",
+  "headers": [
+    {
+      "name": "Authorization",
+      "value": "Bearer {token}",
+      "required": false,
+      "description": "JWT 액세스 토큰 (선택사항, 로그인 시 퀴즈 완료 여부 확인)"
+    }
+  ],
+  "parameters": [],
+  "requestExample": null,
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "오늘의 퀴즈 조회 성공"
+    },
+    {
+      "status": "403 Forbidden",
+      "description": "이미 오늘 퀴즈를 완료함"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "서버 오류 발생"
+    }
+  ],
+  "responseExample": {
+    "alreadySolved": false,
+    "success": true,
+    "quizzes": [
+      {
+        "id": 49,
+        "quizType": "OX퀴즈",
+        "question": "회사가 자본금과 주식의 수를 줄여 자본을 감소시킬 때 자본금의 감소로 발생한 환급 또는 소멸된 주식의 보상액을 주주에게 지급하는 것을 유상감자라고 한다.",
+        "option1": null,
+        "option2": null,
+        "option3": null,
+        "option4": null,
+        "answer": "1",
+        "explanation": "회사가 주식 수를 줄여 자본을 감소시킬 때 회사에서 자본금의 감소로 발생한 환급 또는 소멸된 주식의 대가를 주주에게 지급하는 것을 말한다.",
+        "options": [],
+        "oxquiz": true
+      }
+    ],
+    "message": "오늘의 퀴즈를 성공적으로 조회했습니다."
+  },
+  "curlExample": "curl -X GET http://localhost:8080/api/quiz/today -H \"Authorization: Bearer {token}\""
+}

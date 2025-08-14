@@ -1,0 +1,48 @@
+{
+  "id": "finance-terms-detail",
+  "title": "경제용어 상세 조회",
+  "description": "특정 경제용어의 상세 정보를 조회합니다. 용어 ID를 통해 해당 용어의 자세한 설명을 확인할 수 있습니다.",
+  "method": "GET",
+  "endpoint": "/api/terms/{id}",
+  "headers": [
+    {
+      "name": "Accept",
+      "value": "application/json",
+      "required": false,
+      "description": "응답 형식 지정"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "id",
+      "type": "long",
+      "required": true,
+      "description": "조회할 경제용어의 고유 ID (Path Variable)"
+    }
+  ],
+  "requestExample": null,
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "경제용어 상세 조회 성공"
+    },
+    {
+      "status": "404 Not Found",
+      "description": "해당 ID의 경제용어가 존재하지 않음"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "서버 오류 발생"
+    }
+  ],
+  "responseExample": {
+    "success": true,
+    "data": {
+      "id": 1,
+      "word": "GDP",
+      "description": "국내총생산(Gross Domestic Product)의 약자로, 한 국가의 영토 안에서 가계, 기업, 정부 등 모든 경제주체가 일정 기간 생산한 재화와 서비스의 부가가치를 시장가격으로 평가하여 합산한 지표입니다."
+    },
+    "message": "경제용어 상세 조회 성공"
+  },
+  "curlExample": "curl -X GET http://localhost:8080/api/terms/1"
+}
