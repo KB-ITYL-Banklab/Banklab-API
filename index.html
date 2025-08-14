@@ -375,8 +375,7 @@
                   )}</code></pre>`
                 : ''
             }\n              </section>\n            </div>`;
-
-          content.appendChild(art);
+            content.appendChild(art);
 
             // Fill tables
             const hRows = (api.headers || []).map((h) => [
@@ -423,6 +422,20 @@
               resWrap.appendChild(div);
             });
 
+            // JSON examples
+            if (api.requestExample !== null) {
+              const req = document.getElementById(`req-${api.id}`);
+              req.innerHTML = highlightJSON(api.requestExample);
+              req.classList.add('font-mono', 'text-sm');
+            }
+            if (api.responseExample) {
+              const res = document.getElementById(`res-${api.id}`);
+              res.innerHTML = highlightJSON(api.responseExample);
+              res.classList.add('font-mono', 'text-sm');
+            }
+          });
+        });
+      }
 
       // --- Scroll Spy ---
       function updateActiveLink() {
