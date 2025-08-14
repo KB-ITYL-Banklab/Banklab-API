@@ -120,9 +120,9 @@
     >
       <!-- Sidebar -->
       <aside class="lg:col-span-3 lg:sticky lg:top-24 lg:self-start">
-        <div class="bg-white rounded-xl shadow-soft border border-line">
-          <div class="p-4 border-b border-line font-medium">목차</div>
-          <nav id="toc" class="p-2 space-y-1"></nav>
+        <div class="bg-white rounded-xl shadow-soft border border-line max-h-[calc(100vh-8rem)] flex flex-col">
+          <div class="p-4 border-b border-line font-medium flex-shrink-0">목차</div>
+          <nav id="toc" class="p-2 space-y-1 overflow-y-auto flex-1 scrollbar-thin scrollbar-thumb-mint-300 scrollbar-track-transparent"></nav>
         </div>
       </aside>
 
