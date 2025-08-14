@@ -1,0 +1,73 @@
+{
+  "id": "stocks-top-stocks",
+  "title": "상위 주식 종목 조회",
+  "description": "거래대금, 거래량, 등락률 기준으로 상위 주식 종목을 조회합니다.",
+  "method": "GET",
+  "endpoint": "/api/stocks/top-stocks",
+  "headers": [
+    {
+      "name": "Accept",
+      "value": "application/json",
+      "required": false,
+      "description": "응답 형식 지정"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "type",
+      "type": "string",
+      "required": true,
+      "description": "조회 기준 ('amount': 거래대금, 'volume': 거래량, 'change': 등락률)"
+    }
+  ],
+  "requestExample": null,
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "상위 종목 조회 성공"
+    },
+    {
+      "status": "400 Bad Request",
+      "description": "잘못된 타입 파라미터"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "서버 오류 발생"
+    }
+  ],
+  "responseExample": {
+    "data": [
+      {
+        "srtnCd": "034020",
+        "stockName": "두산에너빌리티",
+        "baseDate": "2025-01-15",
+        "mkp": 66900,
+        "fluctuationRate": 4.52,
+        "closingPrice": 69400,
+        "id": 20962,
+        "tradingValue": 838607430200,
+        "tradingVolume": 12119383,
+        "stockCode": "034020",
+        "versus": 3000
+      },
+      {
+        "srtnCd": "005930",
+        "stockName": "삼성전자",
+        "baseDate": "2025-01-15",
+        "mkp": 72000,
+        "fluctuationRate": -1.11,
+        "closingPrice": 71000,
+        "id": 21169,
+        "tradingValue": 808470078650,
+        "tradingVolume": 11354253,
+        "stockCode": "005930",
+        "versus": -800
+      }
+    ],
+    "success": true,
+    "count": 5,
+    "message": "상위 종목 조회 성공",
+    "type": "amount"
+  },
+  "curlExample": "curl -X GET \"http://localhost:8080/api/stocks/top-stocks?type=volume\""
+}

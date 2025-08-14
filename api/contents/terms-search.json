@@ -48,26 +48,25 @@
     }
   ],
   "responseExample": {
-    "success": true,
-    "data": {
-      "content": [
-        {
-          "id": 1,
-          "word": "GDP",
-          "description": "국내총생산(Gross Domestic Product)의 약자로, 한 국가의 영토 안에서 가계, 기업, 정부 등 모든 경제주체가 일정 기간 생산한 재화와 서비스의 부가가치를 시장가격으로 평가하여 합산한 지표입니다."
-        },
-        {
-          "id": 2,
-          "word": "CPI",
-          "description": "소비자물가지수(Consumer Price Index)의 약자로, 소비자가 구입하는 상품과 서비스의 가격 변동을 측정하는 지표입니다."
-        }
-      ],
-      "totalElements": 150,
-      "totalPages": 15,
+    "searchTerm": "빅맥지수",
+    "pagination": {
+      "pageSize": 10,
+      "totalPages": 1,
+      "hasPrevious": false,
       "currentPage": 1,
-      "size": 10
+      "hasNext": false,
+      "totalCount": 1
     },
-    "message": "경제용어 검색 성공"
+    "data": [
+      {
+        "id": 658,
+        "keyword": "경제",
+        "title": "빅맥지수",
+        "definition": "세계 각국에서 판매되고 있는 맥도날드 빅맥 햄버거의 가격을 미국에서의 판매가격과 같게 만들어주는 환율. 영국의 경제주간지 「이코노미스트(The Economist)」가 1986년부터 매년 조사, 발표하고 있다. 만일 실제환율이 빅맥지수보다 낮으면 해당 국가의 통화가 고평가되어 있음을, 반대로 높으면 저평가되어 있는 것으로 해석할 수 있다."
+      }
+    ],
+    "success": true,
+    "message": "검색이 완료되었습니다."
   },
-  "curlExample": "curl -X GET \"http://localhost:8080/api/terms/search?keyword=GDP&page=1&size=10\""
+  "curlExample": "curl -X GET \"http://localhost:8080/api/terms/search?term=빅맥지수\""
 }

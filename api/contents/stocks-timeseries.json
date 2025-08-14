@@ -1,0 +1,79 @@
+{
+  "id": "stocks-timeseries",
+  "title": "주식 시계열 데이터 조회",
+  "description": "특정 주식의 시계열 차트 데이터를 조회합니다. 부분 일치 검색을 지원합니다.",
+  "method": "GET",
+  "endpoint": "/api/stocks/timeseries",
+  "headers": [
+    {
+      "name": "Accept",
+      "value": "application/json",
+      "required": false,
+      "description": "응답 형식 지정"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "name",
+      "type": "string",
+      "required": true,
+      "description": "조회할 주식명 (부분 일치 지원)"
+    },
+    {
+      "name": "limit",
+      "type": "integer",
+      "required": false,
+      "description": "조회할 데이터 개수 (기본값: 30)"
+    }
+  ],
+  "requestExample": null,
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "시계열 데이터 조회 성공"
+    },
+    {
+      "status": "400 Bad Request",
+      "description": "잘못된 요청 파라미터"
+    },
+    {
+      "status": "404 Not Found",
+      "description": "해당 주식을 찾을 수 없음"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "서버 오류 발생"
+    }
+  ],
+  "responseExample": {
+    "success": true,
+    "message": "시계열 데이터 조회 성공",
+    "data": {
+      "stockInfo": {
+        "stockCode": "005930",
+        "stockName": "삼성전자"
+      },
+      "timeSeries": [
+        {
+          "date": "2025-01-15",
+          "openPrice": 70000,
+          "highPrice": 72000,
+          "lowPrice": 69500,
+          "closePrice": 71500,
+          "volume": 15750000,
+          "tradingValue": 1125000000000
+        },
+        {
+          "date": "2025-01-14",
+          "openPrice": 69000,
+          "highPrice": 70500,
+          "lowPrice": 68800,
+          "closePrice": 70300,
+          "volume": 12350000,
+          "tradingValue": 868050000000
+        }
+      ]
+    }
+  },
+  "curlExample": "curl -X GET \"http://localhost:8080/api/stocks/timeseries/exact?name=현대차\""
+}
