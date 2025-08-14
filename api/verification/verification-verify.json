@@ -1,0 +1,25 @@
+{
+  "id": "verification-verify",
+  "title": "인증번호 검증",
+  "description": "사용자가 입력한 인증번호가 서버에서 발급한 번호와 일치하는지 확인합니다.",
+  "method": "POST",
+  "endpoint": "/api/verification/verify",
+  "headers": [],
+  "parameters": [],
+  "requestExample": {
+    "target": "user@example.com",
+    "isEmail": true,
+    "code": "123456"
+  },
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "인증 성공 또는 실패 여부를 반환"
+    }
+  ],
+  "responseExample": {
+    "success": true,
+    "message": "인증 성공"
+  },
+  "curlExample": "curl -X POST 'https://api.banklab.app/api/verification/verify' -H 'Content-Type: application/json' -d '{\"target\":\"user@example.com\",\"isEmail\":true,\"code\":\"123456\"}'"
+}

@@ -1,0 +1,25 @@
+{
+  "id": "auth-logout",
+  "title": "로그아웃",
+  "description": "Access Token을 블랙리스트에 등록하고 Refresh Token을 삭제하여 로그아웃 처리합니다. 쿠키에 저장된 토큰도 모두 삭제합니다.",
+  "method": "POST",
+  "endpoint": "/api/auth/logout",
+  "headers": [
+    {
+      "name": "Cookie",
+      "value": "자동 전송",
+      "required": true,
+      "description": "로그인 시 발급된 Access Token과 Refresh Token이 HttpOnly 쿠키에 저장되며 브라우저 요청 시 자동 포함됨"
+    }
+  ],
+  "parameters": [],
+  "requestExample": null,
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "로그아웃 성공"
+    }
+  ],
+  "responseExample": null,
+  "curlExample": "curl -X POST 'https://api.banklab.app/api/auth/logout' --cookie \"accessToken=...; refreshToken=...\""
+}

@@ -1,0 +1,43 @@
+{
+  "id": "character-get",
+  "title": "회원 캐릭터 조회",
+  "description": "로그인된 사용자의 캐릭터 정보를 조회합니다. 캐릭터가 없는 경우, 생성 API를 먼저 호출해야 합니다.",
+  "method": "GET",
+  "endpoint": "/api/character",
+  "headers": [
+    {
+      "name": "Cookie",
+      "value": "자동 전송",
+      "required": true,
+      "description": "로그인 시 발급된 Access Token이 HttpOnly 쿠키에 저장되며 브라우저 요청 시 자동 포함됨"
+    }
+  ],
+  "parameters": [],
+  "requestExample": null,
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "캐릭터 정보 조회 성공"
+    },
+    {
+      "status": "401 Unauthorized",
+      "description": "인증 실패 (토큰 없음/만료)"
+    },
+    {
+      "status": "404 Not Found",
+      "description": "사용자에게 캐릭터가 존재하지 않음"
+    }
+  ],
+  "responseExample": {
+    "data": {
+      "level": 1,
+      "exp": 20,
+      "name": "현금보관러",
+      "description": "",
+      "requiredExp": 100,
+      "nextExp": 250,
+      "imageUrl": "Lv1.png"
+    }
+  },
+  "curlExample": " curl -X GET 'https://api.banklab.app/api/character' --cookie \"accessToken={accessToken}\""
+}
