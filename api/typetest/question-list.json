@@ -1,0 +1,138 @@
+{
+  "id": "question-list",
+  "title": "설문 질문 리스트",
+  "description": "사용자의 투자 성향 및 제약 조건 파악을 위한 설문 질문 리스트를 제공합니다.",
+  "method": "GET",
+  "endpoint": "/api/typetest/questions",
+  "headers": [
+    {
+      "name": "Authorization",
+      "value": "Bearer {token}",
+      "required": true,
+      "description": "JWT 액세스 토큰"
+    }
+  ],
+  "parameters": [],
+  "requestExample": null,
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "질문 리스트 반환 성공"
+    },
+    {
+      "status": "401 Unauthorized",
+      "description": "인증 실패 (토큰 없음 또는 만료)"
+    }
+  ],
+  "responseExample": {
+    "questions": [
+      {
+        "id": 1,
+        "questionText": "복권 당첨으로 1,000만원이 생겼습니다! 당신의 선택은?",
+        "choiceAText": "은행에 안전하게 넣고 이자 챙긴다",
+        "choiceBText": "주식·펀드 같은 성장 가능성 있는 상품에 도전",
+        "questionType": "PERSONALITY",
+        "isBlocking": false
+      },
+      {
+        "id": 2,
+        "questionText": "증시 폭락 뉴스 속보를 봤습니다.",
+        "choiceAText": "위험하니 당분간 투자를 미룬다",
+        "choiceBText": "오히려 기회라고 생각하고 추가 매수",
+        "questionType": "PERSONALITY",
+        "isBlocking": false
+      },
+      {
+        "id": 3,
+        "questionText": "보유한 투자 상품이 -10% 손실 중입니다.",
+        "choiceAText": "손실 확정하더라도 바로 정리하고 안전하게 이동",
+        "choiceBText": "버틴다, 오히려 추가 매수도 검토",
+        "questionType": "PERSONALITY",
+        "isBlocking": false
+      },
+      {
+        "id": 4,
+        "questionText": "당신의 과거 투자 경험은 어떤가요?",
+        "choiceAText": "예금, 적금 위주로 안전하게",
+        "choiceBText": "주식, 펀드 등 다양한 상품 경험",
+        "questionType": "PERSONALITY",
+        "isBlocking": false
+      },
+      {
+        "id": 5,
+        "questionText": "원금보장 없는 상품에 대한 생각은?",
+        "choiceAText": "무조건 원금 보장 필수",
+        "choiceBText": "높은 수익 가능성이 있으면 감수 가능",
+        "questionType": "CONSTRAINT",
+        "isBlocking": true
+      },
+      {
+        "id": 6,
+        "questionText": "친구가 변동성 큰 고위험 상품을 추천합니다.",
+        "choiceAText": "절대 안 해, 위험한 건 싫어",
+        "choiceBText": "조건 괜찮으면 투자 고려할 수 있음",
+        "questionType": "CONSTRAINT",
+        "isBlocking": true
+      },
+      {
+        "id": 7,
+        "questionText": "3년간 중도해지 불가 조건이 붙은 상품이 있습니다.",
+        "choiceAText": "언제든 꺼낼 수 있어야 한다, 가입 안 함",
+        "choiceBText": "수익률이 높으면 기다릴 수 있다",
+        "questionType": "CONSTRAINT",
+        "isBlocking": true
+      },
+      {
+        "id": 8,
+        "questionText": "투자 가능한 여유 자금 규모는?",
+        "choiceAText": "500만원 미만",
+        "choiceBText": "500만원 이상",
+        "questionType": "DETAIL",
+        "isBlocking": false
+      },
+      {
+        "id": 9,
+        "questionText": "목표 연간 수익률은?",
+        "choiceAText": "3% 이하 (안정형)",
+        "choiceBText": "3% 초과 (수익형)",
+        "questionType": "DETAIL",
+        "isBlocking": false
+      },
+      {
+        "id": 10,
+        "questionText": "투자 기간 계획은?",
+        "choiceAText": "1년 이하 (단기)",
+        "choiceBText": "1년 초과 (장기)",
+        "questionType": "DETAIL",
+        "isBlocking": false
+      },
+      {
+        "id": 11,
+        "questionText": "감당할 수 있는 최대 손실 폭은?",
+        "choiceAText": "5% 이하",
+        "choiceBText": "5% 초과",
+        "questionType": "DETAIL",
+        "isBlocking": false
+      },
+      {
+        "id": 12,
+        "questionText": "투자 스타일, 어떤 게 더 끌리나요?",
+        "choiceAText": "한번에 목돈 투자 (일시납)",
+        "choiceBText": "매월 일정금액 투자 (적립식)",
+        "questionType": "PREFERENCE",
+        "isBlocking": false
+      },
+      {
+        "id": 13,
+        "questionText": "투자상품 선택 시 우선순위는?",
+        "choiceAText": "안전성·원금보장",
+        "choiceBText": "높은 수익률·성장성",
+        "questionType": "PREFERENCE",
+        "isBlocking": false
+      }
+    ],
+    "success": true,
+    "message": "설문 질문 리스트를 성공적으로 불러왔습니다."
+  },
+  "curlExample": "curl -X GET https://api.banklab.app/api/typetest/questions \\\n  -H \"Authorization: Bearer {token}\""
+}

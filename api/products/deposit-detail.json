@@ -1,0 +1,91 @@
+{
+  "id": "deposit-detail",
+  "title": "예금 상품 상세 조회",
+  "description": "공시 제출월, 금융회사 코드, 금융상품 코드를 경로 파라미터로 받아 예금 상품 상세 정보를 조회합니다.",
+  "method": "GET",
+  "endpoint": "/api/deposit/{dclsMonth}/{finCoNo}/{finPrdtCd}",
+  "headers": [
+    {
+      "name": "Authorization",
+      "value": "Bearer {token}",
+      "required": true,
+      "description": "JWT 액세스 토큰"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "dclsMonth",
+      "type": "string",
+      "required": true,
+      "description": "공시 제출월 [YYYYMM]"
+    },
+    {
+      "name": "finCoNo",
+      "type": "string",
+      "required": true,
+      "description": "금융회사 코드"
+    },
+    {
+      "name": "finPrdtCd",
+      "type": "string",
+      "required": true,
+      "description": "금융상품 코드"
+    }
+  ],
+  "requestExample": null,
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "예금 상품 상세 정보 조회 성공"
+    },
+    {
+      "status": "401 Unauthorized",
+      "description": "인증 실패 (토큰 없음/만료)"
+    },
+    {
+      "status": "404 Not Found",
+      "description": "해당 예금 상품이 존재하지 않음"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "서버 오류"
+    }
+  ],
+  "responseExample": {
+    "dclsMonth": "202507",
+    "finCoNo": "0010001",
+    "finPrdtCd": "WR0001B",
+    "finPrdtNm": "WON플러스예금",
+    "korCoNm": "우리은행",
+    "productType": "DEPOSIT",
+    "joinWay": "인터넷,스마트폰,전화(텔레뱅킹)",
+    "mtrtInt": "만기 후\n- 1개월이내 : 만기시점약정이율×50%\n- 1개월초과 6개월이내: 만기시점약정이율×30%\n- 6개월초과 : 만기시점약정이율×20%\n\n※ 만기시점 약정이율 : 일반정기예금 금리",
+    "spclCnd": "해당사항 없음",
+    "joinDeny": 1,
+    "joinMember": "실명의 개인",
+    "etcNote": "- 가입기간: 1~36개월\n- 최소가입금액: 1만원 이상\n- 만기일을 일,월 단위로 자유롭게 선택 가능\n- 만기해지 시 신규일 당시 영업점과 인터넷 홈페이지에 고시된 계약기간별 금리 적용",
+    "dclsStrtDay": "2025-07-21",
+    "options": [
+      {
+        "id": 1,
+        "intr_rate_type": "S",
+        "intr_rate_type_nm": "단리",
+        "save_trm": "1",
+        "intr_rate": 2.5,
+        "intr_rate2": 2.5
+      },
+      {
+        "id": 2,
+        "intr_rate_type": "S",
+        "intr_rate_type_nm": "단리",
+        "save_trm": "3",
+        "intr_rate": 2.5,
+        "intr_rate2": 2.5
+      }
+    ],
+    "optionCount": 6,
+    "minRate": 2.45,
+    "maxRate": 2.5
+  },
+  "curlExample": "curl -X GET \"https://api.example.com/api/deposit/202507/0010001/WR0001B\" \\\n  -H \"Authorization: Bearer {token}\""
+}

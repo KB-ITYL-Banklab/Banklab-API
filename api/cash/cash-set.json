@@ -1,0 +1,62 @@
+{
+  "id": "cash-set",
+  "title": "현금 금액 설정",
+  "description": "보유 현금 금액을 설정하거나 수정합니다.",
+  "method": "PUT",
+  "endpoint": "/api/cash",
+  "headers": [
+    {
+      "name": "Content-Type",
+      "value": "application/json",
+      "required": true,
+      "description": "요청 본문 JSON"
+    },
+    {
+      "name": "Authorization",
+      "value": "Bearer {token}",
+      "required": true,
+      "description": "JWT 액세스 토큰"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "amount",
+      "type": "number",
+      "required": true,
+      "description": "설정할 현금 금액 (음수 불가)"
+    }
+  ],
+  "requestExample": {
+    "amount": 1500000
+  },
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "현금 금액 설정 성공"
+    },
+    {
+      "status": "400 Bad Request",
+      "description": "잘못된 요청 (금액 누락 또는 음수)"
+    },
+    {
+      "status": "401 Unauthorized",
+      "description": "인증 실패 (토큰 없음/만료)"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "현금 설정 중 오류 발생"
+    }
+  ],
+  "responseExample": {
+    "data": {
+      "cash": {
+        "id": 1,
+        "memberId": 1,
+        "cashAmount": 1500000
+      }
+    },
+    "success": true,
+    "message": "현금 금액이 설정되었습니다."
+  },
+  "curlExample": "curl -X PUT https://api.banklab.app/api/cash \n  -H \"Content-Type: application/json\" \n  -H \"Authorization: Bearer {token}\" \n  -d '{\"amount\":1500000}'"
+}

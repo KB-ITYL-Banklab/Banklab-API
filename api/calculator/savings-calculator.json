@@ -1,0 +1,134 @@
+{
+  "id": "savings-calculator",
+  "title": "적금 계산기",
+  "description": "월 납입액, 금리, 기간, 복리 여부 등을 입력하여 만기금액 또는 목표금액 달성을 위한 적금 계획을 계산합니다.",
+  "method": "POST",
+  "endpoint": "/api/calculator/savings",
+  "headers": [
+    {
+      "name": "Content-Type",
+      "value": "application/json",
+      "required": true,
+      "description": "요청 본문은 JSON 형식이어야 합니다."
+    }
+  ],
+  "parameters": [
+    {
+      "name": "monthlyPayment",
+      "type": "number",
+      "required": false,
+      "description": "월 납입액 (만기금액 계산 시 필수)"
+    },
+    {
+      "name": "rate",
+      "type": "number",
+      "required": true,
+      "description": "연 이율 (%)"
+    },
+    {
+      "name": "termMonths",
+      "type": "integer",
+      "required": true,
+      "description": "저축 기간 (개월)"
+    },
+    {
+      "name": "targetAmount",
+      "type": "number",
+      "required": false,
+      "description": "목표금액 (월 납입액 대신 입력 시, 필요한 월 납입액을 계산)"
+    },
+    {
+      "name": "isCompound",
+      "type": "boolean",
+      "required": true,
+      "description": "복리 여부 (true: 복리, false: 단리)"
+    }
+  ],
+  "requestExample": {
+    "monthlyPayment": 500000,
+    "rate": 3.2,
+    "termMonths": 12,
+    "targetAmount": null,
+    "isCompound": false
+  },
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "계산 성공"
+    },
+    {
+      "status": "400 Bad Request",
+      "description": "입력값 오류 (예: 월 납입액과 목표금액 모두 없음)"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "서버 내부 오류"
+    }
+  ],
+  "responseExample": {
+    "inputConditions": {
+      "monthlyPayment": 500000,
+      "rate": 3.2,
+      "termMonths": 12,
+      "targetAmount": null,
+      "isCompound": false,
+      "rateType": "단리",
+      "calculationType": "MATURITY_AMOUNT"
+    },
+    "results": {
+      "totalInterest": 104000,
+      "generalTax": {
+        "categoryName": "일반과세",
+        "maturityAmount": 6087984,
+        "afterTaxInterest": 87984,
+        "taxAmount": 16016,
+        "taxRate": 15.4
+      },
+      "preferentialTax": {
+        "categoryName": "세금우대",
+        "maturityAmount": 6094120,
+        "afterTaxInterest": 94120,
+        "taxAmount": 9880,
+        "taxRate": 9.5
+      },
+      "exemptTax": {
+        "categoryName": "비과세",
+        "maturityAmount": 6104000,
+        "afterTaxInterest": 104000,
+        "taxAmount": 0,
+        "taxRate": 0.0
+      }
+    },
+    "savingsSpecific": {
+      "totalPayment": 6000000,
+      "requiredMonthlyPaymentGeneral": null,
+      "requiredMonthlyPaymentPreferential": null,
+      "requiredMonthlyPaymentExempt": null
+    }
+  },
+  "additionalRequestExample": {
+    "rate": 3.0,
+    "termMonths": 26,
+    "targetAmount": 10000000,
+    "isCompound": false
+  },
+  "additionalResponseExample": {
+    "inputConditions": {
+      "monthlyPayment": null,
+      "rate": 3.0,
+      "termMonths": 26,
+      "targetAmount": 10000000,
+      "isCompound": false,
+      "rateType": "단리",
+      "calculationType": "TARGET_AMOUNT"
+    },
+    "results": null,
+    "savingsSpecific": {
+      "totalPayment": null,
+      "requiredMonthlyPaymentGeneral": 373939,
+      "requiredMonthlyPaymentPreferential": 373216,
+      "requiredMonthlyPaymentExempt": 372058
+    }
+  },
+  "curlExample": "curl -X POST https://api.banklab.app/api/calculator/savings \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"monthlyPayment\":500000,\"rate\":3.2,\"termMonths\":12,\"isCompound\":false}'"
+}
