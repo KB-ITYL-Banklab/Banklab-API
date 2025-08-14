@@ -1,0 +1,104 @@
+{
+  "categories": [
+    {
+      "name": "계좌 관리",
+      "path": "accounts",
+      "apis": [
+        "account-link",
+        "account-list",
+        "account-refresh",
+        "account-transactions",
+        "account-unlink"
+      ]
+    },
+    {
+      "name": "증권 관리",
+      "path": "stocks",
+      "apis": [
+        "stock-link",
+        "stock-list",
+        "stock-refresh",
+        "stock-unlink",
+        "stock-detail"
+      ]
+    },
+    {
+      "name": "현금 관리",
+      "path": "cash",
+      "apis": ["cash-get", "cash-set"]
+    },
+    {
+      "name": "소비 분석",
+      "path": "analysis",
+      "apis": [
+        "transaction-summary",
+        "transactionBycategory",
+        "peer-comparison"
+      ]
+    },
+    {
+      "name": "거래 내역 관리",
+      "path": "transaction",
+      "apis": ["get-transaction", "status-transaction"]
+    },
+    {
+      "name": "유형검사",
+      "path": "typetest",
+      "apis": [
+        "question-list",
+        "submit-answers",
+        "get-user-investment-type",
+        "get-investment-type-result",
+        "get-all-investment-products"
+      ]
+    },
+    {
+      "name": "상품",
+      "path": "products",
+      "apis": [
+        "deposit-detail",
+        "savings-detail",
+        "creditloan-detail",
+        "annuity-detail",
+        "mortgage-loan-detail",
+        "renthouse-loan-detail"
+      ]
+    },
+    {
+      "name": "금융계산기",
+      "path": "calculator",
+      "apis": [
+        "deposit-calculator",
+        "savings-calculator",
+        "loan-calculator",
+        "annuity-calculator",
+        "get-profile"
+      ]
+    },
+    {
+      "name": "경제콘텐츠",
+      "path": "contents",
+      "apis": [
+        "exchange-rate",
+        "finance-quiz",
+        "finance-terms",
+        "finance-terms-detail",
+        "finance-terms-keyword",
+        "finance-terms-list",
+        "finance-terms-random",
+        "gold-price",
+        "news",
+        "quiz-all",
+        "quiz-daily-result",
+        "quiz-statistics",
+        "quiz-user-stats",
+        "stocks",
+        "stocks-save-data",
+        "stock-timeseries",
+        "upbit-crypto",
+        "upbit-search",
+        "upbit-top-coins-by-type"
+      ]
+    }
+  ]
+}

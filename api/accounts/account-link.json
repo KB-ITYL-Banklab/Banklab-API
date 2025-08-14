@@ -1,0 +1,83 @@
+{
+  "id": "account-link",
+  "title": "은행 계좌 연동",
+  "description": "은행 로그인 정보로 계좌를 연동하고 DB에 저장합니다. CODEF API를 통해 실제 금융기관과 연결됩니다.",
+  "method": "POST",
+  "endpoint": "/api/account/link",
+  "headers": [
+    {
+      "name": "Content-Type",
+      "value": "application/json",
+      "required": true,
+      "description": "요청 본문 JSON"
+    },
+    {
+      "name": "Authorization",
+      "value": "Bearer {token}",
+      "required": true,
+      "description": "JWT 액세스 토큰"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "bankId",
+      "type": "string",
+      "required": true,
+      "description": "은행 로그인 아이디"
+    },
+    {
+      "name": "bankPassword",
+      "type": "string",
+      "required": true,
+      "description": "은행 로그인 비밀번호"
+    },
+    {
+      "name": "bankCode",
+      "type": "string",
+      "required": true,
+      "description": "은행 코드 (예시: 0004 - 국민은행)"
+    }
+  ],
+  "requestExample": {
+    "bankId": "myBankId123",
+    "bankPassword": "myBankPassword!",
+    "bankCode": "0004"
+  },
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "계좌 연동 성공"
+    },
+    {
+      "status": "401 Unauthorized",
+      "description": "인증 실패 (토큰 없음/만료)"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "계좌 연동 중 오류 발생"
+    }
+  ],
+  "responseExample": {
+    "data": {
+      "accounts": [
+        {
+          "id": 1,
+          "connectedId": "abcd1234efgh5678",
+          "organization": "0004",
+          "resAccount": "12345678901234",
+          "resAccountName": "KB멋진통장",
+          "resAccountDisplay": "123456-78-901234",
+          "resAccountBalance": "548261",
+          "resAccountDeposit": "11",
+          "resAccountEndDate": "",
+          "resAccountStartDate": "20250801"
+        }
+      ],
+      "savedCount": 1,
+      "connectedId": "abcd1234efgh5678"
+    },
+    "success": true,
+    "message": "계좌 연동이 완료되었습니다."
+  },
+  "curlExample": "curl -X POST https://api.banklab.app/api/account/link \n  -H \"Content-Type: application/json\" \n  -H \"Authorization: Bearer {token}\" \n  -d '{\"bankId\":\"myBankId123\",\"bankPassword\":\"myBankPassword!\",\"bankCode\":\"0020\"}'"
+}

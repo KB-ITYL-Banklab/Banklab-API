@@ -1,0 +1,90 @@
+{
+  "id": "quiz-daily-result",
+  "title": "일일 퀴즈 결과 제출",
+  "description": "사용자의 일일 퀴즈 답변을 제출하고 결과를 확인합니다. 정답 여부와 점수를 반환합니다.",
+  "method": "POST",
+  "endpoint": "/api/quiz/daily/result",
+  "headers": [
+    {
+      "name": "Authorization",
+      "value": "Bearer {token}",
+      "required": true,
+      "description": "JWT 액세스 토큰 (필수)"
+    },
+    {
+      "name": "Content-Type",
+      "value": "application/json",
+      "required": true,
+      "description": "요청 본문 형식"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "answers",
+      "type": "array",
+      "required": true,
+      "description": "퀴즈 답변 배열 [퀴즈ID와 선택한 답변을 포함]"
+    }
+  ],
+  "requestExample": {
+    "answers": [
+      {
+        "quizId": 49,
+        "selectedAnswer": "1"
+      },
+      {
+        "quizId": 50,
+        "selectedAnswer": "2"
+      },
+      {
+        "quizId": 51,
+        "selectedAnswer": "3"
+      }
+    ]
+  },
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "퀴즈 결과 제출 성공"
+    },
+    {
+      "status": "400 Bad Request",
+      "description": "잘못된 요청 형식 또는 이미 제출된 퀴즈"
+    },
+    {
+      "status": "401 Unauthorized",
+      "description": "인증 토큰이 없거나 유효하지 않음"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "서버 오류 발생"
+    }
+  ],
+  "responseExample": {
+    "success": true,
+    "data": {
+      "totalQuestions": 3,
+      "correctAnswers": 2,
+      "score": 67,
+      "results": [
+        {
+          "quizId": 49,
+          "correct": true,
+          "explanation": "회사가 주식 수를 줄여 자본을 감소시킬 때 회사에서 자본금의 감소로 발생한 환급 또는 소멸된 주식의 대가를 주주에게 지급하는 것을 말한다."
+        },
+        {
+          "quizId": 50,
+          "correct": true,
+          "explanation": "해당 문제의 정답 설명입니다."
+        },
+        {
+          "quizId": 51,
+          "correct": false,
+          "explanation": "해당 문제의 정답 설명입니다."
+        }
+      ]
+    },
+    "message": "퀴즈 결과 제출 성공"
+  },
+  "curlExample": "curl -X POST http://localhost:8080/api/quiz/daily/result -H \"Authorization: Bearer {token}\" -H \"Content-Type: application/json\" -d '{\"answers\":[{\"quizId\":49,\"selectedAnswer\":\"1\"},{\"quizId\":50,\"selectedAnswer\":\"2\"},{\"quizId\":51,\"selectedAnswer\":\"3\"}]}'"
+}

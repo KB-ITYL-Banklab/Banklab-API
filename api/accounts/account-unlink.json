@@ -1,0 +1,63 @@
+{
+  "id": "account-unlink",
+  "title": "계좌 연동 해제",
+  "description": "로그인한 사용자의 커넥티드 아이디를 삭제하고 계좌 연동을 해제합니다.",
+  "method": "DELETE",
+  "endpoint": "/api/account/unlink",
+  "headers": [
+    {
+      "name": "Content-Type",
+      "value": "application/json",
+      "required": true,
+      "description": "요청 본문 JSON"
+    },
+    {
+      "name": "Authorization",
+      "value": "Bearer {token}",
+      "required": true,
+      "description": "JWT 액세스 토큰"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "bankCode",
+      "type": "string",
+      "required": true,
+      "description": "은행 코드"
+    },
+    {
+      "name": "connectedId",
+      "type": "string",
+      "required": true,
+      "description": "삭제할 계좌의 커넥티드 아이디"
+    }
+  ],
+  "requestExample": {
+    "bankCode": "0004",
+    "connectedId": "abcd1234efgh5678"
+  },
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "계좌 연동 해제 완료"
+    },
+    {
+      "status": "401 Unauthorized",
+      "description": "인증 실패 (토큰 없음/만료)"
+    },
+    {
+      "status": "403 Forbidden",
+      "description": "해당 계좌에 대한 권한이 없습니다."
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "계좌 연동 해제 중 오류 발생"
+    }
+  ],
+  "responseExample": {
+    "data": null,
+    "success": true,
+    "message": "계좌 연동 해제가 완료되었습니다."
+  },
+  "curlExample": "curl -X DELETE https://api.banklab.app/api/account/unlink -H \"Content-Type: application/json\" -H \"Authorization: Bearer {token}\" -d '{\"bankCode\":\"0004\",\"connectedId\":\"abcd1234efgh5678\"}'"
+}

@@ -1,0 +1,83 @@
+{
+  "id": "annuity-calculator",
+  "title": "연금 계산기",
+  "description": "월 적립금, 초기 일시금, 적립 기간, 이율, 연금 수령 기간을 입력하여 월별 수령액과 총 수령액을 계산합니다.",
+  "method": "POST",
+  "endpoint": "/api/calculator/annuity",
+  "headers": [
+    {
+      "name": "Content-Type",
+      "value": "application/json",
+      "required": true,
+      "description": "요청 본문 JSON"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "monthlySaving",
+      "type": "integer",
+      "required": true,
+      "description": "월 적립금 (원 단위)"
+    },
+    {
+      "name": "lumpSum",
+      "type": "integer",
+      "required": true,
+      "description": "초기 일시금 (원 단위)"
+    },
+    {
+      "name": "savingYears",
+      "type": "integer",
+      "required": true,
+      "description": "적립 기간 (년 단위)"
+    },
+    {
+      "name": "rate",
+      "type": "float",
+      "required": true,
+      "description": "연 이자율 (%)"
+    },
+    {
+      "name": "paymentYears",
+      "type": "integer",
+      "required": true,
+      "description": "연금 수령 기간 (년 단위)"
+    }
+  ],
+  "requestExample": {
+    "monthlySaving": 100000,
+    "lumpSum": 1000000,
+    "savingYears": 2,
+    "rate": 2.0,
+    "paymentYears": 10
+  },
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "연금 계산 성공"
+    },
+    {
+      "status": "400 Bad Request",
+      "description": "잘못된 입력 파라미터"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "서버 오류"
+    }
+  ],
+  "responseExample": {
+    "inputConditions": {
+      "monthlySaving": 100000,
+      "lumpSum": 1000000,
+      "savingYears": 2,
+      "rate": 2.0,
+      "paymentYears": 10
+    },
+    "results": {
+      "totalPayout": 3839547,
+      "totalMonths": 120,
+      "monthlyPayout": 31996
+    }
+  },
+  "curlExample": "curl -X POST https://api.banklab.app/api/calculator/annuity \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"monthlySaving\":100000,\"lumpSum\":1000000,\"savingYears\":2,\"rate\":2.0,\"paymentYears\":10}'"
+}

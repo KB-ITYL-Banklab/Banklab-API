@@ -43,32 +43,57 @@
         word-break: normal;
         tab-size: 2;
       }
+
       .t-key {
         color: #f3b509;
       }
+
       .t-string {
         color: #07d090;
       }
+
       .t-number {
         color: #db2778d5;
       }
+
       .t-boolean {
         color: #b45309;
       }
+
       .t-null {
         color: #6b7280;
       }
+
       .t-colon {
         color: #94a3b8;
       }
+
       .t-punct {
         color: #94a3b8;
       }
+
       .t-quote {
         color: #9ca3af;
       }
+
+      /* --- Custom Styles --- */
+      /* Active TOC link style */
+      #toc a.active {
+        background-color: #e6f2f2;
+        /* mint-100 */
+        font-weight: 600;
+        /* semibold */
+        color: #52b9b9;
+        /* mint-600 */
+      }
+
+      /* Accordion button rotation */
+      .acc-rot svg {
+        transform: rotate(180deg);
+      }
     </style>
   </head>
+
   <body class="bg-beige text-ink">
     <!-- Header -->
     <header
@@ -94,7 +119,7 @@
       class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6"
     >
       <!-- Sidebar -->
-      <aside class="lg:col-span-3">
+      <aside class="lg:col-span-3 lg:sticky lg:top-24 lg:self-start">
         <div class="bg-white rounded-xl shadow-soft border border-line">
           <div class="p-4 border-b border-line font-medium">목차</div>
           <nav id="toc" class="p-2 space-y-1"></nav>
@@ -114,116 +139,18 @@
       </div>
     </footer>
 
-    <!-- DATA: 편집은 여기 JSON 만 바꾸세요 -->
-    <script type="application/json" id="api-data">
-      {
-        "categories": [
-          {
-            "name": "계좌 관리",
-            "apis": [
-              {
-                "id": "account-link",
-                "title": "은행 계좌 연동",
-                "description": "은행 로그인 정보로 계좌를 연동하고 DB에 저장합니다. CODEF API를 통해 실제 금융기관과 연결됩니다.",
-                "method": "POST",
-                "endpoint": "/api/account/link",
-                "headers": [
-                  {
-                    "name": "Content-Type",
-                    "value": "application/json",
-                    "required": true,
-                    "description": "요청 본문 JSON"
-                  },
-                  {
-                    "name": "Authorization",
-                    "value": "Bearer {token}",
-                    "required": true,
-                    "description": "JWT 액세스 토큰"
-                  }
-                ],
-                "parameters": [
-                  {
-                    "name": "bankId",
-                    "type": "string",
-                    "required": true,
-                    "description": "은행 로그인 아이디"
-                  },
-                  {
-                    "name": "bankPassword",
-                    "type": "string",
-                    "required": true,
-                    "description": "은행 로그인 비밀번호"
-                  },
-                  {
-                    "name": "bankCode",
-                    "type": "string",
-                    "required": true,
-                    "description": "은행 코드 (예: 0020-국민은행, 0003-기업은행, 0004-KB국민은행)"
-                  }
-                ],
-                "requestExample": {
-                  "bankId": "myBankId123",
-                  "bankPassword": "myBankPassword!",
-                  "bankCode": "0020"
-                },
-                "responses": [
-                  {
-                    "status": "200 OK",
-                    "description": "계좌 연동 성공"
-                  },
-                  {
-                    "status": "401 Unauthorized",
-                    "description": "인증 실패 (토큰 없음/만료)"
-                  },
-                  {
-                    "status": "500 Internal Server Error",
-                    "description": "계좌 연동 중 오류 발생"
-                  }
-                ],
-                "responseExample": {
-                  "data": {
-                    "accounts": [
-                      {
-                        "id": 1,
-                        "connectedId": "abcd1234efgh5678",
-                        "organization": "0004",
-                        "resAccount": "12345678901234",
-                        "resAccountName": "KB멋진통장",
-                        "resAccountDisplay": "123456-78-901234",
-                        "resAccountBalance": "548261",
-                        "resAccountDeposit": "11",
-                        "resAccountEndDate": "",
-                        "resAccountStartDate": "20250801"
-                      }
-                    ],
-                    "savedCount": 1,
-                    "connectedId": "abcd1234efgh5678"
-                  },
-                  "success": true,
-                  "message": "계좌 연동이 완료되었습니다.",
-                  "email": "admin@example.com",
-                  "memberId": 1
-                },
-                "curlExample": "curl -X POST https://api.banklab.app/api/account/link \\\n  -H \"Content-Type: application/json\" \\\n  -H \"Authorization: Bearer {token}\" \\\n  -d '{\"bankId\":\"myBankId123\",\"bankPassword\":\"myBankPassword!\",\"bankCode\":\"0020\"}'"
-              }
-            ]
-          }
-        ]
-      }
-    </script>
-
     <!-- RENDERER -->
     <script>
       // --- Utilities ---
       function escapeHTML(str) {
         return str.replace(
-          /[&<>"']/g,
+          /[&<>"\']/g,
           (s) =>
             ({
               '&': '&amp;',
               '<': '&lt;',
               '>': '&gt;',
-              '"': '&quot;',
+              '"': '"',
               "'": '&#39;',
             }[s])
         );
@@ -299,16 +226,12 @@
         const table = document.createElement('table');
         table.className =
           'w-full text-sm border border-line rounded-lg overflow-hidden table-fixed';
-        table.innerHTML = `
-        <thead class="bg-mint-50">
-          <tr>${headers
-            .map(
-              (h) =>
-                `<th class='text-left px-3 py-2 border-b border-line'>${h}</th>`
-            )
-            .join('')}</tr>
-        </thead>
-        <tbody>${rows
+        table.innerHTML = `\n        <thead class="bg-mint-50">\n          <tr>${headers
+          .map(
+            (h) =>
+              `<th class='text-left px-3 py-2 border-b border-line'>${h}</th>`
+          )
+          .join('')}</tr>\n        </thead>\n        <tbody>${rows
           .map(
             (r) =>
               `<tr>${r
@@ -325,173 +248,246 @@
       }
 
       // --- Render from JSON ---
-      const data = JSON.parse(document.getElementById('api-data').textContent);
-      const toc = document.getElementById('toc');
-      const content = document.getElementById('content');
+      async function render() {
+        const toc = document.getElementById('toc');
+        const content = document.getElementById('content');
+        toc.innerHTML = '';
+        content.innerHTML = '';
 
-      data.categories.forEach((cat, ci) => {
-        // Sidebar accordion
-        const wrap = document.createElement('div');
-        wrap.className = 'border-b border-line';
-        const btn = document.createElement('button');
-        btn.className =
-          'w-full flex items-center justify-between px-3 py-2 hover:bg-mint-50 rounded-lg';
-        btn.innerHTML = `<span class='font-medium'>${cat.name}</span><svg class='w-4 h-4 transition-transform' viewBox='0 0 20 20' fill='currentColor'><path fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z' clip-rule='evenodd'/></svg>`;
-        const list = document.createElement('div');
-        list.className = 'pl-3 pb-3 hidden';
-        cat.apis.forEach((api) => {
-          const a = document.createElement('a');
-          a.className = 'block px-3 py-1.5 rounded hover:bg-mint-50';
-          a.href = `#api-${api.id}`;
-          a.textContent = api.title;
-          list.appendChild(a);
-        });
-        btn.addEventListener('click', () => {
-          list.classList.toggle('hidden');
-          btn.classList.toggle('acc-rot');
-        });
-        wrap.appendChild(btn);
-        wrap.appendChild(list);
-        toc.appendChild(wrap);
+        try {
+          const manifestRes = await fetch('api/manifest.json');
+          if (!manifestRes.ok)
+            throw new Error(
+              `manifest.json 로드 실패: ${manifestRes.statusText}`
+            );
+          const manifest = await manifestRes.json();
 
-        // Content articles
-        cat.apis.forEach((api) => {
-          const art = document.createElement('article');
-          art.id = `api-${api.id}`;
-          art.className = 'bg-white rounded-2xl shadow-soft border border-line';
-          art.innerHTML = `
-          <header class='p-6 border-b border-line space-y-3'>
-            <p class='text-sm text-gray-500'>${escapeHTML(cat.name)}</p>
-            <h2 class='text-2xl font-semibold'>${escapeHTML(api.title)}</h2>
-            ${
+          const data = { categories: [] };
+
+          for (const category of manifest.categories) {
+            const apiPromises = category.apis.map((apiId) =>
+              fetch(`api/${category.path}/${apiId}.json`).then((res) => {
+                if (!res.ok)
+                  throw new Error(`${apiId}.json 로드 실패: ${res.statusText}`);
+                return res.json();
+              })
+            );
+            const apis = await Promise.all(apiPromises);
+            data.categories.push({
+              name: category.name,
+              apis: apis,
+            });
+          }
+
+          renderContent(data);
+          // Initial call to set active link
+          updateActiveLink();
+        } catch (error) {
+          console.error('API 명세서를 불러오는 중 오류가 발생했습니다:', error);
+          content.innerHTML = `<div class="p-6 bg-red-100 text-red-700 rounded-lg"><strong>오류:</strong> API 명세 데이터를 불러올 수 없습니다. 자세한 내용은 콘솔을 확인하세요.</div>`;
+        }
+      }
+
+      function renderContent(data) {
+        const toc = document.getElementById('toc');
+        const content = document.getElementById('content');
+
+        data.categories.forEach((cat, ci) => {
+          // Sidebar accordion
+          const wrap = document.createElement('div');
+          if (ci < data.categories.length - 1) {
+            wrap.className = 'border-b border-line';
+          }
+
+          const btn = document.createElement('button');
+          btn.className =
+            'w-full flex items-center justify-between px-3 py-2 hover:bg-mint-50 rounded-lg';
+          btn.innerHTML = `<span class='font-medium text-lg'>${escapeHTML(
+            cat.name
+          )}</span><svg class='w-5 h-5 transition-transform text-gray-400' viewBox='0 0 20 20' fill='currentColor'><path fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z' clip-rule='evenodd'/></svg>`;
+
+          const list = document.createElement('div');
+          list.className = 'pl-3 pt-1 pb-3 space-y-1';
+
+          // Open first category by default
+          if (ci !== 0) {
+            list.classList.add('hidden');
+          } else {
+            btn.classList.add('acc-rot');
+          }
+
+          cat.apis.forEach((api) => {
+            const a = document.createElement('a');
+            a.className =
+              'block px-3 py-1.5 rounded-lg hover:bg-mint-50 text-gray-600';
+            a.href = `#api-${api.id}`;
+            a.textContent = api.title;
+            list.appendChild(a);
+          });
+
+          btn.addEventListener('click', () => {
+            list.classList.toggle('hidden');
+            btn.classList.toggle('acc-rot');
+          });
+
+          wrap.appendChild(btn);
+          wrap.appendChild(list);
+          toc.appendChild(wrap);
+
+          // Content articles
+          cat.apis.forEach((api) => {
+            const art = document.createElement('article');
+            art.id = `api-${api.id}`;
+            art.className =
+              'bg-white rounded-2xl shadow-soft border border-line scroll-mt-20';
+            art.innerHTML = `\n            <header class='p-6 border-b border-line space-y-3'>\n              <p class='text-sm text-gray-500'>${escapeHTML(
+              cat.name
+            )}</p>\n              <h2 class='text-2xl font-semibold'>${escapeHTML(
+              api.title
+            )}</h2>\n              ${
               api.description
                 ? `<p class='text-gray-600 leading-relaxed'>${escapeHTML(
                     api.description
                   )}</p>`
                 : ''
+            }\n              <div class='mt-4 space-y-3'>\n                <div class='rounded-lg border border-line bg-mint-50/40 px-4 py-3 w-full'>\n                  <span class='block text-sm font-medium text-gray-500 mb-1'>HTTP Method</span>\n                  <span class='inline-flex items-center px-2.5 py-1 rounded-lg bg-white border border-mint-200 font-semibold'>${escapeHTML(
+              api.method
+            )}</span>\n                </div>\n                <div class='rounded-lg border border-line bg-mint-50/40 px-4 py-3 w-full'>\n                  <span class='block text-sm font-medium text-gray-500 mb-1'>Endpoint</span>\n                  <code class='font-mono text-sm bg-white border border-mint-200 rounded px-2 py-1'>${escapeHTML(
+              api.endpoint
+            )}</code>\n                </div>\n              </div>\n            </header>\n            <div class='divide-y divide-line'>\n              <section class='p-6 space-y-6'>\n                <h3 class='text-lg font-semibold'>Request</h3>\n                <div class='space-y-6'>\n                  <div>\n                    <h4 class='font-medium mb-2'>Headers</h4>\n                    <div class='overflow-x-auto' id='tbl-h-${
+              api.id
+            }'></div>\n                  </div>\n                  <div>\n                    <h4 class='font-medium mb-2'>Parameters (Body)</h4>\n                    <div class='overflow-x-auto' id='tbl-p-${
+              api.id
+            }'></div>\n                  </div>\n                </div>\n                ${
+              api.requestExample !== null
+                ? `<div><h4 class='font-medium mb-2'>Request Example</h4><pre class='code-json bg-beige p-4 rounded-lg border border-line overflow-x-auto' id='req-${api.id}'></pre></div>`
+                : ''
+            }\n              </section>\n              <section class='p-6 space-y-4'>\n                <h3 class='text-lg font-semibold'>Response</h3>\n                <div class='space-y-2' id='reslist-${
+              api.id
+            }'></div>\n                ${
+              api.responseExample
+                ? `<div><h4 class='font-medium mb-2'>Response Example</h4><pre class='code-json bg-beige p-4 rounded-lg border border-line overflow-x-auto' id='res-${api.id}'></pre></div>`
+                : ''
+            }\n              </section>\n              <section class='p-6 space-y-2'>\n                <h3 class='text-lg font-semibold'>Example</h3>\n                ${
+              api.curlExample
+                ? `<pre class='bg-black text-gray-100 p-4 rounded-lg overflow-x-auto font-mono text-sm'><code>${escapeHTML(
+                    api.curlExample
+                  )}</code></pre>`
+                : ''
+            }\n              </section>\n            </div>`;
+            content.appendChild(art);
+
+            // Fill tables
+            const hRows = (api.headers || []).map((h) => [
+              `<span class='font-mono'>${escapeHTML(h.name || '')}</span>`,
+              escapeHTML(h.value || ''),
+              h.required ? 'O' : 'X',
+              escapeHTML(h.description || ''),
+            ]);
+            document
+              .getElementById(`tbl-h-${api.id}`)
+              .appendChild(
+                createTable(
+                  ['Name', 'Value', 'Required', 'Description'],
+                  hRows.length ? hRows : [['-', '-', '-', '-']]
+                )
+              );
+
+            const pRows = (api.parameters || []).map((p) => [
+              `<span class='font-mono'>${escapeHTML(p.name || '')}</span>`,
+              escapeHTML(p.type || ''),
+              p.required ? 'O' : 'X',
+              escapeHTML(p.description || ''),
+            ]);
+            document
+              .getElementById(`tbl-p-${api.id}`)
+              .appendChild(
+                createTable(
+                  ['Name', 'Type', 'Required', 'Description'],
+                  pRows.length ? pRows : [['-', '-', '-', '-']]
+                )
+              );
+
+            // Status list
+            const resWrap = document.getElementById(`reslist-${api.id}`);
+            (api.responses || []).forEach((r) => {
+              const div = document.createElement('div');
+              div.className =
+                'border border-line rounded-lg p-4 bg-mint-50/30 flex items-start gap-3';
+              div.innerHTML = `<span class='font-mono text-sm px-2 py-0.5 rounded border border-line bg-white'>${escapeHTML(
+                r.status || ''
+              )}</span><p class='text-sm'>${escapeHTML(
+                r.description || ''
+              )}</p>`;
+              resWrap.appendChild(div);
+            });
+
+            // JSON examples
+            if (api.requestExample !== null) {
+              const req = document.getElementById(`req-${api.id}`);
+              req.innerHTML = highlightJSON(api.requestExample);
+              req.classList.add('font-mono', 'text-sm');
             }
-            <div class='mt-4 space-y-3'>
-              <div class='rounded-lg border border-line bg-mint-50/40 px-4 py-3 w-full'>
-                <span class='block text-sm font-medium text-gray-500 mb-1'>HTTP Method</span>
-                <span class='inline-flex items-center px-2.5 py-1 rounded-lg bg-white border border-mint-200 font-semibold'>${escapeHTML(
-                  api.method
-                )}</span>
-              </div>
-              <div class='rounded-lg border border-line bg-mint-50/40 px-4 py-3 w-full'>
-                <span class='block text-sm font-medium text-gray-500 mb-1'>Endpoint</span>
-                <code class='font-mono text-sm bg-white border border-mint-200 rounded px-2 py-1'>${escapeHTML(
-                  api.endpoint
-                )}</code>
-              </div>
-            </div>
-          </header>
-          <div class='divide-y divide-line'>
-            <section class='p-6 space-y-6'>
-              <h3 class='text-lg font-semibold'>Request</h3>
-              <div class='space-y-6'>
-                <div>
-                  <h4 class='font-medium mb-2'>Headers</h4>
-                  <div class='overflow-x-auto' id='tbl-h-${api.id}'></div>
-                </div>
-                <div>
-                  <h4 class='font-medium mb-2'>Parameters (Body)</h4>
-                  <div class='overflow-x-auto' id='tbl-p-${api.id}'></div>
-                </div>
-              </div>
-              ${
-                api.requestExample !== null
-                  ? `<div><h4 class='font-medium mb-2'>Request Example</h4><pre class='code-json bg-beige p-4 rounded-lg border border-line overflow-x-auto' id='req-${api.id}'></pre></div>`
-                  : ''
-              }
-            </section>
-            <section class='p-6 space-y-4'>
-              <h3 class='text-lg font-semibold'>Response</h3>
-              <div class='space-y-2' id='reslist-${api.id}'></div>
-              ${
-                api.responseExample
-                  ? `<div><h4 class='font-medium mb-2'>Response Example</h4><pre class='code-json bg-beige p-4 rounded-lg border border-line overflow-x-auto' id='res-${api.id}'></pre></div>`
-                  : ''
-              }
-            </section>
-            <section class='p-6 space-y-2'>
-              <h3 class='text-lg font-semibold'>Example</h3>
-              ${
-                api.curlExample
-                  ? `<pre class='bg-black text-gray-100 p-4 rounded-lg overflow-x-auto font-mono text-sm'><code>${escapeHTML(
-                      api.curlExample
-                    )}</code></pre>`
-                  : ''
-              }
-            </section>
-          </div>`;
-          content.appendChild(art);
-
-          // Fill tables
-          const hRows = (api.headers || []).map((h) => [
-            `<span class='font-mono'>${escapeHTML(h.name || '')}</span>`,
-            escapeHTML(h.value || ''),
-            h.required ? 'O' : 'X',
-            escapeHTML(h.description || ''),
-          ]);
-          document
-            .getElementById(`tbl-h-${api.id}`)
-            .appendChild(
-              createTable(
-                ['Name', 'Value', 'Required', 'Description'],
-                hRows.length ? hRows : [['-', '-', '-', '-']]
-              )
-            );
-
-          const pRows = (api.parameters || []).map((p) => [
-            `<span class='font-mono'>${escapeHTML(p.name || '')}</span>`,
-            escapeHTML(p.type || ''),
-            p.required ? 'O' : 'X',
-            escapeHTML(p.description || ''),
-          ]);
-          document
-            .getElementById(`tbl-p-${api.id}`)
-            .appendChild(
-              createTable(
-                ['Name', 'Type', 'Required', 'Description'],
-                pRows.length ? pRows : [['-', '-', '-', '-']]
-              )
-            );
-
-          // Status list
-          const resWrap = document.getElementById(`reslist-${api.id}`);
-          (api.responses || []).forEach((r) => {
-            const div = document.createElement('div');
-            div.className =
-              'border border-line rounded-lg p-4 bg-mint-50/30 flex items-start gap-3';
-            div.innerHTML = `<span class='font-mono text-sm px-2 py-0.5 rounded border border-line bg-white'>${escapeHTML(
-              r.status || ''
-            )}</span><p class='text-sm'>${escapeHTML(r.description || '')}</p>`;
-            resWrap.appendChild(div);
+            if (api.responseExample) {
+              const res = document.getElementById(`res-${api.id}`);
+              res.innerHTML = highlightJSON(api.responseExample);
+              res.classList.add('font-mono', 'text-sm');
+            }
           });
+        });
+      }
 
-          // JSON examples
-          if (api.requestExample !== null) {
-            const req = document.getElementById(`req-${api.id}`);
-            req.innerHTML = highlightJSON(api.requestExample);
-            req.classList.add('font-mono', 'text-sm');
-          }
-          if (api.responseExample) {
-            const res = document.getElementById(`res-${api.id}`);
-            res.innerHTML = highlightJSON(api.responseExample);
-            res.classList.add('font-mono', 'text-sm');
+      // --- Scroll Spy ---
+      function updateActiveLink() {
+        const sections = document.querySelectorAll('#content article');
+        const tocLinks = document.querySelectorAll('#toc a');
+        let current = '';
+
+        sections.forEach((section) => {
+          const sectionTop = section.offsetTop;
+          // Header height (h-16 -> 4rem) + gap (py-6 -> 1.5rem) + extra offset
+          if (window.pageYOffset >= sectionTop - 100) {
+            current = section.getAttribute('id');
           }
         });
-      });
+
+        tocLinks.forEach((link) => {
+          link.classList.remove('active');
+          const linkHref = link.getAttribute('href');
+          if (linkHref === `#${current}`) {
+            link.classList.add('active');
+
+            // Open accordion if the active link is inside a collapsed one
+            const parentList = link.closest('div');
+            if (parentList && parentList.classList.contains('hidden')) {
+              parentList.classList.remove('hidden');
+              parentList.previousElementSibling.classList.add('acc-rot');
+            }
+          }
+        });
+      }
 
       // Smooth scroll
       document.addEventListener('click', (e) => {
         const a = e.target.closest('a[href^="#api-"]');
         if (!a) return;
         e.preventDefault();
-        document
-          .querySelector(a.getAttribute('href'))
-          ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const targetElement = document.querySelector(a.getAttribute('href'));
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+          });
+          // Update hash in URL without jumping
+          history.pushState(null, null, a.getAttribute('href'));
+        }
       });
+
+      // Update active link on scroll
+      window.addEventListener('scroll', updateActiveLink);
+
+      // --- Initial Load ---
+      render();
     </script>
   </body>
 </html>

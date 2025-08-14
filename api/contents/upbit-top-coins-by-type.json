@@ -1,0 +1,103 @@
+{
+  "id": "upbit-top-coins-by-type",
+  "title": "업비트 타입별 상위 코인 조회",
+  "description": "업비트 거래소에서 특정 타입별로 상위 암호화폐를 조회합니다. 거래량, 시가총액, 등락률 등 다양한 기준으로 정렬된 상위 코인 목록을 제공합니다.",
+  "method": "GET",
+  "endpoint": "/api/upbit/top-coins-by-type",
+  "headers": [
+    {
+      "name": "Accept",
+      "value": "application/json",
+      "required": false,
+      "description": "응답 형식 지정"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "type",
+      "type": "string",
+      "required": true,
+      "description": "정렬 기준 타입 (volume: 거래량, marketcap: 시가총액, change: 등락률, price: 가격)"
+    },
+    {
+      "name": "limit",
+      "type": "integer",
+      "required": false,
+      "description": "조회할 코인 개수 (기본값: 20, 최대: 100)"
+    },
+    {
+      "name": "market",
+      "type": "string",
+      "required": false,
+      "description": "마켓 타입 (KRW, BTC, USDT, 기본값: KRW)"
+    }
+  ],
+  "requestExample": null,
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "타입별 상위 코인 조회 성공"
+    },
+    {
+      "status": "400 Bad Request",
+      "description": "잘못된 타입 또는 파라미터 값"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "서버 오류 발생"
+    }
+  ],
+  "responseExample": {
+    "success": true,
+    "data": {
+      "type": "volume",
+      "market": "KRW",
+      "coins": [
+        {
+          "rank": 1,
+          "market": "KRW-BTT",
+          "candleDateTime": 1754956800000,
+          "openingPrice": 0,
+          "tradePrice": 0,
+          "prevClosingPrice": 0,
+          "changeRate": -0.0010626993,
+          "accTradeVolume24h": 356010523530.6766,
+          "accTradePrice24h": 335185899.5103044,
+          "createdAt": 1754981469000,
+          "updatedAt": 1754981469000
+        },
+        {
+          "rank": 2,
+          "market": "KRW-PEPE",
+          "candleDateTime": 1754956800000,
+          "openingPrice": 0.02,
+          "tradePrice": 0.02,
+          "prevClosingPrice": 0.02,
+          "changeRate": -0.0064102564,
+          "accTradeVolume24h": 250707316173.28745,
+          "accTradePrice24h": 3899051125.4646487,
+          "createdAt": 1754981469000,
+          "updatedAt": 1754981469000
+        },
+        {
+          "rank": 3,
+          "market": "KRW-SHIB",
+          "candleDateTime": 1754956800000,
+          "openingPrice": 0.02,
+          "tradePrice": 0.02,
+          "prevClosingPrice": 0.02,
+          "changeRate": 0,
+          "accTradeVolume24h": 222565039207.26752,
+          "accTradePrice24h": 3998982116.160772,
+          "createdAt": 1754981469000,
+          "updatedAt": 1754981469000
+        }
+      ],
+      "count": 3,
+      "totalCount": 245,
+      "lastUpdated": "2025-08-13T15:30:00Z"
+    },
+    "message": "타입별 상위 코인 조회 성공"
+  },
+  "curlExample": "curl -X GET \"http://localhost:8080/api/upbit/top-coins-by-type?type=volume&limit=20&market=KRW\""
+}
