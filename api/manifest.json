@@ -94,6 +94,29 @@
       "name": "캐릭터",
       "path": "character",
       "apis": ["character-get", "character-create", "character-missions"]
+    },
+    {
+      "name": "경제콘텐츠",
+      "path": "contents",
+      "apis": [
+        "exchange-chart",
+        "gold-chart",
+        "news",
+        "quiz-daily-result",
+        "quiz-today",
+        "quiz-user-stats",
+        "stocks-db-top",
+        "stocks-timeseries-exact",
+        "stocks-timeseries",
+        "stocks-top-stocks",
+        "terms-detail",
+        "terms-keyword",
+        "terms-list-paged",
+        "terms-random",
+        "terms-search",
+        "upbit-search",
+        "upbit-top-coins-by-type"
+      ]
     }
   ]
 }

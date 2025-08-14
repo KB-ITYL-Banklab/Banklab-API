@@ -1,0 +1,63 @@
+{
+  "id": "exchange-chart",
+  "title": "환율 정보 조회",
+  "description": "한국수출입은행 환율 API를 통해 실시간 환율 정보를 조회합니다. 주요 5개 통화(미국 달러, 유로, 영국 파운드, 호주 달러, 일본 옌)의 환율 정보를 차트 형식으로 제공합니다.",
+  "method": "GET",
+  "endpoint": "/api/exchange/chart",
+  "headers": [
+    {
+      "name": "Accept",
+      "value": "application/json",
+      "required": false,
+      "description": "응답 형식 지정"
+    }
+  ],
+  "parameters": [],
+  "requestExample": null,
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "환율 정보 조회 성공"
+    },
+    {
+      "status": "503 Service Unavailable",
+      "description": "외부 API 서비스 이용 불가"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "서버 오류 발생"
+    }
+  ],
+  "responseExample": {
+    "data": [
+      {
+        "updateDate": "20250813",
+        "name": "호주 달러",
+        "currentPrice": "907.8"
+      },
+      {
+        "updateDate": "20250813",
+        "name": "유로",
+        "currentPrice": "1,623.41"
+      },
+      {
+        "updateDate": "20250813",
+        "name": "영국 파운드",
+        "currentPrice": "1,876.91"
+      },
+      {
+        "updateDate": "20250813",
+        "name": "일본 옌",
+        "currentPrice": "940.72"
+      },
+      {
+        "updateDate": "20250813",
+        "name": "미국 달러",
+        "currentPrice": "1,390.2"
+      }
+    ],
+    "count": 5,
+    "message": "차트용 환율 정보 조회 성공"
+  },
+  "curlExample": "curl -X GET http://localhost:8080/api/exchange/chart"
+}

@@ -1,0 +1,49 @@
+{
+  "id": "terms-detail",
+  "title": "경제용어 상세 조회",
+  "description": "특정 경제용어의 상세 정보를 조회합니다. 용어 ID를 통해 해당 용어의 자세한 설명을 확인할 수 있습니다.",
+  "method": "GET",
+  "endpoint": "/api/terms/detail",
+  "headers": [
+    {
+      "name": "Accept",
+      "value": "application/json",
+      "required": false,
+      "description": "응답 형식 지정"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "id",
+      "type": "string",
+      "required": true,
+      "description": "조회할 정확한 금융용어명"
+    }
+  ],
+  "requestExample": null,
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "경제용어 상세 조회 성공"
+    },
+    {
+      "status": "404 Not Found",
+      "description": "해당 ID의 경제용어가 존재하지 않음"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "서버 오류 발생"
+    }
+  ],
+  "responseExample": {
+    "data": {
+      "id": 658,
+      "keyword": "경제",
+      "title": "빅맥지수",
+      "definition": "세계 각국에서 판매되고 있는 맥도날드 빅맥 햄버거의 가격을 미국에서의 판매가격과 같게 만들어주는 환율. 영국의 경제주간지 「이코노미스트(The Economist)」가 1986년부터 매년 조사, 발표하고 있다. 만일 실제환율이 빅맥지수보다 낮으면 해당 국가의 통화가 고평가되어 있음을, 반대로 높으면 저평가되어 있는 것으로 해석할 수 있다."
+    },
+    "success": true,
+    "message": "용어 조회가 완료되었습니다."
+  },
+  "curlExample": "curl -X GET http://localhost:8080/api/terms/detail?term=빅맥지수"
+}

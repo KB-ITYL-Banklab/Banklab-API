@@ -1,0 +1,45 @@
+{
+  "id": "quiz-user-stats",
+  "title": "사용자 퀴즈 통계 조회",
+  "description": "사용자의 퀴즈 통계 정보를 조회합니다. 총 문제 수, 정답 수, 정답률, 총 획득 포인트를 반환합니다.",
+  "method": "GET",
+  "endpoint": "/api/quiz/user-stats",
+  "headers": [
+    {
+      "name": "Accept",
+      "value": "application/json",
+      "required": false,
+      "description": "응답 형식 지정"
+    },
+    {
+      "name": "Authorization",
+      "value": "Bearer {token}",
+      "required": true,
+      "description": "인증 토큰"
+    }
+  ],
+  "parameters": [],
+  "requestExample": null,
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "사용자 통계 조회 성공"
+    },
+    {
+      "status": "401 Unauthorized",
+      "description": "인증되지 않은 사용자"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "서버 오류 발생"
+    }
+  ],
+  "responseExample": {
+    "success": true,
+    "message": "사용자 퀴즈 통계 조회 성공",
+    "stats": {
+      "user_answer": 133
+    }
+  },
+  "curlExample": "curl -X GET \"http://localhost:8080/api/quiz/user-stats\" -H \"Authorization: Bearer {token}\""
+}

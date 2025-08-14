@@ -1,0 +1,81 @@
+{
+  "id": "quiz-today",
+  "title": "오늘의 퀴즈 조회",
+  "description": "오늘의 퀴즈 문제 3개를 조회합니다. 이미 오늘 퀴즈를 완료한 경우 완료 상태를 반환합니다.",
+  "method": "GET",
+  "endpoint": "/api/quiz/today",
+  "headers": [
+    {
+      "name": "Accept",
+      "value": "application/json",
+      "required": false,
+      "description": "응답 형식 지정"
+    },
+    {
+      "name": "Authorization",
+      "value": "Bearer {token}",
+      "required": true,
+      "description": "인증 토큰"
+    }
+  ],
+  "parameters": [],
+  "requestExample": null,
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "퀴즈 조회 성공"
+    },
+    {
+      "status": "403 Forbidden",
+      "description": "이미 오늘 퀴즈를 완료한 경우"
+    },
+    {
+      "status": "401 Unauthorized",
+      "description": "인증되지 않은 사용자"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "서버 오류 발생"
+    }
+  ],
+  "responseExample": {
+    "success": true,
+    "message": "오늘의 퀴즈를 조회했습니다.",
+    "quizzes": [
+      {
+        "id": 1,
+        "quiz_type": "OX문제",
+        "question": "인플레이션은 물가가 전반적으로 상승하는 현상이다.",
+        "option1": "O (맞다)",
+        "option2": "X (틀리다)",
+        "option3": "null",
+        "option4": "null",
+        "answer": "O (맞다)",
+        "explanation": "인플레이션은 물가의 전반적인 상승 현상으로, 화폐의 가치가 하락하는 것을 의미합니다."
+      },
+      {
+        "id": 2,
+        "quiz_type": "객관식문제",
+        "question": "다음 중 인플레이션을 나타내는 대표적인 지표는?",
+        "option1": "GDP",
+        "option2": "소비자물가지수(CPI)",
+        "option3": "실업률",
+        "option4": "환율",
+        "answer": "소비자물가지수(CPI)",
+        "explanation": "소비자물가지수(CPI)는 소비자가 구입하는 재화와 서비스의 가격 변동을 측정하여 인플레이션을 나타내는 대표적인 지표입니다."
+      },
+      {
+        "id": 3,
+        "quiz_type": "OX문제",
+        "question": "한국은행은 주식 거래를 업무로 한다.",
+        "option1": "O (맞다)",
+        "option2": "X (틀리다)",
+        "option3": "null",
+        "option4": "null",
+        "answer": "X (틀리다)",
+        "explanation": "한국은행은 통화정책, 금리 결정, 화폐 발행 등의 업무를 담당하지만 주식 거래는 하지 않습니다."
+      }
+    ]
+  },
+  "curlExample": "curl -X GET \"http://localhost:8080/api/quiz/today\" -H \"Authorization: Bearer {token}\""
+}

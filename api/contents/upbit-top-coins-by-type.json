@@ -1,0 +1,81 @@
+{
+  "id": "upbit-top-coins-by-type",
+  "title": "업비트 상위 코인 조회 (타입별)",
+  "description": "거래대금, 거래량, 등락률 기준으로 업비트 상위 가상화폐를 조회합니다. 실시간 목록 표시와 차트 기능에서 사용됩니다.",
+  "method": "GET",
+  "endpoint": "/api/upbit/top-coins-by-type",
+  "headers": [
+    {
+      "name": "Accept",
+      "value": "application/json",
+      "required": false,
+      "description": "응답 형식 지정"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "type",
+      "type": "string",
+      "required": true,
+      "description": "조회 기준 ('amount': 거래대금, 'volume': 거래량, 'change': 등락률)"
+    }
+  ],
+  "requestExample": null,
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "타입별 상위 코인 조회 성공"
+    },
+    {
+      "status": "400 Bad Request",
+      "description": "잘못된 타입 파라미터"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "서버 오류 발생"
+    }
+  ],
+  "responseExample": {
+    "success": true,
+    "message": "상위 코인 조회 성공",
+    "type": "volume",
+    "data": {
+      "data": [
+        {
+          "market": "KRW-BTC",
+          "korean_name": "비트코인",
+          "english_name": "Bitcoin",
+          "tradePrice": 95000000,
+          "changeRate": 0.035,
+          "changePrice": 3200000,
+          "accTradePrice24h": 14250000000000,
+          "accTradeVolume24h": 150.25,
+          "rank": 1
+        },
+        {
+          "market": "KRW-ETH",
+          "korean_name": "이더리움", 
+          "english_name": "Ethereum",
+          "tradePrice": 4200000,
+          "changeRate": -0.018,
+          "changePrice": -77000,
+          "accTradePrice24h": 8820000000000,
+          "accTradeVolume24h": 2100.5,
+          "rank": 2
+        },
+        {
+          "market": "KRW-XRP",
+          "korean_name": "리플",
+          "english_name": "Ripple",
+          "tradePrice": 850,
+          "changeRate": 0.025,
+          "changePrice": 21,
+          "accTradePrice24h": 5500000000000,
+          "accTradeVolume24h": 6470588.23,
+          "rank": 3
+        }
+      ]
+    }
+  },
+  "curlExample": "curl -X GET \"http://localhost:8080/api/upbit/top-coins-by-type?type=volume\""
+}

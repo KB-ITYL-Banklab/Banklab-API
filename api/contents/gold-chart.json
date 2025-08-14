@@ -1,0 +1,67 @@
+{
+  "id": "gold-chart",
+  "title": "금 차트 데이터 조회",
+  "description": "금시세 차트 데이터를 조회합니다. 실시간 금 가격 정보와 차트 생성에 필요한 데이터를 제공합니다.",
+  "method": "GET",
+  "endpoint": "/api/gold/chart",
+  "headers": [
+    {
+      "name": "Accept",
+      "value": "application/json",
+      "required": false,
+      "description": "응답 형식 지정"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "period",
+      "type": "string",
+      "required": false,
+      "description": "조회 기간 (예: '1D', '1W', '1M', '3M', '1Y')"
+    },
+    {
+      "name": "interval",
+      "type": "string",
+      "required": false,
+      "description": "데이터 간격 (예: '1m', '5m', '1h', '1d')"
+    }
+  ],
+  "requestExample": null,
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "금 차트 데이터 조회 성공"
+    },
+    {
+      "status": "400 Bad Request",
+      "description": "잘못된 요청 파라미터"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "서버 오류 발생"
+    }
+  ],
+  "responseExample": {
+    "success": true,
+    "message": "금 차트 데이터 조회 성공",
+    "data": {
+      "symbol": "GOLD",
+      "currency": "KRW",
+      "currentPrice": 2650000,
+      "changeRate": 1.2,
+      "changeAmount": 31500,
+      "timestamp": "2025-01-15T10:30:00Z",
+      "chartData": [
+        {
+          "date": "2025-01-15T09:00:00Z",
+          "open": 2620000,
+          "high": 2655000,
+          "low": 2615000,
+          "close": 2650000,
+          "volume": 1250
+        }
+      ]
+    }
+  },
+  "curlExample": "curl -X GET \"http://localhost:8080/api/gold/chart?period=1D&interval=1h\""
+}

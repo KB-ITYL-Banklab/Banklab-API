@@ -1,0 +1,72 @@
+{
+  "id": "terms-search",
+  "title": "경제용어 검색",
+  "description": "키워드를 통해 경제용어를 검색합니다. 부분 일치 및 전체 검색 기능을 제공합니다.",
+  "method": "GET",
+  "endpoint": "/api/terms/search",
+  "headers": [
+    {
+      "name": "Accept",
+      "value": "application/json",
+      "required": false,
+      "description": "응답 형식 지정"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "keyword",
+      "type": "string",
+      "required": false,
+      "description": "검색할 경제용어 키워드 (미입력 시 전체 조회)"
+    },
+    {
+      "name": "page",
+      "type": "integer",
+      "required": false,
+      "description": "페이지 번호 (기본값: 1)"
+    },
+    {
+      "name": "size",
+      "type": "integer",
+      "required": false,
+      "description": "페이지당 항목 수 (기본값: 10)"
+    }
+  ],
+  "requestExample": null,
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "경제용어 검색 성공"
+    },
+    {
+      "status": "400 Bad Request",
+      "description": "잘못된 요청 파라미터"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "서버 오류 발생"
+    }
+  ],
+  "responseExample": {
+    "searchTerm": "빅맥지수",
+    "pagination": {
+      "pageSize": 10,
+      "totalPages": 1,
+      "hasPrevious": false,
+      "currentPage": 1,
+      "hasNext": false,
+      "totalCount": 1
+    },
+    "data": [
+      {
+        "id": 658,
+        "keyword": "경제",
+        "title": "빅맥지수",
+        "definition": "세계 각국에서 판매되고 있는 맥도날드 빅맥 햄버거의 가격을 미국에서의 판매가격과 같게 만들어주는 환율. 영국의 경제주간지 「이코노미스트(The Economist)」가 1986년부터 매년 조사, 발표하고 있다. 만일 실제환율이 빅맥지수보다 낮으면 해당 국가의 통화가 고평가되어 있음을, 반대로 높으면 저평가되어 있는 것으로 해석할 수 있다."
+      }
+    ],
+    "success": true,
+    "message": "검색이 완료되었습니다."
+  },
+  "curlExample": "curl -X GET \"http://localhost:8080/api/terms/search?term=빅맥지수\""
+}

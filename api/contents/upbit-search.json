@@ -1,0 +1,77 @@
+{
+  "id": "upbit-search",
+  "title": "업비트 암호화폐 검색",
+  "description": "키워드를 통해 업비트 거래소에서 거래되는 암호화폐를 검색합니다. 한국어명, 영어명, 심볼로 검색이 가능합니다.",
+  "method": "GET",
+  "endpoint": "/api/upbit/search/{market}",
+  "headers": [
+    {
+      "name": "Accept",
+      "value": "application/json",
+      "required": false,
+      "description": "응답 형식 지정"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "keyword",
+      "type": "string",
+      "required": true,
+      "description": "검색할 키워드 (암호화폐종목 코드)"
+    },
+    {
+      "name": "limit",
+      "type": "integer",
+      "required": false,
+      "description": "검색 결과 개수 (기본값: 20, 최대: 100)"
+    }
+  ],
+  "requestExample": null,
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "암호화폐 검색 성공"
+    },
+    {
+      "status": "400 Bad Request",
+      "description": "필수 파라미터 누락 또는 잘못된 값"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "서버 오류 발생"
+    }
+  ],
+  "responseExample": {
+    "success": true,
+    "message": "종목 KRW-BTC의 데이터 30건을 조회했습니다.",
+    "data": [
+      {
+        "id": 5280,
+        "market": "KRW-BTC",
+        "candleDateTime": 1754956800000,
+        "openingPrice": 164210000.0,
+        "tradePrice": 163857000.0,
+        "prevClosingPrice": 164210000.0,
+        "changeRate": -0.0021496864,
+        "accTradeVolume24h": 469.13763398,
+        "accTradePrice24h": 7.695321582347066e10,
+        "createdAt": 1754981469000,
+        "updatedAt": 1754981469000
+      },
+      {
+        "id": 5281,
+        "market": "KRW-BTC",
+        "candleDateTime": 1754870400000,
+        "openingPrice": 163860000.0,
+        "tradePrice": 164210000.0,
+        "prevClosingPrice": 163859000.0,
+        "changeRate": 0.0021420856,
+        "accTradeVolume24h": 3218.61763068,
+        "accTradePrice24h": 5.3243454861083026e11,
+        "createdAt": 1754981469000,
+        "updatedAt": 1754981469000
+      }
+    ]
+  },
+  "curlExample": "curl -X GET \"http://localhost:8080/api/upbit/search/KRW-BTC\""
+}
