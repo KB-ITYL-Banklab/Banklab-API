@@ -1,0 +1,29 @@
+{
+  "id": "auth-reissue",
+  "title": "Access Token 재발급",
+  "description": "만료된 Access Token을 Refresh Token을 사용하여 재발급합니다.",
+  "method": "POST",
+  "endpoint": "/api/auth/reissue",
+  "headers": [
+    {
+      "name": "Cookie",
+      "value": "자동 전송",
+      "required": true,
+      "description": "로그인 시 발급된 Refresh Token이 HttpOnly 쿠키에 저장되며 브라우저 요청 시 자동 포함됨"
+    }
+  ],
+  "parameters": [],
+  "requestExample": null,
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "Access Token 재발급 성공"
+    },
+    {
+      "status": "401 Unauthorized",
+      "description": "Refresh Token이 유효하지 않거나 탈취된 것으로 의심"
+    }
+  ],
+  "responseExample": null,
+  "curlExample": "curl -X POST 'https://api.banklab.app/api/auth/reissue' --cookie \"refreshToken=...\" -i"
+}

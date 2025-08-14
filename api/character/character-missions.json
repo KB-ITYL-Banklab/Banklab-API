@@ -1,0 +1,80 @@
+{
+  "id": "character-missions",
+  "title": "캐릭터 미션 목록 조회 및 동기화",
+  "description": "캐릭터 페이지 진입 시 호출됩니다. 사용자의 현재 상태를 기반으로 미션 완료 여부를 확인하고, 현재 진행 가능한 미션 목록과 진행도를 반환합니다.",
+  "method": "GET",
+  "endpoint": "/api/character/missions",
+  "headers": [
+    {
+      "name": "Cookie",
+      "value": "자동 전송",
+      "required": true,
+      "description": "로그인 시 발급된 Access Token이 HttpOnly 쿠키에 저장되며 브라우저 요청 시 자동 포함됨"
+    }
+  ],
+  "parameters": [],
+  "requestExample": null,
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "미션 목록 조회 및 갱신 성공"
+    },
+    {
+      "status": "401 Unauthorized",
+      "description": "인증 실패 (토큰 없음/만료)"
+    }
+  ],
+  "responseExample": {
+    "data": {
+      "required": [
+        {
+          "type": "CRITERIA",
+          "title": "목적성 금융상품 3개 이상 보유",
+          "description": "입출금 외 금융상품을 3개 이상 보유하거나 신규 가입해보세요",
+          "rewardExp": 60,
+          "targetValue": 3,
+          "missionCycle": "NONE",
+          "progressValue": 0,
+          "completed": false
+        },
+        {
+          "type": "REQUIRED",
+          "title": "유형검사 누적 3회 완료",
+          "description": "투자 성향 유형검사를 누적 3회 이상 진행하여 성향 변화를 확인해보세요",
+          "rewardExp": 10,
+          "targetValue": 3,
+          "missionCycle": "NONE",
+          "progressValue": 1,
+          "completed": false
+        }
+      ],
+      "optional": [
+        {
+          "type": "OPTIONAL",
+          "title": "퀴즈 정답률 70% 이상",
+          "description": "최소 20문제 이상을 풀고 정답률 70% 이상 달성해보세요",
+          "rewardExp": 3,
+          "targetValue": 70,
+          "missionCycle": "WEEKLY",
+          "progressValue": 0,
+          "completed": false
+        }
+      ],
+      "persistent": [
+        {
+          "type": "PERSISTENT",
+          "title": "최근 30일 내 금융 활동",
+          "description": "퀴즈/차트/뉴스/용어 열람 등의 금융 활동을 진행하세요",
+          "rewardExp": 0,
+          "targetValue": 1,
+          "missionCycle": "NONE",
+          "progressValue": 1,
+          "completed": true
+        }
+      ]
+    },
+    "success": true,
+    "message": "미션 목록 조회 성공"
+  },
+  "curlExample": "curl -X GET 'https://api.banklab.app/api/character/missions' -H 'Authorization: Bearer {token}'"
+}

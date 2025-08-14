@@ -1,0 +1,57 @@
+{
+  "id": "member-join",
+  "title": "회원가입",
+  "description": "새로운 회원을 등록합니다. 이메일, 비밀번호, 이름, 생년월일, 성별, 전화번호를 입력받아 계정을 생성합니다.",
+  "method": "POST",
+  "endpoint": "/api/member",
+  "headers": [
+    {
+      "name": "Content-Type",
+      "value": "application/json",
+      "required": true,
+      "description": "요청 본문 JSON"
+    }
+  ],
+  "parameters": [],
+  "requestExample": {
+    "email": "banklab@example.com",
+    "password": "password123!",
+    "name": "김뱅크",
+    "phone": "01012345678",
+    "gender": "FEMALE",
+    "birth": "2009-10-16"
+  },
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "회원가입 성공"
+    },
+    {
+      "status": "400 Bad Request",
+      "description": "비밀번호 형식이 올바르지 않습니다."
+    },
+    {
+      "status": "400 Bad Request",
+      "description": "이메일 인증을 먼저 완료하세요."
+    },
+    {
+      "status": "400 Bad Request",
+      "description": "전화번호 인증을 먼저 완료하세요."
+    },
+    {
+      "status": "400 Bad Request",
+      "description": "이미 가입된 전화번호입니다."
+    }
+  ],
+  "responseExample": {
+    "email": "banklab@example.com",
+    "phone": "01012345678",
+    "name": "김뱅크",
+    "gender": "FEMALE",
+    "birth": "2009-10-16",
+    "regDate": 1753409899000,
+    "updateDate": 1753409899000,
+    "authList": ["ROLE_MEMBER"]
+  },
+  "curlExample": "curl -X POST 'https://api.banklab.app/api/member' -H 'Content-Type: application/json' -d '{\"email\":\"banklab@example.com\",\"password\":\"password123!\",\"name\":\"김뱅크\",\"phone\":\"01012345678\",\"gender\":\"FEMALE\",\"birth\":\"2009-10-16\"}'"
+}

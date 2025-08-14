@@ -10,6 +10,12 @@
       "value": "Bearer {token}",
       "required": true,
       "description": "JWT 액세스 토큰"
+    },
+    {
+      "name": "Cookie",
+      "value": "자동 전송",
+      "required": true,
+      "description": "로그인 시 발급된 Access Token이 HttpOnly 쿠키에 저장되며 브라우저 요청 시 자동 포함됨"
     }
   ],
   "parameters": null,

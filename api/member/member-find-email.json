@@ -1,0 +1,43 @@
+{
+  "id": "member-find-email",
+  "title": "ID(이메일) 찾기",
+  "description": "사용자의 개인 정보(이름, 생년월일, 전화번호)를 기반으로 가입 시 사용한 이메일 주소를 찾습니다.",
+  "method": "POST",
+  "endpoint": "/api/member/find/email",
+  "headers": [
+    {
+      "name": "Content-Type",
+      "value": "application/json",
+      "required": true,
+      "description": "요청 본문 JSON"
+    }
+  ],
+  "parameters": [],
+  "requestExample": {
+    "name": "김뱅크",
+    "birth": "1990-01-01",
+    "phone": "01012345678"
+  },
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "이메일 찾기 성공"
+    },
+    {
+      "status": "400 Bad Request",
+      "description": "전화번호 인증을 먼저 완료하세요."
+    },
+    {
+      "status": "400 Bad Request",
+      "description": "입력하신 정보와 일치하는 계정이 없습니다."
+    }
+  ],
+  "responseExample": {
+    "data": {
+      "email": "user@example.com",
+      "regDate": "2025-08-08",
+      "provider": "LOCAL"
+    }
+  },
+  "curlExample": "curl -X POST 'https://api.banklab.app/api/member/find/email' -H 'Content-Type: application/json' -d '{\"name\":\"김뱅크\", \"birth\":\"1990-01-01\", \"phone\":\"01012345678\"}'"
+}

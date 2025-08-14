@@ -1,0 +1,27 @@
+{
+  "id": "member-check-email",
+  "title": "ID(이메일) 존재 여부 확인",
+  "description": "회원가입 또는 비밀번호 찾기 시, 입력된 이메일이 이미 시스템에 등록되어 있는지 확인합니다.",
+  "method": "GET",
+  "endpoint": "/api/member/exist/email/{email}",
+  "headers": [],
+  "parameters": [
+    {
+      "name": "email",
+      "type": "string",
+      "required": true,
+      "description": "존재 여부를 확인할 이메일 주소"
+    }
+  ],
+  "requestExample": null,
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "이메일 존재 여부 (true: 존재함, false: 존재하지 않음)"
+    }
+  ],
+  "responseExample": {
+    "data": true
+  },
+  "curlExample": "curl -X GET 'https://api.banklab.app/api/member/exist/email/user@example.com'"
+}
