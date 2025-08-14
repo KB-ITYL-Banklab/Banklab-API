@@ -40,7 +40,39 @@
       "path": "transaction",
       "apis": ["get-transaction", "status-transaction"]
     },
-
-       
+    {
+      "name": "유형검사",
+      "path": "typetest",
+      "apis": [
+        "question-list",
+        "submit-answers",
+        "get-user-investment-type",
+        "get-investment-type-result",
+        "get-all-investment-products"
+      ]
+    },
+    {
+      "name": "상품",
+      "path": "products",
+      "apis": [
+        "deposit-detail",
+        "savings-detail",
+        "creditloan-detail",
+        "annuity-detail",
+        "mortgage-loan-detail",
+        "renthouse-loan-detail"
+      ]
+    },
+    {
+      "name": "금융계산기",
+      "path": "calculator",
+      "apis": [
+        "deposit-calculator",
+        "savings-calculator",
+        "loan-calculator",
+        "annuity-calculator",
+        "get-profile"
+      ]
+    }
   ]
 }

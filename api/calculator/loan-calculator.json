@@ -1,0 +1,113 @@
+{
+  "id": "loan-calculator",
+  "title": "대출 계산기",
+  "description": "대출 금액, 기간, 금리, 거치 기간, 상환 방식을 입력하면 월별 원금과 이자 상환 내역을 계산합니다.",
+  "method": "POST",
+  "endpoint": "/api/calculator/loan",
+  "headers": [
+    {
+      "name": "Content-Type",
+      "value": "application/json",
+      "required": true,
+      "description": "요청 본문 JSON"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "loanAmount",
+      "type": "integer",
+      "required": true,
+      "description": "대출 금액 (원 단위)"
+    },
+    {
+      "name": "loanTermMonths",
+      "type": "integer",
+      "required": true,
+      "description": "대출 기간 (개월)"
+    },
+    {
+      "name": "loanRate",
+      "type": "float",
+      "required": true,
+      "description": "연 이자율 (%)"
+    },
+    {
+      "name": "gracePeriodMonths",
+      "type": "integer",
+      "required": false,
+      "description": "거치 기간 (개월, 기본값 0)"
+    },
+    {
+      "name": "repaymentMethod",
+      "type": "string",
+      "required": true,
+      "description": "상환 방식 (EQUAL_PAYMENT: 원리금균등상환, EQUAL_PRINCIPAL: 원금균등상환, BULLET_PAYMENT: 만기일시상환)"
+    }
+  ],
+  "requestExample": {
+    "loanAmount": 1000000,
+    "loanTermMonths": 12,
+    "loanRate": 3.5,
+    "gracePeriodMonths": 2,
+    "repaymentMethod": "EQUAL_PAYMENT"
+  },
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "상환 스케줄 계산 성공"
+    },
+    {
+      "status": "400 Bad Request",
+      "description": "잘못된 입력 파라미터"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "서버 오류"
+    }
+  ],
+  "responseExample": {
+    "inputConditions": {
+      "loanAmount": 1000000,
+      "loanTermMonths": 12,
+      "loanRate": 3.5,
+      "gracePeriodMonths": 2,
+      "repaymentMethod": "EQUAL_PAYMENT",
+      "repaymentMethodName": "원리금균등상환"
+    },
+    "results": {
+      "loanAmount": 1000000,
+      "totalInterest": 21946,
+      "totalCost": 1021946,
+      "avgMonthlyPrincipal": 83333,
+      "avgMonthlyInterest": 1828,
+      "avgMonthlyPayment": 85162
+    },
+    "schedule": [
+      {
+        "month": 1,
+        "period": "거치기간",
+        "payment": 2917,
+        "principal": 0,
+        "interest": 2917,
+        "balance": 1000000
+      },
+      {
+        "month": 2,
+        "period": "거치기간",
+        "payment": 2917,
+        "principal": 0,
+        "interest": 2917,
+        "balance": 1000000
+      },
+      {
+        "month": 3,
+        "period": "상환기간",
+        "payment": 101612,
+        "principal": 98695,
+        "interest": 2917,
+        "balance": 901305
+      }
+    ]
+  },
+  "curlExample": "curl -X POST https://api.banklab.app/api/calculator/loan \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"loanAmount\":1000000,\"loanTermMonths\":12,\"loanRate\":3.5,\"gracePeriodMonths\":2,\"repaymentMethod\":\"EQUAL_PAYMENT\"}'"
+}

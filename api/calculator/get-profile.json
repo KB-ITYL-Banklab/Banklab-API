@@ -1,0 +1,36 @@
+{
+  "id": "get-profile",
+  "title": "사용자 프로필 부분 조회(금액, 기간)",
+  "description": "계산기 기본 금액과 기본 기간 정보를 조회합니다.",
+  "method": "GET",
+  "endpoint": "/api/calculator/profile",
+  "headers": [
+    {
+      "name": "Authorization",
+      "value": "Bearer {token}",
+      "required": true,
+      "description": "JWT 액세스 토큰"
+    }
+  ],
+  "parameters": null,
+  "requestExample": null,
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "사용자 프로필 정보 조회 성공"
+    },
+    {
+      "status": "401 Unauthorized",
+      "description": "인증 실패 (토큰 없음/만료)"
+    },
+    {
+      "status": "500 Internal Server Error",
+      "description": "서버 오류"
+    }
+  ],
+  "responseExample": {
+    "defaultAmount": 1000000,
+    "defaultTermMonths": 6
+  },
+  "curlExample": "curl -X GET https://api.banklab.app/api/calculator/profile \\\n  -H \"Authorization: Bearer {token}\""
+}
