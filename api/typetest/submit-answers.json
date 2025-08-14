@@ -1,0 +1,60 @@
+{
+  "id": "submit-answers",
+  "title": "투자 성향 설문 응답 제출",
+  "description": "사용자의 투자 성향 설문 답변을 저장하고, 투자 유형을 분석합니다.",
+  "method": "POST",
+  "endpoint": "/api/typetest/submit",
+  "headers": [
+    {
+      "name": "Content-Type",
+      "value": "application/json",
+      "required": true,
+      "description": "요청 본문은 JSON 형식"
+    },
+    {
+      "name": "Authorization",
+      "value": "Bearer {token}",
+      "required": true,
+      "description": "JWT 액세스 토큰"
+    }
+  ],
+  "parameters": [],
+  "requestExample": {
+    "answers": [
+      { "question_id": 1, "choice": "A" },
+      { "question_id": 2, "choice": "A" },
+      { "question_id": 3, "choice": "A" },
+      { "question_id": 4, "choice": "A" },
+      { "question_id": 5, "choice": "A" },
+      { "question_id": 6, "choice": "A" },
+      { "question_id": 7, "choice": "A" },
+      { "question_id": 8, "choice": "A" },
+      { "question_id": 9, "choice": "A" },
+      { "question_id": 10, "choice": "A" },
+      { "question_id": 11, "choice": "A" },
+      { "question_id": 12, "choice": "B" },
+      { "question_id": 13, "choice": "B" }
+    ]
+  },
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "응답 저장 및 투자 성향 분석 성공"
+    },
+    {
+      "status": "400 Bad Request",
+      "description": "질문 형식 오류 또는 응답 누락"
+    },
+    {
+      "status": "401 Unauthorized",
+      "description": "인증 실패"
+    }
+  ],
+  "responseExample": {
+    "userId": 1,
+    "investmentTypeId": 1,
+    "investmentTypeName": "안전형",
+    "message": "유형검사 답변 저장 및 투자유형 계산 완료"
+  },
+  "curlExample": "curl -X POST https://api.banklab.app//api/typetest/submit \\\n  -H \"Content-Type: application/json\" \\\n  -H \"Authorization: Bearer {token}\" \\\n  -d '{\n    \"answers\": [\n      { \"question_id\": 1, \"choice\": \"A\" },\n      { \"question_id\": 2, \"choice\": \"A\" },\n      { \"question_id\": 3, \"choice\": \"A\" },\n      { \"question_id\": 4, \"choice\": \"A\" },\n      { \"question_id\": 5, \"choice\": \"A\" },\n      { \"question_id\": 6, \"choice\": \"A\" },\n      { \"question_id\": 7, \"choice\": \"A\" },\n      { \"question_id\": 8, \"choice\": \"A\" },\n      { \"question_id\": 9, \"choice\": \"A\" },\n      { \"question_id\": 10, \"choice\": \"A\" },\n      { \"question_id\": 11, \"choice\": \"A\" },\n      { \"question_id\": 12, \"choice\": \"B\" },\n      { \"question_id\": 13, \"choice\": \"B\" }\n    ]\n  }'"
+}

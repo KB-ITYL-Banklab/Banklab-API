@@ -1,0 +1,89 @@
+{
+  "id": "get-investment-type-result",
+  "title": "투자 유형 결과 및 추천 상품 조회",
+  "description": "사용자 정보를 통해 투자 성향 분석 결과와 해당 유형에 적합한 금융 상품 리스트를 반환합니다.",
+  "method": "GET",
+  "endpoint": "/api/typetest/result",
+  "headers": [
+    {
+      "name": "Authorization",
+      "value": "Bearer {token}",
+      "required": true,
+      "description": "JWT 액세스 토큰 (사용자 정보 포함)"
+    }
+  ],
+  "parameters": [],
+  "requestExample": null,
+  "responses": [
+    {
+      "status": "200 OK",
+      "description": "투자 유형 결과 및 추천 상품 조회 성공"
+    },
+    {
+      "status": "401 Unauthorized",
+      "description": "인증 실패 또는 토큰 없음/만료"
+    },
+    {
+      "status": "404 Not Found",
+      "description": "해당 사용자의 투자유형 정보 없음"
+    }
+  ],
+  "responseExample": {
+    "userId": 1,
+    "investmentTypeId": 1,
+    "investmentTypeName": "안전형",
+    "investmentTypeDesc": "원금 손실을 극도로 꺼리는 성향입니다. 예적금, 국채 등 안정적인 상품 위주로 운용하는 것이 적합합니다. 장기보다는 단기 운용을 선호합니다.",
+    "message": "투자유형 계산이 완료되었습니다.",
+    "recommendedProducts": [
+      {
+        "productId": 31,
+        "productType": "DEPOSIT",
+        "productName": "NH올원e예금",
+        "companyName": "농협은행주식회사",
+        "riskLevel": "LOW",
+        "riskReason": "NH올원e예금은 정기예금 상품으로 기본적인 예금 상품에 해당하며, 우대조건이나 가입제한, 금리변동 등의 복잡한 조건이 없어 위험도가 낮습니다.",
+        "interestRate": "연 2.35~2.55%",
+        "dclsMonth": "202507",
+        "finCoNo": "0013175",
+        "finPrdtCd": "10-003-1384-0001"
+      },
+      {
+        "productId": 13,
+        "productType": "DEPOSIT",
+        "productName": "The플러스예금",
+        "companyName": "광주은행",
+        "riskLevel": "LOW",
+        "riskReason": "이 상품은 예금/적금 기본 상품으로 LOW 위험도에 해당합니다.",
+        "interestRate": "연 2.40~2.45%",
+        "dclsMonth": "202507",
+        "finCoNo": "0010019",
+        "finPrdtCd": "TD11300036000"
+      },
+      {
+        "productId": 40,
+        "productType": "DEPOSIT",
+        "productName": "토스뱅크 먼저 이자 받는 정기예금",
+        "companyName": "토스뱅크 주식회사",
+        "riskLevel": "LOW",
+        "riskReason": "토스뱅크 먼저 이자 받는 정기예금은 우대조건이 없는 기본적인 정기예금 상품으로 저위험 상품입니다.",
+        "interestRate": "연 2.50%",
+        "dclsMonth": "202507",
+        "finCoNo": "0017801",
+        "finPrdtCd": "1001202000002"
+      },
+      {
+        "productId": 37,
+        "productType": "DEPOSIT",
+        "productName": "헤이(Hey)정기예금",
+        "companyName": "수협은행",
+        "riskLevel": "LOW",
+        "riskReason": "헤이(Hey)정기예금은 우대조건이 없는 기본적인 정기예금 상품으로 저위험 상품입니다.",
+        "interestRate": "연 2.65~2.70%",
+        "dclsMonth": "202507",
+        "finCoNo": "0014807",
+        "finPrdtCd": "10120114700011"
+      }
+    ]
+  },
+  "curlExample": "curl -X GET https://api.banklab.app/api/typetest/result \\\n  -H \"Authorization: Bearer {token}\""
+}
