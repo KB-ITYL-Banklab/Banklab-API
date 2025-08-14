@@ -1,0 +1,3777 @@
+{
+  "account": {
+    "account-link": {
+      "id": "account-link",
+      "title": "은행 계좌 연동",
+      "description": "은행 로그인 정보로 계좌를 연동하고 DB에 저장합니다. CODEF API를 통해 실제 금융기관과 연결됩니다.",
+      "method": "POST",
+      "endpoint": "/api/account/link",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "required": true,
+          "description": "요청 본문 JSON"
+        },
+        {
+          "name": "Cookie",
+          "value": "자동 전송",
+          "required": true,
+          "description": "로그인 시 발급된 Access Token이 HttpOnly 쿠키에 저장되며 브라우저 요청 시 자동 포함됨"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "bankId",
+          "type": "string",
+          "required": true,
+          "description": "은행 로그인 아이디"
+        },
+        {
+          "name": "bankPassword",
+          "type": "string",
+          "required": true,
+          "description": "은행 로그인 비밀번호"
+        },
+        {
+          "name": "bankCode",
+          "type": "string",
+          "required": true,
+          "description": "은행 코드 (예시: 0004 - 국민은행)"
+        }
+      ],
+      "requestExample": {
+        "bankId": "myBankId123",
+        "bankPassword": "myBankPassword!",
+        "bankCode": "0004"
+      },
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "계좌 연동 성공"
+        },
+        {
+          "status": "401 Unauthorized",
+          "description": "인증 실패 (토큰 없음/만료)"
+        },
+        {
+          "status": "500 Internal Server Error",
+          "description": "계좌 연동 중 오류 발생"
+        }
+      ],
+      "responseExample": {
+        "data": {
+          "accounts": [
+            {
+              "id": 1,
+              "connectedId": "abcd1234efgh5678",
+              "organization": "0004",
+              "resAccount": "12345678901234",
+              "resAccountName": "KB멋진통장",
+              "resAccountDisplay": "123456-78-901234",
+              "resAccountBalance": "548261",
+              "resAccountDeposit": "11",
+              "resAccountEndDate": "",
+              "resAccountStartDate": "20250801"
+            }
+          ],
+          "savedCount": 1,
+          "connectedId": "abcd1234efgh5678"
+        },
+        "success": true,
+        "message": "계좌 연동이 완료되었습니다."
+      },
+      "curlExample": "curl -X POST https://api.banklab.app/api/account/link \n  -H \"Content-Type: application/json\" \n  -H \"Authorization: Bearer {token}\" \n  -d '{\"bankId\":\"myBankId123\",\"bankPassword\":\"myBankPassword!\",\"bankCode\":\"0020\"}'"
+    },
+    "account-list": {
+      "id": "account-list",
+      "title": "계좌 목록 조회",
+      "description": "사용자의 연동된 계좌 목록을 조회합니다.",
+      "method": "GET",
+      "endpoint": "/api/account/list",
+      "headers": [
+        {
+          "name": "Cookie",
+          "value": "자동 전송",
+          "required": true,
+          "description": "로그인 시 발급된 Access Token이 HttpOnly 쿠키에 저장되며 브라우저 요청 시 자동 포함됨"
+        }
+      ],
+      "parameters": [],
+      "requestExample": null,
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "계좌 목록 조회 성공"
+        },
+        {
+          "status": "401 Unauthorized",
+          "description": "인증 실패 (토큰 없음/만료)"
+        },
+        {
+          "status": "500 Internal Server Error",
+          "description": "계좌 목록 조회 중 오류 발생"
+        }
+      ],
+      "responseExample": {
+        "data": {
+          "accounts": [
+            {
+              "id": 1,
+              "connectedId": "abcd1234efgh5678",
+              "organization": "0004",
+              "resAccount": "12345678901234",
+              "resAccountName": "KB멋진통장",
+              "resAccountDisplay": "123456-78-901234",
+              "resAccountBalance": "548261",
+              "resAccountDeposit": "11",
+              "resAccountEndDate": "",
+              "resAccountStartDate": "20250801"
+            }
+          ],
+          "count": 1
+        },
+        "success": true,
+        "message": "계좌 목록 조회 완료"
+      },
+      "curlExample": "curl -X GET https://api.banklab.app/api/account/list -H \"Authorization: Bearer {token}\""
+    },
+    "account-refresh": {
+      "id": "account-refresh",
+      "title": "계좌 잔액 새로고침",
+      "description": "사용자 계좌의 잔액을 새로고침합니다.",
+      "method": "PUT",
+      "endpoint": "/api/account/refresh",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "required": true,
+          "description": "요청 본문 JSON"
+        },
+        {
+          "name": "Cookie",
+          "value": "자동 전송",
+          "required": true,
+          "description": "로그인 시 발급된 Access Token이 HttpOnly 쿠키에 저장되며 브라우저 요청 시 자동 포함됨"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "bankCode",
+          "type": "string",
+          "required": true,
+          "description": "은행 코드"
+        },
+        {
+          "name": "connectedId",
+          "type": "string",
+          "required": true,
+          "description": "커넥티드 아이디"
+        }
+      ],
+      "requestExample": {
+        "bankCode": "0004",
+        "connectedId": "abcd1234efgh5678"
+      },
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "계좌 잔액 새로고침 완료"
+        },
+        {
+          "status": "401 Unauthorized",
+          "description": "인증 실패 (토큰 없음/만료)"
+        },
+        {
+          "status": "403 Forbidden",
+          "description": "해당 계좌에 대한 권한이 없습니다."
+        },
+        {
+          "status": "500 Internal Server Error",
+          "description": "계좌 잔액 새로고침 중 오류 발생"
+        }
+      ],
+      "responseExample": {
+        "data": {
+          "accounts": [
+            {
+              "id": 1,
+              "connectedId": "abcd1234efgh5678",
+              "organization": "0004",
+              "resAccount": "12345678901234",
+              "resAccountName": "KB멋진통장",
+              "resAccountDisplay": "123456-78-901234",
+              "resAccountBalance": "600000",
+              "resAccountDeposit": "11",
+              "resAccountEndDate": "",
+              "resAccountStartDate": "20250801"
+            }
+          ]
+        },
+        "success": true,
+        "message": "계좌 잔액 새로고침 완료"
+      },
+      "curlExample": "curl -X PUT https://api.banklab.app/api/account/refresh -H \"Content-Type: application/json\" -H \"Authorization: Bearer {token}\" -d '{\"bankCode\":\"0004\",\"connectedId\":\"abcd1234efgh5678\"}'"
+    },
+    "account-transactions": {
+      "id": "account-transactions",
+      "title": "계좌 거래내역 상세 조회",
+      "description": "특정 계좌의 기간별 거래내역 상세 정보를 조회합니다.",
+      "method": "GET",
+      "endpoint": "/api/account/{accountId}/transactions",
+      "headers": [
+        {
+          "name": "Cookie",
+          "value": "자동 전송",
+          "required": true,
+          "description": "로그인 시 발급된 Access Token이 HttpOnly 쿠키에 저장되며 브라우저 요청 시 자동 포함됨"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "accountId",
+          "type": "long",
+          "in": "path",
+          "required": true,
+          "description": "조회할 계좌의 ID"
+        },
+        {
+          "name": "start",
+          "type": "string",
+          "in": "query",
+          "required": false,
+          "description": "조회 시작일 (YYYY-MM-DD)"
+        },
+        {
+          "name": "end",
+          "type": "string",
+          "in": "query",
+          "required": false,
+          "description": "조회 종료일 (YYYY-MM-DD)"
+        }
+      ],
+      "requestExample": {
+        "accountId": 1,
+        "start": "2025-08-11",
+        "end": "2025-08-12"
+      },
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "거래내역 조회 완료"
+        },
+        {
+          "status": "401 Unauthorized",
+          "description": "인증 실패 (토큰 없음/만료)"
+        },
+        {
+          "status": "500 Internal Server Error",
+          "description": "거래내역 조회 중 오류 발생"
+        }
+      ],
+      "responseExample": {
+        "data": {
+          "accountId": 1,
+          "transactions": [
+            {
+              "transactionDate": "2025-08-12",
+              "transactionTime": "15:30:00",
+              "type": "출금",
+              "amount": "50000",
+              "balance": "498261",
+              "description": "온라인 쇼핑"
+            },
+            {
+              "transactionDate": "2025-08-11",
+              "transactionTime": "09:00:00",
+              "type": "입금",
+              "amount": "100000",
+              "balance": "548261",
+              "description": "월급"
+            }
+          ],
+          "count": 2,
+          "period": {
+            "start": "2025-08-01T00:00:00.000+00:00",
+            "end": "2025-08-31T23:59:59.000+00:00"
+          }
+        },
+        "success": true,
+        "message": "거래내역 조회 완료"
+      },
+      "curlExample": "curl -X GET 'https://api.banklab.app/api/account/1/transactions?start=2025-08-01&end=2025-08-31' -H \"Authorization: Bearer {token}\""
+    },
+    "account-unlink": {
+      "id": "account-unlink",
+      "title": "계좌 연동 해제",
+      "description": "로그인한 사용자의 커넥티드 아이디를 삭제하고 계좌 연동을 해제합니다.",
+      "method": "DELETE",
+      "endpoint": "/api/account/unlink",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "required": true,
+          "description": "요청 본문 JSON"
+        },
+        {
+          "name": "Cookie",
+          "value": "자동 전송",
+          "required": true,
+          "description": "로그인 시 발급된 Access Token이 HttpOnly 쿠키에 저장되며 브라우저 요청 시 자동 포함됨"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "bankCode",
+          "type": "string",
+          "required": true,
+          "description": "은행 코드"
+        },
+        {
+          "name": "connectedId",
+          "type": "string",
+          "required": true,
+          "description": "삭제할 계좌의 커넥티드 아이디"
+        }
+      ],
+      "requestExample": {
+        "bankCode": "0004",
+        "connectedId": "abcd1234efgh5678"
+      },
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "계좌 연동 해제 완료"
+        },
+        {
+          "status": "401 Unauthorized",
+          "description": "인증 실패 (토큰 없음/만료)"
+        },
+        {
+          "status": "403 Forbidden",
+          "description": "해당 계좌에 대한 권한이 없습니다."
+        },
+        {
+          "status": "500 Internal Server Error",
+          "description": "계좌 연동 해제 중 오류 발생"
+        }
+      ],
+      "responseExample": {
+        "data": null,
+        "success": true,
+        "message": "계좌 연동 해제가 완료되었습니다."
+      },
+      "curlExample": "curl -X DELETE https://api.banklab.app/api/account/unlink -H \"Content-Type: application/json\" -H \"Authorization: Bearer {token}\" -d '{\"bankCode\":\"0004\",\"connectedId\":\"abcd1234efgh5678\"}'"
+    }
+  },
+  "analysis": {
+    "peer-comparison": {
+      "id": "peer-consumption-comparison",
+      "title": "특정 월 또래 평균 소비 & 카테고리 조회",
+      "description": "현재 로그인한 사용자의 소비 패턴을 같은 연령대의 또래 사용자들과 비교하여 분석 결과를 제공합니다.",
+      "method": "GET",
+      "endpoint": "/api/peer/",
+      "headers": [
+        {
+          "name": "Cookie",
+          "value": "자동 전송",
+          "required": true,
+          "description": "로그인 시 발급된 Access Token이 HttpOnly 쿠키에 저장되며 브라우저 요청 시 자동 포함됨"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "start",
+          "type": "string",
+          "required": false,
+          "description": "비교 분석 시작일 (yyyy-MM-dd)"
+        },
+        {
+          "name": "end",
+          "type": "string",
+          "required": false,
+          "description": "비교 분석 종료일 (yyyy-MM-dd)"
+        }
+      ],
+      "requestExample": null,
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "또래 대비 소비 패턴 조회 성공"
+        },
+        {
+          "status": "401 Unauthorized",
+          "description": "인증 실패 (토큰 없음/만료)"
+        },
+        {
+          "status": "500 Internal Server Error",
+          "description": "조회 중 오류 발생"
+        }
+      ],
+      "responseExample": {
+        "peerAvgTotalExpense": 440995,
+        "categoryComparisons": [
+          {
+            "categoryId": 7,
+            "categoryName": "이체",
+            "avgExpense": 215915.3333
+          },
+          {
+            "categoryId": 2,
+            "categoryName": "주거/통신",
+            "avgExpense": 129366.9091
+          },
+          {
+            "categoryId": 5,
+            "categoryName": "쇼핑",
+            "avgExpense": 103340.1429
+          },
+          {
+            "categoryId": 6,
+            "categoryName": "문화/여가",
+            "avgExpense": 44290.75
+          },
+          {
+            "categoryId": 4,
+            "categoryName": "교통",
+            "avgExpense": 24998
+          },
+          {
+            "categoryId": 3,
+            "categoryName": "식비",
+            "avgExpense": 16271.6923
+          },
+          {
+            "categoryId": 1,
+            "categoryName": "카페/간식",
+            "avgExpense": 5870.1667
+          },
+          {
+            "categoryId": 8,
+            "categoryName": "기타",
+            "avgExpense": 0
+          }
+        ]
+      },
+      "curlExample": "curl -X GET 'https://api.banklab.app/api/peer/?start=2024-07-01&end=2024-07-31' -H \"Authorization: Bearer {token}\""
+    },
+    "transaction-summary": {
+      "id": "transaction-summary",
+      "title": "특정 월 소비 통합 조회",
+      "description": "지정된 기간 동안의 총 수입, 총 지출 및 카테고리별 지출 내역을 요약하여 조회합니다.",
+      "method": "GET",
+      "endpoint": "/api/analysis/summary",
+      "headers": [
+        {
+          "name": "Cookie",
+          "value": "자동 전송",
+          "required": true,
+          "description": "로그인 시 발급된 Access Token이 HttpOnly 쿠키에 저장되며 브라우저 요청 시 자동 포함됨"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "start",
+          "type": "string",
+          "required": false,
+          "description": "조회 시작일 (yyyy-MM-dd)"
+        },
+        {
+          "name": "end",
+          "type": "string",
+          "required": false,
+          "description": "조회 종료일 (yyyy-MM-dd)"
+        }
+      ],
+      "requestExample": null,
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "소비 내역 요약 조회 성공"
+        },
+        {
+          "status": "401 Unauthorized",
+          "description": "인증 실패 (토큰 없음/만료)"
+        },
+        {
+          "status": "500 Internal Server Error",
+          "description": "조회 중 오류 발생"
+        }
+      ],
+      "responseExample": {
+        "data": {
+          "summaries": [
+            {
+              "account": "Total",
+              "monthlySummary": {
+                "totalIncome": 102563,
+                "totalExpense": 690400
+              },
+              "dailyExpense": [
+                {
+                  "date": "2025-08-01",
+                  "totalExpense": 21600
+                },
+                {
+                  "date": "2025-08-02",
+                  "totalExpense": 7300
+                },
+                {
+                  "date": "2025-08-03",
+                  "totalExpense": 0
+                }
+              ],
+              "weeklyExpense": [
+                {
+                  "weekNumber": 1,
+                  "yearMonth": "2025-08",
+                  "startDate": "2025-08-01",
+                  "endDate": "2025-08-02",
+                  "totalExpense": 28900
+                },
+                {
+                  "weekNumber": 2,
+                  "yearMonth": "2025-08",
+                  "startDate": "2025-08-03",
+                  "endDate": "2025-08-09",
+                  "totalExpense": 648700
+                }
+              ],
+              "categoryExpense": [
+                {
+                  "categoryId": 2,
+                  "categoryName": "주거/통신",
+                  "totalExpense": 607500,
+                  "expenseDays": 1,
+                  "avgExpense": null
+                }
+              ]
+            }
+          ]
+        },
+        "success": true,
+        "message": "집계 테이블 조회에 성공했습니다.",
+        "email": "admin@example.com",
+        "memberId": 1
+      },
+      "curlExample": "curl -X GET 'https://api.banklab.app/api/analysis/summary?start=2024-01-01&end=2024-01-31' -H \"Authorization: Bearer {token}\""
+    },
+    "transactionBycategory": {
+      "id": "transaction-details-by-category",
+      "title": "카테고리별 상세 거래 내역 조회",
+      "description": "특정 카테고리에 해당하는 상세 거래 내역 목록을 기간별로 조회합니다.",
+      "method": "GET",
+      "endpoint": "/api/analysis/summary/category/{categoryId}",
+      "headers": [
+        {
+          "name": "Cookie",
+          "value": "자동 전송",
+          "required": true,
+          "description": "로그인 시 발급된 Access Token이 HttpOnly 쿠키에 저장되며 브라우저 요청 시 자동 포함됨"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "categoryId",
+          "type": "long",
+          "required": true,
+          "description": "조회할 카테고리의 ID (Path Variable)"
+        },
+        {
+          "name": "start",
+          "type": "string",
+          "required": false,
+          "description": "조회 시작일 (yyyy-MM-dd)"
+        },
+        {
+          "name": "end",
+          "type": "string",
+          "required": false,
+          "description": "조회 종료일 (yyyy-MM-dd)"
+        }
+      ],
+      "requestExample": null,
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "카테고리별 상세 거래 내역 조회 성공"
+        },
+        {
+          "status": "401 Unauthorized",
+          "description": "인증 실패 (토큰 없음/만료)"
+        },
+        {
+          "status": "500 Internal Server Error",
+          "description": "조회 중 오류 발생"
+        }
+      ],
+      "responseExample": {
+        "data": {
+          "transactions": [
+            {
+              "memberId": 1,
+              "resAccount": "110568497184",
+              "resAccountIn": 0,
+              "resAccountOut": 1600,
+              "resAfterTranBalance": 84063,
+              "resAccountTrDate": "2025-08-13",
+              "resAccountTrTime": "08:43:21",
+              "resAccountDesc3": "대표인증_3"
+            },
+            {
+              "memberId": 1,
+              "resAccount": "110568497184",
+              "resAccountIn": 0,
+              "resAccountOut": 1800,
+              "resAfterTranBalance": 85260,
+              "resAccountTrDate": "2025-08-11",
+              "resAccountTrTime": "18:31:44",
+              "resAccountDesc3": "컴포즈커피(홍"
+            }
+          ]
+        },
+        "success": true,
+        "message": "카테고리별 거래 내역 조회에 성공했습니다.",
+        "email": "admin@example.com",
+        "memberId": 1
+      },
+      "curlExample": "curl -X GET 'https://api.banklab.app/api/analysis/summary/category/1?start=2024-01-01&end=2024-01-31' -H \"Authorization: Bearer {token}\""
+    }
+  },
+  "calculator": {
+    "annuity-calculator": {
+      "id": "annuity-calculator",
+      "title": "연금 계산기",
+      "description": "월 적립금, 초기 일시금, 적립 기간, 이율, 연금 수령 기간을 입력하여 월별 수령액과 총 수령액을 계산합니다.",
+      "method": "POST",
+      "endpoint": "/api/calculator/annuity",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "required": true,
+          "description": "요청 본문 JSON"
+        },
+        {
+          "name": "Cookie",
+          "value": "자동 전송",
+          "required": true,
+          "description": "로그인 시 발급된 Access Token이 HttpOnly 쿠키에 저장되며 브라우저 요청 시 자동 포함됨"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "monthlySaving",
+          "type": "integer",
+          "required": true,
+          "description": "월 적립금 (원 단위)"
+        },
+        {
+          "name": "lumpSum",
+          "type": "integer",
+          "required": true,
+          "description": "초기 일시금 (원 단위)"
+        },
+        {
+          "name": "savingYears",
+          "type": "integer",
+          "required": true,
+          "description": "적립 기간 (년 단위)"
+        },
+        {
+          "name": "rate",
+          "type": "float",
+          "required": true,
+          "description": "연 이자율 (%)"
+        },
+        {
+          "name": "paymentYears",
+          "type": "integer",
+          "required": true,
+          "description": "연금 수령 기간 (년 단위)"
+        }
+      ],
+      "requestExample": {
+        "monthlySaving": 100000,
+        "lumpSum": 1000000,
+        "savingYears": 2,
+        "rate": 2,
+        "paymentYears": 10
+      },
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "연금 계산 성공"
+        },
+        {
+          "status": "400 Bad Request",
+          "description": "잘못된 입력 파라미터"
+        },
+        {
+          "status": "500 Internal Server Error",
+          "description": "서버 오류"
+        }
+      ],
+      "responseExample": {
+        "inputConditions": {
+          "monthlySaving": 100000,
+          "lumpSum": 1000000,
+          "savingYears": 2,
+          "rate": 2,
+          "paymentYears": 10
+        },
+        "results": {
+          "totalPayout": 3839547,
+          "totalMonths": 120,
+          "monthlyPayout": 31996
+        }
+      },
+      "curlExample": "curl -X POST https://api.banklab.app/api/calculator/annuity \
+  -H \"Content-Type: application/json\" \
+  -d '{\"monthlySaving\":100000,\"lumpSum\":1000000,\"savingYears\":2,\"rate\":2.0,\"paymentYears\":10}'"
+    },
+    "deposit-calculator": {
+      "id": "deposit-calculator",
+      "title": "예금 계산기",
+      "description": "예금 원금, 금리, 기간, 이자 계산 방식을 기준으로 세전/세후 수익과 만기 금액을 계산합니다.",
+      "method": "POST",
+      "endpoint": "/api/calculator/deposit",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "required": true,
+          "description": "요청 본문은 JSON 형식이어야 합니다."
+        },
+        {
+          "name": "Cookie",
+          "value": "자동 전송",
+          "required": true,
+          "description": "로그인 시 발급된 Access Token이 HttpOnly 쿠키에 저장되며 브라우저 요청 시 자동 포함됨"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "principal",
+          "type": "number",
+          "required": true,
+          "description": "예치 금액 (원)"
+        },
+        {
+          "name": "rate",
+          "type": "number",
+          "required": true,
+          "description": "연 이율 (%)"
+        },
+        {
+          "name": "termMonths",
+          "type": "integer",
+          "required": true,
+          "description": "예치 기간 (개월)"
+        },
+        {
+          "name": "isCompound",
+          "type": "boolean",
+          "required": true,
+          "description": "복리 여부 (true: 복리, false: 단리)"
+        }
+      ],
+      "requestExample": {
+        "principal": 10000000,
+        "rate": 3.5,
+        "termMonths": 12,
+        "isCompound": false
+      },
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "계산 성공"
+        },
+        {
+          "status": "400 Bad Request",
+          "description": "입력 값 오류 (예: 음수 값)"
+        },
+        {
+          "status": "500 Internal Server Error",
+          "description": "서버 내부 오류"
+        }
+      ],
+      "responseExample": {
+        "inputConditions": {
+          "principal": 10000000,
+          "rate": 3.5,
+          "termMonths": 12,
+          "isCompound": false,
+          "rateType": "단리"
+        },
+        "results": {
+          "totalInterest": 350000,
+          "generalTax": {
+            "categoryName": "일반과세",
+            "maturityAmount": 10296100,
+            "afterTaxInterest": 296100,
+            "taxAmount": 53900,
+            "taxRate": 15.4
+          },
+          "preferentialTax": {
+            "categoryName": "세금우대",
+            "maturityAmount": 10316750,
+            "afterTaxInterest": 316750,
+            "taxAmount": 33250,
+            "taxRate": 9.5
+          },
+          "exemptTax": {
+            "categoryName": "비과세",
+            "maturityAmount": 10350000,
+            "afterTaxInterest": 350000,
+            "taxAmount": 0,
+            "taxRate": 0
+          }
+        }
+      },
+      "curlExample": "curl -X POST https://api.banklab.app/api/calculator/deposit \
+  -H \"Content-Type: application/json\" \
+  -d '{\"principal\":10000000,\"rate\":3.5,\"termMonths\":12,\"isCompound\":false}'"
+    },
+    "get-profile": {
+      "id": "get-profile",
+      "title": "사용자 프로필 부분 조회(금액, 기간)",
+      "description": "계산기 기본 금액과 기본 기간 정보를 조회합니다.",
+      "method": "GET",
+      "endpoint": "/api/calculator/profile",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {token}",
+          "required": true,
+          "description": "JWT 액세스 토큰"
+        },
+        {
+          "name": "Cookie",
+          "value": "자동 전송",
+          "required": true,
+          "description": "로그인 시 발급된 Access Token이 HttpOnly 쿠키에 저장되며 브라우저 요청 시 자동 포함됨"
+        }
+      ],
+      "parameters": null,
+      "requestExample": null,
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "사용자 프로필 정보 조회 성공"
+        },
+        {
+          "status": "401 Unauthorized",
+          "description": "인증 실패 (토큰 없음/만료)"
+        },
+        {
+          "status": "500 Internal Server Error",
+          "description": "서버 오류"
+        }
+      ],
+      "responseExample": {
+        "defaultAmount": 1000000,
+        "defaultTermMonths": 6
+      },
+      "curlExample": "curl -X GET https://api.banklab.app/api/calculator/profile \
+  -H \"Authorization: Bearer {token}\""
+    },
+    "loan-calculator": {
+      "id": "loan-calculator",
+      "title": "대출 계산기",
+      "description": "대출 금액, 기간, 금리, 거치 기간, 상환 방식을 입력하면 월별 원금과 이자 상환 내역을 계산합니다.",
+      "method": "POST",
+      "endpoint": "/api/calculator/loan",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "required": true,
+          "description": "요청 본문 JSON"
+        },
+        {
+          "name": "Cookie",
+          "value": "자동 전송",
+          "required": true,
+          "description": "로그인 시 발급된 Access Token이 HttpOnly 쿠키에 저장되며 브라우저 요청 시 자동 포함됨"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "loanAmount",
+          "type": "integer",
+          "required": true,
+          "description": "대출 금액 (원 단위)"
+        },
+        {
+          "name": "loanTermMonths",
+          "type": "integer",
+          "required": true,
+          "description": "대출 기간 (개월)"
+        },
+        {
+          "name": "loanRate",
+          "type": "float",
+          "required": true,
+          "description": "연 이자율 (%)"
+        },
+        {
+          "name": "gracePeriodMonths",
+          "type": "integer",
+          "required": false,
+          "description": "거치 기간 (개월, 기본값 0)"
+        },
+        {
+          "name": "repaymentMethod",
+          "type": "string",
+          "required": true,
+          "description": "상환 방식 (EQUAL_PAYMENT: 원리금균등상환, EQUAL_PRINCIPAL: 원금균등상환, BULLET_PAYMENT: 만기일시상환)"
+        }
+      ],
+      "requestExample": {
+        "loanAmount": 1000000,
+        "loanTermMonths": 12,
+        "loanRate": 3.5,
+        "gracePeriodMonths": 2,
+        "repaymentMethod": "EQUAL_PAYMENT"
+      },
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "상환 스케줄 계산 성공"
+        },
+        {
+          "status": "400 Bad Request",
+          "description": "잘못된 입력 파라미터"
+        },
+        {
+          "status": "500 Internal Server Error",
+          "description": "서버 오류"
+        }
+      ],
+      "responseExample": {
+        "inputConditions": {
+          "loanAmount": 1000000,
+          "loanTermMonths": 12,
+          "loanRate": 3.5,
+          "gracePeriodMonths": 2,
+          "repaymentMethod": "EQUAL_PAYMENT",
+          "repaymentMethodName": "원리금균등상환"
+        },
+        "results": {
+          "loanAmount": 1000000,
+          "totalInterest": 21946,
+          "totalCost": 1021946,
+          "avgMonthlyPrincipal": 83333,
+          "avgMonthlyInterest": 1828,
+          "avgMonthlyPayment": 85162
+        },
+        "schedule": [
+          {
+            "month": 1,
+            "period": "거치기간",
+            "payment": 2917,
+            "principal": 0,
+            "interest": 2917,
+            "balance": 1000000
+          },
+          {
+            "month": 2,
+            "period": "거치기간",
+            "payment": 2917,
+            "principal": 0,
+            "interest": 2917,
+            "balance": 1000000
+          },
+          {
+            "month": 3,
+            "period": "상환기간",
+            "payment": 101612,
+            "principal": 98695,
+            "interest": 2917,
+            "balance": 901305
+          }
+        ]
+      },
+      "curlExample": "curl -X POST https://api.banklab.app/api/calculator/loan \
+  -H \"Content-Type: application/json\" \
+  -d '{\"loanAmount\":1000000,\"loanTermMonths\":12,\"loanRate\":3.5,\"gracePeriodMonths\":2,\"repaymentMethod\":\"EQUAL_PAYMENT\"}'"
+    },
+    "savings-calculator": {
+      "id": "savings-calculator",
+      "title": "적금 계산기",
+      "description": "월 납입액, 금리, 기간, 복리 여부 등을 입력하여 만기금액 또는 목표금액 달성을 위한 적금 계획을 계산합니다.",
+      "method": "POST",
+      "endpoint": "/api/calculator/savings",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "required": true,
+          "description": "요청 본문은 JSON 형식이어야 합니다."
+        },
+        {
+          "name": "Cookie",
+          "value": "자동 전송",
+          "required": true,
+          "description": "로그인 시 발급된 Access Token이 HttpOnly 쿠키에 저장되며 브라우저 요청 시 자동 포함됨"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "monthlyPayment",
+          "type": "number",
+          "required": false,
+          "description": "월 납입액 (만기금액 계산 시 필수)"
+        },
+        {
+          "name": "rate",
+          "type": "number",
+          "required": true,
+          "description": "연 이율 (%)"
+        },
+        {
+          "name": "termMonths",
+          "type": "integer",
+          "required": true,
+          "description": "저축 기간 (개월)"
+        },
+        {
+          "name": "targetAmount",
+          "type": "number",
+          "required": false,
+          "description": "목표금액 (월 납입액 대신 입력 시, 필요한 월 납입액을 계산)"
+        },
+        {
+          "name": "isCompound",
+          "type": "boolean",
+          "required": true,
+          "description": "복리 여부 (true: 복리, false: 단리)"
+        }
+      ],
+      "requestExample": {
+        "monthlyPayment": 500000,
+        "rate": 3.2,
+        "termMonths": 12,
+        "targetAmount": null,
+        "isCompound": false
+      },
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "계산 성공"
+        },
+        {
+          "status": "400 Bad Request",
+          "description": "입력값 오류 (예: 월 납입액과 목표금액 모두 없음)"
+        },
+        {
+          "status": "500 Internal Server Error",
+          "description": "서버 내부 오류"
+        }
+      ],
+      "responseExample": {
+        "inputConditions": {
+          "monthlyPayment": 500000,
+          "rate": 3.2,
+          "termMonths": 12,
+          "targetAmount": null,
+          "isCompound": false,
+          "rateType": "단리",
+          "calculationType": "MATURITY_AMOUNT"
+        },
+        "results": {
+          "totalInterest": 104000,
+          "generalTax": {
+            "categoryName": "일반과세",
+            "maturityAmount": 6087984,
+            "afterTaxInterest": 87984,
+            "taxAmount": 16016,
+            "taxRate": 15.4
+          },
+          "preferentialTax": {
+            "categoryName": "세금우대",
+            "maturityAmount": 6094120,
+            "afterTaxInterest": 94120,
+            "taxAmount": 9880,
+            "taxRate": 9.5
+          },
+          "exemptTax": {
+            "categoryName": "비과세",
+            "maturityAmount": 6104000,
+            "afterTaxInterest": 104000,
+            "taxAmount": 0,
+            "taxRate": 0
+          }
+        },
+        "savingsSpecific": {
+          "totalPayment": 6000000,
+          "requiredMonthlyPaymentGeneral": null,
+          "requiredMonthlyPaymentPreferential": null,
+          "requiredMonthlyPaymentExempt": null
+        }
+      },
+      "additionalRequestExample": {
+        "rate": 3,
+        "termMonths": 26,
+        "targetAmount": 10000000,
+        "isCompound": false
+      },
+      "additionalResponseExample": {
+        "inputConditions": {
+          "monthlyPayment": null,
+          "rate": 3,
+          "termMonths": 26,
+          "targetAmount": 10000000,
+          "isCompound": false,
+          "rateType": "단리",
+          "calculationType": "TARGET_AMOUNT"
+        },
+        "results": null,
+        "savingsSpecific": {
+          "totalPayment": null,
+          "requiredMonthlyPaymentGeneral": 373939,
+          "requiredMonthlyPaymentPreferential": 373216,
+          "requiredMonthlyPaymentExempt": 372058
+        }
+      },
+      "curlExample": "curl -X POST https://api.banklab.app/api/calculator/savings \
+  -H \"Content-Type: application/json\" \
+  -d '{\"monthlyPayment\":500000,\"rate\":3.2,\"termMonths\":12,\"isCompound\":false}'"
+    }
+  },
+  "cash": {
+    "cash-get": {
+      "id": "cash-get",
+      "title": "현금 정보 조회",
+      "description": "로그인한 사용자의 보유 현금을 조회합니다.",
+      "method": "GET",
+      "endpoint": "/api/cash",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {token}",
+          "required": true,
+          "description": "JWT 액세스 토큰"
+        }
+      ],
+      "parameters": [],
+      "requestExample": null,
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "현금 정보 조회 성공"
+        },
+        {
+          "status": "401 Unauthorized",
+          "description": "인증 실패 (토큰 없음/만료)"
+        },
+        {
+          "status": "500 Internal Server Error",
+          "description": "현금 정보 조회 중 오류 발생"
+        }
+      ],
+      "responseExample": {
+        "data": {
+          "cash": {
+            "id": 1,
+            "memberId": 1,
+            "cashAmount": 1000000
+          }
+        },
+        "success": true,
+        "message": "현금 정보 조회 완료"
+      },
+      "curlExample": "curl -X GET https://api.banklab.app/api/cash \n  -H \"Authorization: Bearer {token}\""
+    },
+    "cash-set": {
+      "id": "cash-set",
+      "title": "현금 금액 설정",
+      "description": "보유 현금 금액을 설정하거나 수정합니다.",
+      "method": "PUT",
+      "endpoint": "/api/cash",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "required": true,
+          "description": "요청 본문 JSON"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {token}",
+          "required": true,
+          "description": "JWT 액세스 토큰"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "amount",
+          "type": "number",
+          "required": true,
+          "description": "설정할 현금 금액 (음수 불가)"
+        }
+      ],
+      "requestExample": {
+        "amount": 1500000
+      },
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "현금 금액 설정 성공"
+        },
+        {
+          "status": "400 Bad Request",
+          "description": "잘못된 요청 (금액 누락 또는 음수)"
+        },
+        {
+          "status": "401 Unauthorized",
+          "description": "인증 실패 (토큰 없음/만료)"
+        },
+        {
+          "status": "500 Internal Server Error",
+          "description": "현금 설정 중 오류 발생"
+        }
+      ],
+      "responseExample": {
+        "data": {
+          "cash": {
+            "id": 1,
+            "memberId": 1,
+            "cashAmount": 1500000
+          }
+        },
+        "success": true,
+        "message": "현금 금액이 설정되었습니다."
+      },
+      "curlExample": "curl -X PUT https://api.banklab.app/api/cash \n  -H \"Content-Type: application/json\" \n  -H \"Authorization: Bearer {token}\" \n  -d '{\"amount\":1500000}'"
+    }
+  },
+  "contents": {
+    "exchange-rate": {
+      "id": "exchange-rate",
+      "title": "환율 정보 조회",
+      "description": "한국수출입은행 환율 API를 통해 실시간 환율 정보를 조회합니다. 주요 5개 통화(미국 달러, 유로, 영국 파운드, 호주 달러, 일본 옌)의 환율 정보를 차트 형식으로 제공합니다.",
+      "method": "GET",
+      "endpoint": "/api/exchange/chart",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json",
+          "required": false,
+          "description": "응답 형식 지정"
+        }
+      ],
+      "parameters": [],
+      "requestExample": null,
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "환율 정보 조회 성공"
+        },
+        {
+          "status": "503 Service Unavailable",
+          "description": "외부 API 서비스 이용 불가"
+        },
+        {
+          "status": "500 Internal Server Error",
+          "description": "서버 오류 발생"
+        }
+      ],
+      "responseExample": {
+        "data": [
+          {
+            "updateDate": "20250813",
+            "name": "호주 달러",
+            "currentPrice": "907.8"
+          },
+          {
+            "updateDate": "20250813",
+            "name": "유로",
+            "currentPrice": "1623.41"
+          },
+          {
+            "updateDate": "20250813",
+            "name": "영국 파운드",
+            "currentPrice": "1876.91"
+          },
+          {
+            "updateDate": "20250813",
+            "name": "일본 옌",
+            "currentPrice": "940.72"
+          },
+          {
+            "updateDate": "20250813",
+            "name": "미국 달러",
+            "currentPrice": "1390.2"
+          }
+        ],
+        "count": 5,
+        "message": "차트용 환율 정보 조회 성공"
+      },
+      "curlExample": "curl -X GET http://localhost:8080/api/exchange/chart"
+    },
+    "finance-quiz": {
+      "id": "finance-quiz",
+      "title": "경제 퀴즈",
+      "description": "경제 퀴즈를 제공하고 사용자 답변을 검증합니다. 오늘의 퀴즈 3문제를 제공하며, 사용자별 퀴즈 통계를 관리합니다.",
+      "method": "GET",
+      "endpoint": "/api/quiz/today",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {token}",
+          "required": false,
+          "description": "JWT 액세스 토큰 (선택사항, 로그인 시 퀴즈 완료 여부 확인)"
+        }
+      ],
+      "parameters": [],
+      "requestExample": null,
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "오늘의 퀴즈 조회 성공"
+        },
+        {
+          "status": "403 Forbidden",
+          "description": "이미 오늘 퀴즈를 완료함"
+        },
+        {
+          "status": "500 Internal Server Error",
+          "description": "서버 오류 발생"
+        }
+      ],
+      "responseExample": {
+        "alreadySolved": false,
+        "success": true,
+        "quizzes": [
+          {
+            "id": 49,
+            "quizType": "OX퀴즈",
+            "question": "회사가 자본금과 주식의 수를 줄여 자본을 감소시킬 때 자본금의 감소로 발생한 환급 또는 소멸된 주식의 보상액을 주주에게 지급하는 것을 유상감자라고 한다.",
+            "option1": null,
+            "option2": null,
+            "option3": null,
+            "option4": null,
+            "answer": "1",
+            "explanation": "회사가 주식 수를 줄여 자본을 감소시킬 때 회사에서 자본금의 감소로 발생한 환급 또는 소멸된 주식의 대가를 주주에게 지급하는 것을 말한다.",
+            "options": [],
+            "oxquiz": true
+          }
+        ],
+        "message": "오늘의 퀴즈를 성공적으로 조회했습니다."
+      },
+      "curlExample": "curl -X GET http://localhost:8080/api/quiz/today -H \"Authorization: Bearer {token}\""
+    },
+    "finance-terms-detail": {
+      "id": "finance-terms-detail",
+      "title": "경제용어 상세 조회",
+      "description": "특정 경제용어의 상세 정보를 조회합니다. 용어 ID를 통해 해당 용어의 자세한 설명을 확인할 수 있습니다.",
+      "method": "GET",
+      "endpoint": "/api/terms/{id}",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json",
+          "required": false,
+          "description": "응답 형식 지정"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "type": "long",
+          "required": true,
+          "description": "조회할 경제용어의 고유 ID (Path Variable)"
+        }
+      ],
+      "requestExample": null,
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "경제용어 상세 조회 성공"
+        },
+        {
+          "status": "404 Not Found",
+          "description": "해당 ID의 경제용어가 존재하지 않음"
+        },
+        {
+          "status": "500 Internal Server Error",
+          "description": "서버 오류 발생"
+        }
+      ],
+      "responseExample": {
+        "success": true,
+        "data": {
+          "id": 1,
+          "word": "GDP",
+          "description": "국내총생산(Gross Domestic Product)의 약자로, 한 국가의 영토 안에서 가계, 기업, 정부 등 모든 경제주체가 일정 기간 생산한 재화와 서비스의 부가가치를 시장가격으로 평가하여 합산한 지표입니다."
+        },
+        "message": "경제용어 상세 조회 성공"
+      },
+      "curlExample": "curl -X GET http://localhost:8080/api/terms/1"
+    },
+    "finance-terms-keyword": {
+      "id": "finance-terms-keyword",
+      "title": "경제용어 키워드 기반 검색",
+      "description": "키워드를 기반으로 경제용어를 검색합니다. 부분 일치 검색을 통해 관련된 모든 용어를 찾을 수 있습니다.",
+      "method": "GET",
+      "endpoint": "/api/terms/search",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json",
+          "required": false,
+          "description": "응답 형식 지정"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "keyword",
+          "type": "string",
+          "required": true,
+          "description": "검색할 키워드"
+        },
+        {
+          "name": "page",
+          "type": "integer",
+          "required": false,
+          "description": "페이지 번호 (기본값: 0)"
+        },
+        {
+          "name": "size",
+          "type": "integer",
+          "required": false,
+          "description": "페이지 크기 (기본값: 20)"
+        }
+      ],
+      "requestExample": null,
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "경제용어 검색 성공"
+        },
+        {
+          "status": "400 Bad Request",
+          "description": "필수 파라미터 누락"
+        },
+        {
+          "status": "500 Internal Server Error",
+          "description": "서버 오류 발생"
+        }
+      ],
+      "responseExample": {
+        "success": true,
+        "data": {
+          "content": [
+            {
+              "id": 1,
+              "word": "GDP",
+              "description": "국내총생산(Gross Domestic Product)의 약자로, 한 국가의 영토 안에서 가계, 기업, 정부 등 모든 경제주체가 일정 기간 생산한 재화와 서비스의 부가가치를 시장가격으로 평가하여 합산한 지표입니다."
+            }
+          ],
+          "totalElements": 1,
+          "totalPages": 1,
+          "size": 20,
+          "number": 0
+        },
+        "message": "경제용어 검색 성공"
+      },
+      "curlExample": "curl -X GET \"http://localhost:8080/api/terms/search?keyword=GDP&page=0&size=20\""
+    },
+    "finance-terms-list": {
+      "id": "finance-terms-list",
+      "title": "경제용어 목록 조회",
+      "description": "등록된 모든 경제용어 목록을 페이지네이션과 함께 조회합니다.",
+      "method": "GET",
+      "endpoint": "/api/terms/list-paged",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json",
+          "required": false,
+          "description": "응답 형식 지정"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "page",
+          "type": "integer",
+          "required": false,
+          "description": "페이지 번호 (기본값: 1)"
+        },
+        {
+          "name": "size",
+          "type": "integer",
+          "required": false,
+          "description": "페이지 크기 (기본값: 10)"
+        }
+      ],
+      "requestExample": null,
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "경제용어 목록 조회 성공"
+        },
+        {
+          "status": "500 Internal Server Error",
+          "description": "서버 오류 발생"
+        }
+      ],
+      "responseExample": {
+        "success": true,
+        "data": {
+          "content": [
+            {
+              "id": 1,
+              "keyword": "경제",
+              "title": "1인당 국민소득",
+              "definition": "국민소득을 총국민 수로 나눈 값. 해당 국가의 소득 수준을 보여주는 가장 대표적인 지표이다."
+            },
+            {
+              "id": 2,
+              "keyword": "금융",
+              "title": "2차 시장(Secondary Market)",
+              "definition": "2차 시장은 처음 발행된 증권, 채권 등이 거래되는 발행시장과 구분되며, 이미 발행된 주식들의 거래가 이루어지는 유통시장을 뜻한다. 국내에서는 유가증권시장, 코스닥, 코넥스, 프리보드 시장 등이 2차시장에 해당하며, 외국의 경우?New York Stock Exachange(NYSE), NASDAQ 등이 있다. 2차 시장에서는 주식이 가장 보편적으로 거래 되며, 주식 외에도 뮤추얼 펀드, 채권과 같은 상품 등도 거래된다. 패니매(Fanni Mae), 프레디맥(Freddie Mac)과 같은 기관들은 2차 시장에서 모기지 관련 상품을 거래하며 모기지 증권을 만든다. 
+
+1차 시장(Primary Market)에서는 처음 발행된 주식이나 채권을 등의 거래가 이루어지며, 흔히 알려진 거래 형태는 IPO(Initial Public Offering)이다. 이 때 거래된 증권을 후에 재판매하기 위한 거래 시장이 2차 시장이다. 각각의 거래에서 발생한 수익은 거래 당사자에게 돌아가며, 1차 시장에서 IPO 에 참여한 투자은행, 주식 발행 주체가 되는 회사 등은 2차 시장에서의 거래에 관여하지 않는다."
+            }
+          ]
+        },
+        "message": "경제용어 목록 조회 성공"
+      },
+      "curlExample": "curl -X GET \"http://localhost:8080/api/terms/list?page=0&size=20\""
+    },
+    "finance-terms-random": {
+      "id": "finance-terms-random",
+      "title": "랜덤 경제용어 조회",
+      "description": "무작위로 선택된 경제용어를 조회합니다. 학습 목적으로 다양한 용어를 접할 수 있도록 제공됩니다.",
+      "method": "GET",
+      "endpoint": "/api/terms/random",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json",
+          "required": false,
+          "description": "응답 형식 지정"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "count",
+          "type": "integer",
+          "required": false,
+          "description": "반환할 용어 개수 (기본값: 1, 최대: 10)"
+        }
+      ],
+      "requestExample": null,
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "랜덤 경제용어 조회 성공"
+        },
+        {
+          "status": "400 Bad Request",
+          "description": "잘못된 파라미터 값"
+        },
+        {
+          "status": "500 Internal Server Error",
+          "description": "서버 오류 발생"
+        }
+      ],
+      "responseExample": {
+        "success": true,
+        "data": [
+          {
+            "id": 5,
+            "word": "인플레이션",
+            "description": "전반적인 물가 수준이 지속적으로 상승하는 경제 현상을 말합니다. 통화량 증가, 수요 증가, 공급 부족 등이 원인이 될 수 있습니다."
+          }
+        ],
+        "message": "랜덤 경제용어 조회 성공"
+      },
+      "curlExample": "curl -X GET \"http://localhost:8080/api/terms/random?count=1\""
+    },
+    "finance-terms": {
+      "id": "finance-terms",
+      "title": "경제용어 조회",
+      "description": "경제용어 정보를 조회합니다. 키워드 기반 검색을 통해 관련 용어들을 찾을 수 있습니다.",
+      "method": "GET",
+      "endpoint": "/api/terms",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json",
+          "required": false,
+          "description": "응답 형식 지정"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "keyword",
+          "type": "string",
+          "required": true,
+          "description": "검색할 경제용어 키워드"
+        }
+      ],
+      "requestExample": null,
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "경제용어 조회 성공"
+        },
+        {
+          "status": "400 Bad Request",
+          "description": "필수 파라미터 누락"
+        },
+        {
+          "status": "500 Internal Server Error",
+          "description": "서버 오류 발생"
+        }
+      ],
+      "responseExample": {
+        "success": true,
+        "data": [
+          {
+            "id": 1,
+            "word": "GDP",
+            "description": "국내총생산(Gross Domestic Product)의 약자로, 한 국가의 영토 안에서 가계, 기업, 정부 등 모든 경제주체가 일정 기간 생산한 재화와 서비스의 부가가치를 시장가격으로 평가하여 합산한 지표입니다."
+          }
+        ],
+        "message": "경제용어 조회 성공"
+      },
+      "curlExample": "curl -X GET \"http://localhost:8080/api/terms?keyword=GDP\""
+    },
+    "gold-price": {
+      "id": "gold-price",
+      "title": "금 시세 조회",
+      "description": "실시간 금 시세 정보를 조회합니다. 온스당 가격과 그램당 가격 정보를 제공합니다.",
+      "method": "GET",
+      "endpoint": "/api/gold/chart",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json",
+          "required": false,
+          "description": "응답 형식 지정"
+        }
+      ],
+      "parameters": [],
+      "requestExample": null,
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "금 시세 조회 성공"
+        },
+        {
+          "status": "503 Service Unavailable",
+          "description": "외부 API 서비스 이용 불가"
+        },
+        {
+          "status": "500 Internal Server Error",
+          "description": "서버 오류 발생"
+        }
+      ],
+      "responseExample": {
+        "data": [
+          {
+            "updateDate": "20250812",
+            "name": "금 99.99_1Kg",
+            "currentPrice": "149550"
+          },
+          {
+            "updateDate": "20250812",
+            "name": "미니금 99.99_100g",
+            "currentPrice": "150180"
+          }
+        ],
+        "count": 2,
+        "message": "차트용 금 시세 정보 조회 성공"
+      },
+      "curlExample": "curl -X GET http://localhost:8080/api/gold/chart"
+    },
+    "news": {
+      "id": "news",
+      "title": "뉴스 검색",
+      "description": "키워드를 기반으로 관련 뉴스를 검색합니다. 실시간 뉴스 정보를 제공하여 최신 경제 동향을 파악할 수 있습니다.",
+      "method": "GET",
+      "endpoint": "/api/news/search",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json",
+          "required": false,
+          "description": "응답 형식 지정"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "query",
+          "type": "string",
+          "required": true,
+          "description": "검색할 뉴스 키워드"
+        },
+        {
+          "name": "display",
+          "type": "integer",
+          "required": false,
+          "description": "검색 결과 개수 (기본값: 10, 최대: 100)"
+        },
+        {
+          "name": "start",
+          "type": "integer",
+          "required": false,
+          "description": "검색 시작 위치 (기본값: 1)"
+        },
+        {
+          "name": "sort",
+          "type": "string",
+          "required": false,
+          "description": "정렬 방법 (sim: 정확도순, date: 날짜순, 기본값: date)"
+        }
+      ],
+      "requestExample": null,
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "뉴스 검색 성공"
+        },
+        {
+          "status": "400 Bad Request",
+          "description": "필수 파라미터 누락 또는 잘못된 파라미터 값"
+        },
+        {
+          "status": "503 Service Unavailable",
+          "description": "외부 API 서비스 이용 불가"
+        },
+        {
+          "status": "500 Internal Server Error",
+          "description": "서버 오류 발생"
+        }
+      ],
+      "responseExample": {
+        "success": true,
+        "data": {
+          "items": [
+            {
+              "title": "국내 <b>경제</b> 성장률 전망 상향 조정",
+              "originallink": "https://example.com/news/1",
+              "link": "https://example.com/redirect/1",
+              "description": "<b>경제</b> 전문가들이 올해 국내 경제 성장률을 기존 전망치보다 상향 조정했다고 발표했습니다.",
+              "pubDate": "Wed, 13 Aug 2025 09:30:00 +0900"
+            }
+          ],
+          "total": 1,
+          "start": 1,
+          "display": 10
+        },
+        "message": "뉴스 검색 성공"
+      },
+      "curlExample": "curl -X GET \"http://localhost:8080/api/news/search?query=경제&display=10&start=1&sort=date\""
+    },
+    "quiz-all": {
+      "id": "quiz-all",
+      "title": "전체 퀴즈 조회",
+      "description": "등록된 모든 퀴즈를 페이지네이션과 함께 조회합니다. 관리자나 학습 목적으로 전체 퀴즈 데이터를 확인할 수 있습니다.",
+      "method": "GET",
+      "endpoint": "/api/quiz/all",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {token}",
+          "required": false,
+          "description": "JWT 액세스 토큰 (선택사항)"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "page",
+          "type": "integer",
+          "required": false,
+          "description": "페이지 번호 (기본값: 0)"
+        },
+        {
+          "name": "size",
+          "type": "integer",
+          "required": false,
+          "description": "페이지 크기 (기본값: 10)"
+        }
+      ],
+      "requestExample": null,
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "전체 퀴즈 조회 성공"
+        },
+        {
+          "status": "500 Internal Server Error",
+          "description": "서버 오류 발생"
+        }
+      ],
+      "responseExample": {
+        "success": true,
+        "data": {
+          "content": [
+            {
+              "id": 49,
+              "quizType": "OX퀴즈",
+              "question": "회사가 자본금과 주식의 수를 줄여 자본을 감소시킬 때 자본금의 감소로 발생한 환급 또는 소멸된 주식의 보상액을 주주에게 지급하는 것을 유상감자라고 한다.",
+              "option1": null,
+              "option2": null,
+              "option3": null,
+              "option4": null,
+              "answer": "1",
+              "explanation": "회사가 주식 수를 줄여 자본을 감소시킬 때 회사에서 자본금의 감소로 발생한 환급 또는 소멸된 주식의 대가를 주주에게 지급하는 것을 말한다.",
+              "options": [],
+              "oxquiz": true
+            }
+          ],
+          "totalElements": 100,
+          "totalPages": 10,
+          "size": 10,
+          "number": 0
+        },
+        "message": "전체 퀴즈 조회 성공"
+      },
+      "curlExample": "curl -X GET \"http://localhost:8080/api/quiz/all?page=0&size=10\""
+    },
+    "quiz-daily-result": {
+      "id": "quiz-daily-result",
+      "title": "일일 퀴즈 결과 제출",
+      "description": "사용자의 일일 퀴즈 답변을 제출하고 결과를 확인합니다. 정답 여부와 점수를 반환합니다.",
+      "method": "POST",
+      "endpoint": "/api/quiz/daily/result",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {token}",
+          "required": true,
+          "description": "JWT 액세스 토큰 (필수)"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "required": true,
+          "description": "요청 본문 형식"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "answers",
+          "type": "array",
+          "required": true,
+          "description": "퀴즈 답변 배열 [퀴즈ID와 선택한 답변을 포함]"
+        }
+      ],
+      "requestExample": {
+        "answers": [
+          {
+            "quizId": 49,
+            "selectedAnswer": "1"
+          },
+          {
+            "quizId": 50,
+            "selectedAnswer": "2"
+          },
+          {
+            "quizId": 51,
+            "selectedAnswer": "3"
+          }
+        ]
+      },
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "퀴즈 결과 제출 성공"
+        },
+        {
+          "status": "400 Bad Request",
+          "description": "잘못된 요청 형식 또는 이미 제출된 퀴즈"
+        },
+        {
+          "status": "401 Unauthorized",
+          "description": "인증 토큰이 없거나 유효하지 않음"
+        },
+        {
+          "status": "500 Internal Server Error",
+          "description": "서버 오류 발생"
+        }
+      ],
+      "responseExample": {
+        "success": true,
+        "data": {
+          "totalQuestions": 3,
+          "correctAnswers": 2,
+          "score": 67,
+          "results": [
+            {
+              "quizId": 49,
+              "correct": true,
+              "explanation": "회사가 주식 수를 줄여 자본을 감소시킬 때 회사에서 자본금의 감소로 발생한 환급 또는 소멸된 주식의 대가를 주주에게 지급하는 것을 말한다."
+            },
+            {
+              "quizId": 50,
+              "correct": true,
+              "explanation": "해당 문제의 정답 설명입니다."
+            },
+            {
+              "quizId": 51,
+              "correct": false,
+              "explanation": "해당 문제의 정답 설명입니다."
+            }
+          ]
+        },
+        "message": "퀴즈 결과 제출 성공"
+      },
+      "curlExample": "curl -X POST http://localhost:8080/api/quiz/daily/result -H \"Authorization: Bearer {token}\" -H \"Content-Type: application/json\" -d '{\"answers\":[{\"quizId\":49,\"selectedAnswer\":\"1\"},{\"quizId\":50,\"selectedAnswer\":\"2\"},{\"quizId\":51,\"selectedAnswer\":\"3\"}]}'"
+    },
+    "quiz-statistics": {
+      "id": "quiz-statistics",
+      "title": "퀴즈 통계 조회",
+      "description": "전체 사용자들의 퀴즈 통계 정보를 조회합니다. 평균 점수, 참여율 등의 데이터를 제공합니다.",
+      "method": "GET",
+      "endpoint": "/api/quiz/statistics",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json",
+          "required": false,
+          "description": "응답 형식 지정"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "period",
+          "type": "string",
+          "required": false,
+          "description": "통계 기간 (daily, weekly, monthly, 기본값: daily)"
+        }
+      ],
+      "requestExample": null,
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "퀴즈 통계 조회 성공"
+        },
+        {
+          "status": "500 Internal Server Error",
+          "description": "서버 오류 발생"
+        }
+      ],
+      "responseExample": {
+        "success": true,
+        "data": {
+          "totalParticipants": 1250,
+          "averageScore": 78.5,
+          "totalQuizzes": 150,
+          "completionRate": 85.2,
+          "topScorers": [
+            {
+              "username": "user1",
+              "score": 95
+            },
+            {
+              "username": "user2",
+              "score": 92
+            }
+          ]
+        },
+        "message": "퀴즈 통계 조회 성공"
+      },
+      "curlExample": "curl -X GET \"http://localhost:8080/api/quiz/statistics?period=daily\""
+    },
+    "quiz-user-stats": {
+      "id": "quiz-user-stats",
+      "title": "사용자별 퀴즈 통계",
+      "description": "특정 사용자의 퀴즈 참여 기록과 통계를 조회합니다. 개인의 학습 진도와 성과를 확인할 수 있습니다.",
+      "method": "GET",
+      "endpoint": "/api/quiz/user/statistics",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {token}",
+          "required": true,
+          "description": "JWT 액세스 토큰 (필수)"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "userId",
+          "type": "long",
+          "required": false,
+          "description": "조회할 사용자 ID (미입력시 토큰의 사용자 정보 사용)"
+        },
+        {
+          "name": "period",
+          "type": "string",
+          "required": false,
+          "description": "통계 기간 (daily, weekly, monthly, 기본값: monthly)"
+        }
+      ],
+      "requestExample": null,
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "사용자 퀴즈 통계 조회 성공"
+        },
+        {
+          "status": "401 Unauthorized",
+          "description": "인증 토큰이 없거나 유효하지 않음"
+        },
+        {
+          "status": "404 Not Found",
+          "description": "해당 사용자가 존재하지 않음"
+        },
+        {
+          "status": "500 Internal Server Error",
+          "description": "서버 오류 발생"
+        }
+      ],
+      "responseExample": {
+        "success": true,
+        "data": {
+          "userId": 12345,
+          "username": "testuser",
+          "totalQuizzesTaken": 50,
+          "averageScore": 82.3,
+          "completionRate": 95.5,
+          "scoresByDate": [
+            {
+              "date": "2025-08-12",
+              "score": 90
+            },
+            {
+              "date": "2025-08-11",
+              "score": 75
+            }
+          ]
+        },
+        "message": "사용자 퀴즈 통계 조회 성공"
+      },
+      "curlExample": "curl -X GET \"http://localhost:8080/api/quiz/user/statistics?userId=12345&period=monthly\" -H \"Authorization: Bearer {token}\""
+    }
+  },
+  "character":{
+    "character-create":{
+      "id": "character-create",
+      "title": "캐릭터 생성",
+      "description": "로그인된 사용자의 캐릭터를 생성합니다. 계정당 하나의 캐릭터만 생성할 수 있습니다.",
+      "method": "POST",
+      "endpoint": "/api/character",
+      "headers": [
+        {
+          "name": "Cookie",
+          "value": "자동 전송",
+          "required": true,
+          "description": "로그인 시 발급된 Access Token이 HttpOnly 쿠키에 저장되며 브라우저 요청 시 자동 포함됨"
+        }
+      ],
+      "parameters": [],
+      "requestExample": null,
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "캐릭터 생성 성공"
+        },
+        {
+          "status": "401 Unauthorized",
+          "description": "인증 실패 (토큰 없음/만료)"
+        },
+        {
+          "status": "409 Conflict",
+          "description": "이미 캐릭터가 존재함"
+        }
+      ],
+      "responseExample": {
+        "data": {
+          "level": 1,
+          "exp": 20,
+          "name": "현금보관러",
+          "description": "",
+          "requiredExp": 100,
+          "nextExp": 250,
+          "imageUrl": "Lv1.png"
+        }
+      },
+      "curlExample": "curl -X POST 'https://api.banklab.app/api/character' -H 'Cookie: access_token={accessToken}'"
+    },
+    "character-get":{
+      "id": "character-get",
+      "title": "회원 캐릭터 조회",
+      "description": "로그인된 사용자의 캐릭터 정보를 조회합니다. 캐릭터가 없는 경우, 생성 API를 먼저 호출해야 합니다.",
+      "method": "GET",
+      "endpoint": "/api/character",
+      "headers": [
+        {
+          "name": "Cookie",
+          "value": "자동 전송",
+          "required": true,
+          "description": "로그인 시 발급된 Access Token이 HttpOnly 쿠키에 저장되며 브라우저 요청 시 자동 포함됨"
+        }
+      ],
+      "parameters": [],
+      "requestExample": null,
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "캐릭터 정보 조회 성공"
+        },
+        {
+          "status": "401 Unauthorized",
+          "description": "인증 실패 (토큰 없음/만료)"
+        },
+        {
+          "status": "404 Not Found",
+          "description": "사용자에게 캐릭터가 존재하지 않음"
+        }
+      ],
+      "responseExample": {
+        "data": {
+          "level": 1,
+          "exp": 20,
+          "name": "현금보관러",
+          "description": "",
+          "requiredExp": 100,
+          "nextExp": 250,
+          "imageUrl": "Lv1.png"
+        }
+      },
+      "curlExample": " curl -X GET 'https://api.banklab.app/api/character' --cookie \"accessToken={accessToken}\""
+    },
+    "character-mission":{
+      "id": "character-missions",
+      "title": "캐릭터 미션 목록 조회 및 동기화",
+      "description": "캐릭터 페이지 진입 시 호출됩니다. 사용자의 현재 상태를 기반으로 미션 완료 여부를 확인하고, 현재 진행 가능한 미션 목록과 진행도를 반환합니다.",
+      "method": "GET",
+      "endpoint": "/api/character/missions",
+      "headers": [
+        {
+          "name": "Cookie",
+          "value": "자동 전송",
+          "required": true,
+          "description": "로그인 시 발급된 Access Token이 HttpOnly 쿠키에 저장되며 브라우저 요청 시 자동 포함됨"
+        }
+      ],
+      "parameters": [],
+      "requestExample": null,
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "미션 목록 조회 및 갱신 성공"
+        },
+        {
+          "status": "401 Unauthorized",
+          "description": "인증 실패 (토큰 없음/만료)"
+        }
+      ],
+      "responseExample": {
+        "data": {
+          "required": [
+            {
+              "type": "CRITERIA",
+              "title": "목적성 금융상품 3개 이상 보유",
+              "description": "입출금 외 금융상품을 3개 이상 보유하거나 신규 가입해보세요",
+              "rewardExp": 60,
+              "targetValue": 3,
+              "missionCycle": "NONE",
+              "progressValue": 0,
+              "completed": false
+            },
+            {
+              "type": "REQUIRED",
+              "title": "유형검사 누적 3회 완료",
+              "description": "투자 성향 유형검사를 누적 3회 이상 진행하여 성향 변화를 확인해보세요",
+              "rewardExp": 10,
+              "targetValue": 3,
+              "missionCycle": "NONE",
+              "progressValue": 1,
+              "completed": false
+            }
+          ],
+          "optional": [
+            {
+              "type": "OPTIONAL",
+              "title": "퀴즈 정답률 70% 이상",
+              "description": "최소 20문제 이상을 풀고 정답률 70% 이상 달성해보세요",
+              "rewardExp": 3,
+              "targetValue": 70,
+              "missionCycle": "WEEKLY",
+              "progressValue": 0,
+              "completed": false
+            }
+          ],
+          "persistent": [
+            {
+              "type": "PERSISTENT",
+              "title": "최근 30일 내 금융 활동",
+              "description": "퀴즈/차트/뉴스/용어 열람 등의 금융 활동을 진행하세요",
+              "rewardExp": 0,
+              "targetValue": 1,
+              "missionCycle": "NONE",
+              "progressValue": 1,
+              "completed": true
+            }
+          ]
+        },
+        "success": true,
+        "message": "미션 목록 조회 성공"
+      },
+      "curlExample": "curl -X GET 'https://api.banklab.app/api/character/missions' -H 'Authorization: Bearer {token}'"
+    }
+  },
+  "member":{
+      
+  },
+  "products": {
+    "annuity-detail": {
+      "id": "annuity-detail",
+      "title": "연금저축보험 상품 상세 조회",
+      "description": "금융회사 코드, 금융상품 코드, 공시제출월을 기준으로 연금저축보험의 세부 정보를 조회합니다.",
+      "method": "GET",
+      "endpoint": "/api/annuity/{dclsMonth}/{finCoNo}/{finPrdtCd}",
+      "parameters": [
+        {
+          "name": "dclsMonth",
+          "type": "string",
+          "required": true,
+          "description": "공시 제출월 [YYYYMM]"
+        },
+        {
+          "name": "finCoNo",
+          "type": "string",
+          "required": true,
+          "description": "금융회사 코드"
+        },
+        {
+          "name": "finPrdtCd",
+          "type": "string",
+          "required": true,
+          "description": "금융상품 코드"
+        }
+      ],
+      "requestExample": null,
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "상품 정보 조회 성공"
+        },
+        {
+          "status": "404 Not Found",
+          "description": "상품 정보를 찾을 수 없음"
+        },
+        {
+          "status": "500 Internal Server Error",
+          "description": "서버 오류"
+        }
+      ],
+      "responseExample": {
+        "dclsMonth": "202010",
+        "finCoNo": "0010628",
+        "finPrdtCd": "2920",
+        "finPrdtNm": "연금저축손해보험 롯데 행복한동행 연금보험(2004)",
+        "korCoNm": "롯데손해보험주식회사",
+        "joinWay": "기타",
+        "pnsnKind": "3",
+        "pnsnKindNm": "연금저축보험(손해)",
+        "prdtType": "201",
+        "prdtTypeNm": "금리연동형",
+        "saleStrtDay": "20200401",
+        "mntnCnt": 363,
+        "dclsStrtDay": "2020-10-31",
+        "avgPrftRate": -2.55,
+        "dclsRate": 1.6,
+        "guarRate": "경과기간 5년이하:1.25%\n경과기간 10년이하:1.0%\n경과기간 10년초과:0.3%",
+        "btrmPrftRate1": 1.6,
+        "btrmPrftRate2": 1.65,
+        "btrmPrftRate3": 1.7,
+        "optionCount": 48,
+        "minRecpAmt": 86274,
+        "maxRecpAmt": 1227248,
+        "options": [
+          {
+            "id": 1,
+            "pnsn_recp_trm_nm": "10년 확정",
+            "pnsn_entr_age_nm": "30세",
+            "mon_paym_atm_nm": "100,000원",
+            "paym_prd_nm": "10년",
+            "pnsn_strt_age_nm": "60세",
+            "pnsn_recp_amt": 193520
+          },
+          {
+            "id": 25,
+            "pnsn_recp_trm_nm": "20년 확정",
+            "pnsn_entr_age_nm": "30세",
+            "mon_paym_atm_nm": null,
+            "paym_prd_nm": null,
+            "pnsn_strt_age_nm": "60세",
+            "pnsn_recp_amt": 850901
+          },
+          {
+            "id": 47,
+            "pnsn_recp_trm_nm": "20년 확정",
+            "pnsn_entr_age_nm": "40세",
+            "mon_paym_atm_nm": "300,000원",
+            "paym_prd_nm": "20년",
+            "pnsn_strt_age_nm": "60세",
+            "pnsn_recp_amt": 477712
+          },
+          {
+            "id": 24,
+            "pnsn_recp_trm_nm": "10년 확정",
+            "pnsn_entr_age_nm": "40세",
+            "mon_paym_atm_nm": "300,000원",
+            "paym_prd_nm": "20년",
+            "pnsn_strt_age_nm": "65세",
+            "pnsn_recp_amt": 961218
+          },
+          {
+            "id": 48,
+            "pnsn_recp_trm_nm": "20년 확정",
+            "pnsn_entr_age_nm": "40세",
+            "mon_paym_atm_nm": "300,000원",
+            "paym_prd_nm": "20년",
+            "pnsn_strt_age_nm": "65세",
+            "pnsn_recp_amt": 539647
+          }
+        ]
+      },
+      "curlExample": "curl -X GET https://api.banklab.app/api/annuity/202010/0010628/2920"
+    },
+    "creditloan-detail": {
+      "id": "creditloan-detail",
+      "title": "신용대출 상품 상세 조회",
+      "description": "공시 제출월, 금융회사 코드, 금융상품 코드를 경로 파라미터로 받아 신용대출 상품 상세 정보를 조회합니다.",
+      "method": "GET",
+      "endpoint": "/api/creditloan/{dclsMonth}/{finCoNo}/{finPrdtCd}",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {token}",
+          "required": true,
+          "description": "JWT 액세스 토큰"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "dclsMonth",
+          "type": "string",
+          "required": true,
+          "description": "공시 제출월 [YYYYMM]"
+        },
+        {
+          "name": "finCoNo",
+          "type": "string",
+          "required": true,
+          "description": "금융회사 코드"
+        },
+        {
+          "name": "finPrdtCd",
+          "type": "string",
+          "required": true,
+          "description": "금융상품 코드"
+        }
+      ],
+      "requestExample": null,
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "신용대출 상품 상세 정보 조회 성공"
+        },
+        {
+          "status": "401 Unauthorized",
+          "description": "인증 실패 (토큰 없음/만료)"
+        },
+        {
+          "status": "404 Not Found",
+          "description": "해당 신용대출 상품이 존재하지 않음"
+        },
+        {
+          "status": "500 Internal Server Error",
+          "description": "서버 오류"
+        }
+      ],
+      "responseExample": {
+        "dclsMonth": "202507",
+        "finCoNo": "0010001",
+        "finPrdtCd": "CR0001A",
+        "finPrdtNm": "개인신용대출 우대고객",
+        "korCoNm": "우리은행",
+        "productType": "CREDITLOAN",
+        "joinWay": "영업점,인터넷,스마트폰",
+        "crdtPrdtType": "1",
+        "crdtPrdtTypeNm": "일반신용대출",
+        "cbName": "KCB",
+        "dclsStrtDay": "2025-07-21",
+        "options": [
+          {
+            "id": 1,
+            "crdt_prdt_type": "1",
+            "crdt_lend_rate_type": "A",
+            "crdt_lend_rate_type_nm": "대출금리",
+            "crdt_grad_1": 4.4,
+            "crdt_grad_4": 5.04,
+            "crdt_grad_5": 6.16,
+            "crdt_grad_6": 7.09,
+            "crdt_grad_10": 8.53,
+            "crdt_grad_11": 9.25,
+            "crdt_grad_12": 10.06,
+            "crdt_grad_13": 8.81,
+            "crdt_grad_avg": 4.68
+          },
+          {
+            "id": 2,
+            "crdt_prdt_type": "1",
+            "crdt_lend_rate_type": "B",
+            "crdt_lend_rate_type_nm": "기준금리",
+            "crdt_grad_1": 2.58,
+            "crdt_grad_4": 2.62,
+            "crdt_grad_5": 2.65,
+            "crdt_grad_6": 2.7,
+            "crdt_grad_10": 2.63,
+            "crdt_grad_11": 2.61,
+            "crdt_grad_12": 3.34,
+            "crdt_grad_13": 2.58,
+            "crdt_grad_avg": 2.59
+          },
+          {
+            "id": 3,
+            "crdt_prdt_type": "1",
+            "crdt_lend_rate_type": "C",
+            "crdt_lend_rate_type_nm": "가산금리",
+            "crdt_grad_1": 2.68,
+            "crdt_grad_4": 3.11,
+            "crdt_grad_5": 3.93,
+            "crdt_grad_6": 4.77,
+            "crdt_grad_10": 6.47,
+            "crdt_grad_11": 7.49,
+            "crdt_grad_12": 7.92,
+            "crdt_grad_13": 7.31,
+            "crdt_grad_avg": 2.89
+          },
+          {
+            "id": 4,
+            "crdt_prdt_type": "1",
+            "crdt_lend_rate_type": "D",
+            "crdt_lend_rate_type_nm": "가감조정금리",
+            "crdt_grad_1": 0.86,
+            "crdt_grad_4": 0.69,
+            "crdt_grad_5": 0.42,
+            "crdt_grad_6": 0.38,
+            "crdt_grad_10": 0.57,
+            "crdt_grad_11": 0.85,
+            "crdt_grad_12": 1.2,
+            "crdt_grad_13": 1.08,
+            "crdt_grad_avg": 0.8
+          }
+        ],
+        "optionCount": 4,
+        "minRate": 0.8,
+        "maxRate": 4.68
+      },
+      "curlExample": "curl -X GET \"https://api.example.com/api/creditloan/202507/0010001/CR0001A\" \n  -H \"Authorization: Bearer {token}\""
+    },
+    "deposit-detail": {
+      "id": "deposit-detail",
+      "title": "예금 상품 상세 조회",
+      "description": "공시 제출월, 금융회사 코드, 금융상품 코드를 경로 파라미터로 받아 예금 상품 상세 정보를 조회합니다.",
+      "method": "GET",
+      "endpoint": "/api/deposit/{dclsMonth}/{finCoNo}/{finPrdtCd}",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {token}",
+          "required": true,
+          "description": "JWT 액세스 토큰"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "dclsMonth",
+          "type": "string",
+          "required": true,
+          "description": "공시 제출월 [YYYYMM]"
+        },
+        {
+          "name": "finCoNo",
+          "type": "string",
+          "required": true,
+          "description": "금융회사 코드"
+        },
+        {
+          "name": "finPrdtCd",
+          "type": "string",
+          "required": true,
+          "description": "금융상품 코드"
+        }
+      ],
+      "requestExample": null,
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "예금 상품 상세 정보 조회 성공"
+        },
+        {
+          "status": "401 Unauthorized",
+          "description": "인증 실패 (토큰 없음/만료)"
+        },
+        {
+          "status": "404 Not Found",
+          "description": "해당 예금 상품이 존재하지 않음"
+        },
+        {
+          "status": "500 Internal Server Error",
+          "description": "서버 오류"
+        }
+      ],
+      "responseExample": {
+        "dclsMonth": "202507",
+        "finCoNo": "0010001",
+        "finPrdtCd": "WR0001B",
+        "finPrdtNm": "WON플러스예금",
+        "korCoNm": "우리은행",
+        "productType": "DEPOSIT",
+        "joinWay": "인터넷,스마트폰,전화(텔레뱅킹)",
+        "mtrtInt": "만기 후\n- 1개월이내 : 만기시점약정이율×50%\n- 1개월초과 6개월이내: 만기시점약정이율×30%\n- 6개월초과 : 만기시점약정이율×20%\n\n※ 만기시점 약정이율 : 일반정기예금 금리",
+        "spclCnd": "해당사항 없음",
+        "joinDeny": 1,
+        "joinMember": "실명의 개인",
+        "etcNote": "1. 가입기간: 1~36개월\n2. 가입금액: 1만원 이상\n3. 만기일을 일,월 단위로 자유롭게 선택 가능\n4. 만기해지 시 신규일 당시 영업점과 인터넷 홈페이지에 고시된 계약기간별 금리 적용",
+        "dclsStrtDay": "2025-07-21",
+        "options": [
+          {
+            "id": 1,
+            "intr_rate_type": "S",
+            "intr_rate_type_nm": "단리",
+            "save_trm": "1",
+            "intr_rate": 2.5,
+            "intr_rate2": 2.5
+          },
+          {
+            "id": 2,
+            "intr_rate_type": "S",
+            "intr_rate_type_nm": "단리",
+            "save_trm": "3",
+            "intr_rate": 2.5,
+            "intr_rate2": 2.5
+          }
+        ],
+        "optionCount": 6,
+        "minRate": 2.45,
+        "maxRate": 2.5
+      },
+      "curlExample": "curl -X GET \"https://api.example.com/api/deposit/202507/0010001/WR0001B\" \n  -H \"Authorization: Bearer {token}\""
+    },
+    "mortgage-loan-detail": {
+      "id": "mortgage-loan-detail",
+      "title": "주택담보대출 상품 상세 조회",
+      "description": "금융회사 코드, 상품 코드, 공시 제출월을 기준으로 주택담보대출 상품의 상세 정보를 조회합니다.",
+      "method": "GET",
+      "endpoint": "/api/mortgage-loan/{dclsMonth}/{finCoNo}/{finPrdtCd}",
+      "parameters": [
+        {
+          "name": "dclsMonth",
+          "type": "string",
+          "required": true,
+          "description": "공시 제출월 [YYYYMM]"
+        },
+        {
+          "name": "finCoNo",
+          "type": "string",
+          "required": true,
+          "description": "금융회사 코드"
+        },
+        {
+          "name": "finPrdtCd",
+          "type": "string",
+          "required": true,
+          "description": "금융상품 코드"
+        }
+      ],
+      "requestExample": null,
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "상품 정보 조회 성공"
+        },
+        {
+          "status": "404 Not Found",
+          "description": "상품 정보를 찾을 수 없음"
+        },
+        {
+          "status": "500 Internal Server Error",
+          "description": "서버 오류"
+        }
+      ],
+      "responseExample": {
+        "dclsMonth": "202507",
+        "finCoNo": "0010001",
+        "finPrdtCd": "1054",
+        "finPrdtNm": "우리아파트론",
+        "korCoNm": "우리은행",
+        "productType": "MORTGAGE",
+        "joinWay": "영업점,모집인",
+        "loanInciExpn": "- 인지세 : 해당세액의 50%(대출금액 5천만원 이하시 없음)\n- 국민주택채권 매입 : 대출금액 × 120% × 1% × 채권할인율",
+        "erlyRpayFee": "- 고정금리 : 중도상환대출금×0.74%×잔존기간÷대출기간\n- 변동금리 : 중도상환대출금×0.74%×잔존기간÷대출기간",
+        "dlyRate": "- 적용금리+ 3%\n(가계대출 최고연체이자율 : 12%)",
+        "loanLmt": "LTV 70%",
+        "dclsStrtDay": "20250720",
+        "dclsEndDay": "20260719",
+        "optionCount": 3,
+        "minRate": 4.03,
+        "maxRate": 4.6,
+        "options": [
+          {
+            "id": 1,
+            "mrtg_type_nm": "아파트",
+            "rpay_type_nm": "분할상환방식",
+            "lend_rate_type_nm": "고정금리",
+            "lend_rate_min": 3.62,
+            "lend_rate_max": 4.82,
+            "lend_rate_avg": 4.03
+          },
+          {
+            "id": 2,
+            "mrtg_type_nm": "아파트",
+            "rpay_type_nm": "분할상환방식",
+            "lend_rate_type_nm": "변동금리",
+            "lend_rate_min": 3.84,
+            "lend_rate_max": 5.04,
+            "lend_rate_avg": 4.6
+          },
+          {
+            "id": 3,
+            "mrtg_type_nm": "아파트",
+            "rpay_type_nm": "만기일시상환방식",
+            "lend_rate_type_nm": "변동금리",
+            "lend_rate_min": 4.17,
+            "lend_rate_max": 5.27,
+            "lend_rate_avg": null
+          }
+        ]
+      },
+      "curlExample": "curl -X GET https://api.banklab.app/api/mortgage-loan/202507/0010001/1054"
+    },
+    "renthouse-loan-detail": {
+      "id": "renthouse-loan-detail",
+      "title": "전세자금대출 상품 상세 조회",
+      "description": "금융회사 코드, 상품 코드, 공시 제출월을 기준으로 전세자금대출 상품의 상세 정보를 조회합니다.",
+      "method": "GET",
+      "endpoint": "/api/renthouse-loan/{dclsMonth}/{finCoNo}/{finPrdtCd}",
+      "parameters": [
+        {
+          "name": "dclsMonth",
+          "type": "string",
+          "required": true,
+          "description": "공시 제출월 [YYYYMM]"
+        },
+        {
+          "name": "finCoNo",
+          "type": "string",
+          "required": true,
+          "description": "금융회사 코드"
+        },
+        {
+          "name": "finPrdtCd",
+          "type": "string",
+          "required": true,
+          "description": "금융상품 코드"
+        }
+      ],
+      "requestExample": null,
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "상품 정보 조회 성공"
+        },
+        {
+          "status": "404 Not Found",
+          "description": "상품 정보를 찾을 수 없음"
+        },
+        {
+          "status": "500 Internal Server Error",
+          "description": "서버 오류"
+        }
+      ],
+      "responseExample": {
+        "dclsMonth": "202507",
+        "finCoNo": "0010001",
+        "finPrdtCd": "10561",
+        "korCoNm": "우리은행",
+        "finPrdtNm": "우리전세론(주택금융보증)",
+        "productType": "RENTHOUSE",
+        "joinWay": "영업점,모집인",
+        "loanInciExpn": "- 인지세 : 해당세액의 50%(대출금액 5천만원 이하시 없음)\n- 보증료",
+        "erlyRpayFee": "- 고정금리 : 중도상환대출금×0.52%×잔존기간÷대출기간\n- 변동금리 : 중도상환대출금×0.37%×잔존기간÷대출기간",
+        "dlyRate": "- 적용금리+ 3%\n(가계대출 최고연체이자율 : 12%)",
+        "loanLmt": "최대4.44억원",
+        "dclsStrtDay": "2025-07-20",
+        "dclsEndDay": "2026-07-19",
+        "optionCount": 4,
+        "minRate": 3.51,
+        "maxRate": 4.29,
+        "options": [
+          {
+            "id": 1,
+            "rpay_type_nm": "분할상환방식",
+            "lend_rate_type_nm": "변동금리",
+            "lend_rate_min": 3.51,
+            "lend_rate_max": 4.21,
+            "lend_rate_avg": null
+          },
+          {
+            "id": 2,
+            "rpay_type_nm": "분할상환방식",
+            "lend_rate_type_nm": "고정금리",
+            "lend_rate_min": 3.59,
+            "lend_rate_max": 4.29,
+            "lend_rate_avg": 3.88
+          },
+          {
+            "id": 3,
+            "rpay_type_nm": "만기일시상환방식",
+            "lend_rate_type_nm": "변동금리",
+            "lend_rate_min": 3.51,
+            "lend_rate_max": 4.21,
+            "lend_rate_avg": 4.1
+          },
+          {
+            "id": 4,
+            "rpay_type_nm": "만기일시상환방식",
+            "lend_rate_type_nm": "고정금리",
+            "lend_rate_min": 3.59,
+            "lend_rate_max": 4.29,
+            "lend_rate_avg": 4.0
+          }
+        ]
+      },
+      "curlExample": "curl -X GET https://api.banklab.app/api/renthouse-loan/202507/0010001/10561"
+    },
+    "savings-detail": {
+      "id": "savings-detail",
+      "title": "적금 상품 상세보기",
+      "description": "공시 제출월, 금융회사 코드, 금융상품 코드를 경로 파라미터로 받아 적금 상품 상세 정보를 조회합니다.",
+      "method": "GET",
+      "endpoint": "/api/savings/{dclsMonth}/{finCoNo}/{finPrdtCd}",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {token}",
+          "required": true,
+          "description": "JWT 액세스 토큰"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "dclsMonth",
+          "type": "string",
+          "required": true,
+          "description": "공시 제출월 [YYYYMM]"
+        },
+        {
+          "name": "finCoNo",
+          "type": "string",
+          "required": true,
+          "description": "금융회사 코드"
+        },
+        {
+          "name": "finPrdtCd",
+          "type": "string",
+          "required": true,
+          "description": "금융상품 코드"
+        }
+      ],
+      "requestExample": null,
+      "responses": [
+        {
+          "status": "200 OK",
+          "description": "적금 상품 상세 정보 조회 성공"
+        },
+        {
+          "status": "401 Unauthorized",
+          "description": "인증 실패 (토큰 없음/만료)"
+        },
+        {
+          "status": "404 Not Found",
+          "description": "해당 적금 상품이 존재하지 않음"
+        },
+        {
+          "status": "500 Internal Server Error",
+          "description": "서버 오류"
+        }
+      ],
+      "responseExample": {
+        "dclsMonth": "202507",
+        "finCoNo": "0010001",
+        "finPrdtCd": "WR0001F",
+        "finPrdtNm": "우리SUPER주거래적금",
+        "korCoNm": "우리은행",
+        "productType": "SAVINGS",
+        "joinWay": "영업점,인터넷,스마트폰,전화(텔레뱅킹)",
+        "mtrtInt": "만기 후\n- 1개월이내 : 만기시점약정이율×50%\n- 1개월초과 6개월이내: 만기시점약정이율×30%\n- 6개월초과 : 만기시점약정이율×20%\n\n※ 만기시점 약정이율 : 일반정기적금 금리",
+        "spclCnd": "1. 거래실적 인정기간 동안 우리은행 입출식 계좌에서 아래 각 항목별 실적이 있는 월 수가 계약기간의 1/2이상인 경우\n가. 급여/연금 이체 : 연 0.7%p\n나. 공과금 자동이체 출금 실적 : 0.3%p\n다. 우리카드사 신용/체크카드 결제금액 10만원 이상 출금 : 연 0.3%p\n2. 우리은행 상품서비스 마케팅 동의 항목 중 전화(휴대폰) 및 SMS항목을 모두 동의한 후 만기해지시점까지 유지 : 연 0.1%p\n3. 이 상품 가입 시 금리우대쿠폰을 적용한 경우",
+        "joinDeny": 1,
+        "joinMember": "실명의 개인",
+        "etcNote": "1. 가입기간 : 1년/2년/3년\n2. 가입금액 : 월 50만원 이내",
+        "dclsStrtDay": "2025-08-04",
+        "options": [
+          {
+            "id": 1,
+            "intr_rate_type": "S",
+            "intr_rate_type_nm": "단리",
+            "rsrv_type": "S",
+            "rsrv_type_nm": "정액적립식",
+            "save_trm": "12",
+            "intr_rate": 2.15,
+            "intr_rate2": 3.55
+          },
+          {
+            "id": 4,
+            "intr_rate_type": "S",
+            "intr_rate_type_nm": "단리",
+            "rsrv_type": "F",
+            "rsrv_type_nm": "자유적립식",
+            "save_trm": "12",
+            "intr_rate": 2.15,
+            "intr_rate2": 3.55
+          }
+        ],
+        "optionCount": 6,
+        "minRate": 2.15,
+        "maxRate": 3.55
+      },
+      "curlExample": "curl -X GET \"https://api.example.com/api/savings/202507/0010001/WR0001F\" \n  -H \"Authorization: Bearer {token}\""
+    }
+  },
+  "stocks":{
+    "stock-detail":{
+        "id": "stock-detail",
+        "title": "보유종목 상세정보 조회",
+        "description": "보유종목 ID로 기본정보와 시계열 데이터를 조회합니다.",
+        "method": "GET",
+        "endpoint": "/api/stock/{stockId}/detail",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": "Bearer {token}",
+            "required": true,
+            "description": "JWT 액세스 토큰"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "stockId",
+            "type": "number",
+            "required": true,
+            "description": "보유종목 ID (경로 매개변수)"
+          },
+          {
+            "name": "limit",
+            "type": "number",
+            "required": false,
+            "description": "시계열 데이터 조회 개수 (기본값: 30)"
+          }
+        ],
+        "requestExample": null,
+        "responses": [
+          {
+            "status": "200 OK",
+            "description": "보유종목 상세정보 조회 성공"
+          },
+          {
+            "status": "401 Unauthorized",
+            "description": "인증 실패 (토큰 없음/만료)"
+          },
+          {
+            "status": "404 Not Found",
+            "description": "보유종목을 찾을 수 없음"
+          },
+          {
+            "status": "500 Internal Server Error",
+            "description": "보유종목 상세정보 조회 중 오류 발생"
+          }
+        ],
+        "responseExample": {
+          "data": {
+            "stockInfo": {
+              "id": 1,
+              "resItemName": "삼성전자",
+              "resItemCode": "005930",
+              "quantity": "10",
+              "presentAmt": "75000",
+              "purchaseAmount": "700000",
+              "valuationAmt": "750000",
+              "valuationPL": "50000",
+              "earningsRate": "7.14",
+              "accountCurrency": "KRW",
+              "productType": "주식"
+            },
+            "timeSeriesData": [
+              {
+                "date": "2025-08-13",
+                "closePrice": "75000",
+                "openPrice": "74500",
+                "highPrice": "75500",
+                "lowPrice": "74000",
+                "volume": "1000000"
+              }
+            ],
+            "timeSeriesCount": 1,
+            "timeSeriesLimit": 30
+          },
+          "success": true,
+          "message": "보유종목 상세정보 조회 완료"
+        },
+        "curlExample": "curl -X GET https://api.banklab.app/api/stock/1/detail?limit=30 \n  -H \"Authorization: Bearer {token}\""
+    },
+    "stock-link":{
+        "id": "stock-link",
+        "title": "증권계좌 연동",
+        "description": "증권사 로그인 정보로 계좌를 연동하고 보유종목을 DB에 저장합니다. CODEF API를 통해 실제 금융기관과 연결됩니다.",
+        "method": "POST",
+        "endpoint": "/api/stock/link",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json",
+            "required": true,
+            "description": "요청 본문 JSON"
+          },
+          {
+            "name": "Authorization",
+            "value": "Bearer {token}",
+            "required": true,
+            "description": "JWT 액세스 토큰"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "stockCode",
+            "type": "string",
+            "required": true,
+            "description": "증권사 코드"
+          },
+          {
+            "name": "stockId",
+            "type": "string",
+            "required": true,
+            "description": "증권사 로그인 아이디"
+          },
+          {
+            "name": "stockPassword",
+            "type": "string",
+            "required": true,
+            "description": "증권사 로그인 비밀번호"
+          },
+          {
+            "name": "account",
+            "type": "string",
+            "required": true,
+            "description": "계좌번호"
+          },
+          {
+            "name": "accountPassword",
+            "type": "string",
+            "required": false,
+            "description": "계좌비밀번호(증권사에 따라 필요할 수 있음; Codef API 문서에 명시된 증권사 확인)"
+          }
+        ],
+        "requestExample": {
+          "stockCode": "0243",
+          "stockId": "myStockId123",
+          "stockPassword": "myStockPassword!",
+          "account": "12345678901",
+          "accountPassword": "1234"
+        },
+        "responses": [
+          {
+            "status": "200 OK",
+            "description": "증권계좌 연동 성공"
+          },
+          {
+            "status": "401 Unauthorized",
+            "description": "인증 실패 (토큰 없음/만료)"
+          },
+          {
+            "status": "500 Internal Server Error",
+            "description": "증권계좌 연동 중 오류 발생"
+          }
+        ],
+        "responseExample": {
+          "data": {
+            "connectedId": "abcd1234efgh5678",
+            "savedCount": 3,
+            "stocks": [
+              {
+                "id": 1,
+                "memberId": 1,
+                "connectedId": "abcd1234efgh5678",
+                "organization": "0243",
+                "resAccount": "12345678901",
+                "resItemName": "삼성전자",
+                "resItemCode": "005930",
+                "resQuantity": "10",
+                "resPresentAmt": "75000",
+                "resPurchaseAmount": "700000",
+                "resValuationAmt": "750000",
+                "resValuationPL": "50000",
+                "resEarningsRate": "7.14",
+                "resProductType": "주식",
+                "resAccountCurrency": "KRW"
+              }
+            ]
+          },
+          "success": true,
+          "message": "증권계좌 연동이 완료되었습니다."
+        },
+        "curlExample": "curl -X POST https://api.banklab.app/api/stock/link \n  -H \"Content-Type: application/json\" \n  -H \"Authorization: Bearer {token}\" \n  -d '{\"stockCode\":\"0243\",\"stockId\":\"myStockId123\",\"stockPassword\":\"myStockPassword!\",\"account\":\"12345678901\",\"accountPassword\":\"1234\"}'"
+      },
+    "stock-list":{
+        "id": "stock-list",
+        "title": "보유종목 목록 조회",
+        "description": "사용자의 연동된 증권계좌 보유종목을 조회합니다.",
+        "method": "GET",
+        "endpoint": "/api/stock/list",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": "Bearer {token}",
+            "required": true,
+            "description": "JWT 액세스 토큰"
+          }
+        ],
+        "parameters": [],
+        "requestExample": null,
+        "responses": [
+          {
+            "status": "200 OK",
+            "description": "보유종목 목록 조회 성공"
+          },
+          {
+            "status": "401 Unauthorized",
+            "description": "인증 실패 (토큰 없음/만료)"
+          },
+          {
+            "status": "500 Internal Server Error",
+            "description": "보유종목 목록 조회 중 오류 발생"
+          }
+        ],
+        "responseExample": {
+          "data": {
+            "stocks": [
+              {
+                "id": 1,
+                "memberId": 1,
+                "connectedId": "abcd1234efgh5678",
+                "organization": "0243",
+                "resAccount": "12345678901",
+                "resItemName": "삼성전자",
+                "resItemCode": "005930",
+                "resQuantity": "10",
+                "resPresentAmt": "75000",
+                "resPurchaseAmount": "700000",
+                "resValuationAmt": "750000",
+                "resValuationPL": "50000",
+                "resEarningsRate": "7.14",
+                "resProductType": "주식",
+                "resAccountCurrency": "KRW"
+              }
+            ],
+            "count": 1
+          },
+          "success": true,
+          "message": "보유종목 목록 조회 완료"
+        },
+        "curlExample": "curl -X GET https://api.banklab.app/api/stock/list \n  -H \"Authorization: Bearer {token}\""
+      },
+    "stock-refresh":{
+        "id": "stock-refresh",
+        "title": "보유종목 정보 새로고침",
+        "description": "커넥티드 아이디로 보유종목 정보를 새로고침합니다.",
+        "method": "PUT",
+        "endpoint": "/api/stock/refresh",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json",
+            "required": true,
+            "description": "요청 본문 JSON"
+          },
+          {
+            "name": "Authorization",
+            "value": "Bearer {token}",
+            "required": true,
+            "description": "JWT 액세스 토큰"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "account",
+            "type": "string",
+            "required": true,
+            "description": "계좌번호"
+          },
+          {
+            "name": "connectedId",
+            "type": "string",
+            "required": true,
+            "description": "연동 ID"
+          },
+          {
+            "name": "stockCode",
+            "type": "string",
+            "required": true,
+            "description": "증권사 코드"
+          }
+        ],
+        "requestExample": {
+          "account": "12345678901",
+          "connectedId": "abcd1234efgh5678",
+          "stockCode": "0243"
+        },
+        "responses": [
+          {
+            "status": "200 OK",
+            "description": "보유종목 정보 새로고침 성공"
+          },
+          {
+            "status": "401 Unauthorized",
+            "description": "인증 실패 (토큰 없음/만료)"
+          },
+          {
+            "status": "500 Internal Server Error",
+            "description": "보유종목 정보 새로고침 중 오류 발생"
+          }
+        ],
+        "responseExample": {
+          "data": {
+            "stocks": [
+              {
+                "id": 1,
+                "memberId": 1,
+                "connectedId": "abcd1234efgh5678",
+                "organization": "0243",
+                "resAccount": "12345678901",
+                "resItemName": "삼성전자",
+                "resItemCode": "005930",
+                "resQuantity": "10",
+                "resPresentAmt": "76000",
+                "resPurchaseAmount": "700000",
+                "resValuationAmt": "760000",
+                "resValuationPL": "60000",
+                "resEarningsRate": "8.57",
+                "resProductType": "주식",
+                "resAccountCurrency": "KRW"
+              }
+            ]
+          },
+          "success": true,
+          "message": "보유종목 정보 새로고침 완료"
+        },
+        "curlExample": "curl -X PUT https://api.banklab.app/api/stock/refresh \n  -H \"Content-Type: application/json\" \n  -H \"Authorization: Bearer {token}\" \n  -d '{\"account\":\"12345678901\",\"connectedId\":\"abcd1234efgh5678\",\"stockCode\":\"0243\"}'"
+      },
+    "stock-unlink":{
+        "id": "stock-unlink",
+        "title": "증권계좌 연동 해제",
+        "description": "로그인한 사용자의 커넥티드 아이디를 삭제하고 증권계좌 연동을 해제합니다.",
+        "method": "DELETE",
+        "endpoint": "/api/stock/unlink",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json",
+            "required": true,
+            "description": "요청 본문 JSON"
+          },
+          {
+            "name": "Authorization",
+            "value": "Bearer {token}",
+            "required": true,
+            "description": "JWT 액세스 토큰"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "account",
+            "type": "string",
+            "required": true,
+            "description": "계좌번호"
+          },
+          {
+            "name": "connectedId",
+            "type": "string",
+            "required": true,
+            "description": "연동 ID"
+          },
+          {
+            "name": "stockCode",
+            "type": "string",
+            "required": true,
+            "description": "증권사 코드"
+          }
+        ],
+        "requestExample": {
+          "account": "12345678901",
+          "connectedId": "abcd1234efgh5678",
+          "stockCode": "0243"
+        },
+        "responses": [
+          {
+            "status": "200 OK",
+            "description": "증권계좌 연동 해제 성공"
+          },
+          {
+            "status": "401 Unauthorized",
+            "description": "인증 실패 (토큰 없음/만료)"
+          },
+          {
+            "status": "500 Internal Server Error",
+            "description": "증권계좌 연동 해제 중 오류 발생"
+          }
+        ],
+        "responseExample": {
+          "data": null,
+          "success": true,
+          "message": "증권계좌 연동 해제가 완료되었습니다."
+        },
+        "curlExample": "curl -X DELETE https://api.banklab.app/api/stock/unlink \n  -H \"Content-Type: application/json\" \n  -H \"Authorization: Bearer {token}\" \n  -d '{\"account\":\"12345678901\",\"connectedId\":\"abcd1234efgh5678\",\"stockCode\":\"0243\"}'"
+      }
+      
+
+  },
+  "transaction":{
+    "get-transaction":{
+        "id": "transaction-sync",
+        "title": "거래 내역 연동",
+        "description": "CODEF API를 통해 계좌의 거래 내역을 조회하고 DB에 저장합니다. 비동기로 처리되며, 완료까지 시간이 소요될 수 있습니다.",
+        "method": "POST",
+        "endpoint": "/api/analysis/transaction-list",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json",
+            "required": true,
+            "description": "요청 본문 JSON"
+          },
+          {
+            "name": "Authorization",
+            "value": "Bearer {token}",
+            "required": true,
+            "description": "JWT 액세스 토큰"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "organization",
+            "type": "string",
+            "required": true,
+            "description": "기관 코드 (은행 코드)"
+          },
+          {
+            "name": "connectedId",
+            "type": "string",
+            "required": true,
+            "description": "연결된 계좌의 고유 ID"
+          },
+          {
+            "name": "startDate",
+            "type": "string",
+            "required": true,
+            "description": "조회 시작일 (YYYYMMDD)"
+          },
+          {
+            "name": "endDate",
+            "type": "string",
+            "required": true,
+            "description": "조회 종료일 (YYYYMMDD)"
+          },
+          {
+            "name": "orderBy",
+            "type": "string",
+            "required": false,
+            "description": "정렬 기준 (0:과거순, 1:최신순)"
+          }
+        ],
+        "requestExample": {
+          "organization": "0004",
+          "connectedId": "abcd1234efgh5678",
+          "startDate": "20240101",
+          "endDate": "20240131",
+          "orderBy": "1"
+        },
+        "responses": [
+          {
+            "status": "200 OK",
+            "description": "거래 내역 연동 요청 성공 (비동기 처리 시작)"
+          },
+          {
+            "status": "401 Unauthorized",
+            "description": "인증 실패 (토큰 없음/만료)"
+          },
+          {
+            "status": "500 Internal Server Error",
+            "description": "거래 내역 연동 요청 중 오류 발생"
+          }
+        ],
+        "responseExample": {
+          "success": true,
+          "message": "거래 내역 저장이 완료되었습니다.",
+          "data": {},
+          "email": "user@example.com",
+          "memberId": 1
+        },
+        "curlExample": "curl -X POST https://api.banklab.app/api/analysis/transaction-list -H \"Content-Type: application/json\" -H \"Authorization: Bearer {token}\" -d '{\"organization\":\"0004\",\"connectedId\":\"abcd1234efgh5678\",\"startDate\":\"20240101\",\"endDate\":\"20240131\"}'"
+      },
+    "status-transaction":{
+        "id": "transaction-sync-status",
+        "title": "거래 내역 연동 상태 확인",
+        "description": "계좌의 거래 내역 연동 작업의 현재 상태를 확인합니다. (예: NOT_STARTED, IN_PROGRESS, COMPLETED)",
+        "method": "POST",
+        "endpoint": "/api/analysis/summary/status",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json",
+            "required": true,
+            "description": "요청 본문 JSON"
+          },
+          {
+            "name": "Authorization",
+            "value": "Bearer {token}",
+            "required": true,
+            "description": "JWT 액세스 토큰"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "accountNumber",
+            "type": "string",
+            "required": true,
+            "description": "상태를 확인할 계좌번호"
+          }
+        ],
+        "requestExample": {
+          "accountNumber": "123-456-789"
+        },
+        "responses": [
+          {
+            "status": "200 OK",
+            "description": "상태 조회 성공"
+          },
+          {
+            "status": "401 Unauthorized",
+            "description": "인증 실패 (토큰 없음/만료)"
+          }
+        ],
+        "responseExample": {
+          "status": "COMPLETED"
+        },
+        "curlExample": "curl -X POST https://api.banklab.app/api/analysis/summary/status -H \"Content-Type: application/json\" -H \"Authorization: Bearer {token}\" -d '{\"accountNumber\":\"123-456-789\"}'"
+    }
+      
+  },
+  "typetest":{
+    "get-all-investment-products":{
+        "id": "get-all-investment-products",
+        "title": "투자 유형 기반 전체 상품 조회",
+        "description": "사용자 정보를 통해 해당 투자 성향에 맞는 전체 금융 상품 목록을 반환합니다. 추천 상품 외의 모든 관련 상품이 포함됩니다.",
+        "method": "GET",
+        "endpoint": "/api/typetest/result/all",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": "Bearer {token}",
+            "required": true,
+            "description": "JWT 액세스 토큰 (사용자 정보 포함)"
+          }
+        ],
+        "parameters": [],
+        "requestExample": null,
+        "responses": [
+          {
+            "status": "200 OK",
+            "description": "해당 투자 유형의 전체 금융 상품 조회 성공"
+          },
+          {
+            "status": "401 Unauthorized",
+            "description": "인증 실패 또는 토큰 없음/만료"
+          },
+          {
+            "status": "404 Not Found",
+            "description": "투자 유형 정보 또는 관련 상품 없음"
+          }
+        ],
+        "responseExample": {
+          "userId": 1,
+          "investmentTypeId": 1,
+          "investmentTypeName": "안전형",
+          "investmentTypeDesc": "원금 손실을 극도로 꺼리는 성향입니다. 예적금, 국채 등 안정적인 상품 위주로 운용하는 것이 적합합니다. 장기보다는 단기 운용을 선호합니다.",
+          "message": "전체 상품 조회 완료",
+          "recommendedProducts": [
+            {
+              "productId": 31,
+              "productType": "DEPOSIT",
+              "productName": "NH올원e예금",
+              "companyName": "농협은행주식회사",
+              "riskLevel": "LOW",
+              "riskReason": "NH올원e예금은 정기예금 상품으로 기본적인 예금 상품에 해당하며, 우대조건이나 가입제한, 금리변동 등의 복잡한 조건이 없어 위험도가 낮습니다.",
+              "interestRate": "연 2.35~2.55%",
+              "dclsMonth": "202507",
+              "finCoNo": "0013175",
+              "finPrdtCd": "10-003-1384-0001"
+            },
+            {
+              "productId": 25,
+              "productType": "DEPOSIT",
+              "productName": "IBK굴리기통장(정기예금)",
+              "companyName": "중소기업은행",
+              "riskLevel": "LOW",
+              "riskReason": "IBK굴리기통장은 정기예금 상품으로 기본적인 예금 상품에 해당하며, 우대조건이나 가입제한, 금리변동 등의 복잡한 조건이 없어 위험도가 낮습니다.",
+              "interestRate": "연 2.19~2.31%",
+              "dclsMonth": "202507",
+              "finCoNo": "0010026",
+              "finPrdtCd": "01211310142"
+            }
+          ]
+        },
+        "curlExample": "curl -X GET https://api.banklab.app/api/typetest/result/all \
+  -H \"Authorization: Bearer {token}\""
+      },
+      "get-investment-type-result":{
+        "id": "get-investment-type-result",
+        "title": "투자 유형 결과 및 추천 상품 조회",
+        "description": "사용자 정보를 통해 투자 성향 분석 결과와 해당 유형에 적합한 금융 상품 리스트를 반환합니다.",
+        "method": "GET",
+        "endpoint": "/api/typetest/result",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": "Bearer {token}",
+            "required": true,
+            "description": "JWT 액세스 토큰 (사용자 정보 포함)"
+          }
+        ],
+        "parameters": [],
+        "requestExample": null,
+        "responses": [
+          {
+            "status": "200 OK",
+            "description": "투자 유형 결과 및 추천 상품 조회 성공"
+          },
+          {
+            "status": "401 Unauthorized",
+            "description": "인증 실패 또는 토큰 없음/만료"
+          },
+          {
+            "status": "404 Not Found",
+            "description": "해당 사용자의 투자유형 정보 없음"
+          }
+        ],
+        "responseExample": {
+          "userId": 1,
+          "investmentTypeId": 1,
+          "investmentTypeName": "안전형",
+          "investmentTypeDesc": "원금 손실을 극도로 꺼리는 성향입니다. 예적금, 국채 등 안정적인 상품 위주로 운용하는 것이 적합합니다. 장기보다는 단기 운용을 선호합니다.",
+          "message": "투자유형 계산이 완료되었습니다.",
+          "recommendedProducts": [
+            {
+              "productId": 31,
+              "productType": "DEPOSIT",
+              "productName": "NH올원e예금",
+              "companyName": "농협은행주식회사",
+              "riskLevel": "LOW",
+              "riskReason": "NH올원e예금은 정기예금 상품으로 기본적인 예금 상품에 해당하며, 우대조건이나 가입제한, 금리변동 등의 복잡한 조건이 없어 위험도가 낮습니다.",
+              "interestRate": "연 2.35~2.55%",
+              "dclsMonth": "202507",
+              "finCoNo": "0013175",
+              "finPrdtCd": "10-003-1384-0001"
+            },
+            {
+              "productId": 13,
+              "productType": "DEPOSIT",
+              "productName": "The플러스예금",
+              "companyName": "광주은행",
+              "riskLevel": "LOW",
+              "riskReason": "이 상품은 예금/적금 기본 상품으로 LOW 위험도에 해당합니다.",
+              "interestRate": "연 2.40~2.45%",
+              "dclsMonth": "202507",
+              "finCoNo": "0010019",
+              "finPrdtCd": "TD11300036000"
+            },
+            {
+              "productId": 40,
+              "productType": "DEPOSIT",
+              "productName": "토스뱅크 먼저 이자 받는 정기예금",
+              "companyName": "토스뱅크 주식회사",
+              "riskLevel": "LOW",
+              "riskReason": "토스뱅크 먼저 이자 받는 정기예금은 우대조건이 없는 기본적인 정기예금 상품으로 저위험 상품입니다.",
+              "interestRate": "연 2.50%",
+              "dclsMonth": "202507",
+              "finCoNo": "0017801",
+              "finPrdtCd": "1001202000002"
+            },
+            {
+              "productId": 37,
+              "productType": "DEPOSIT",
+              "productName": "헤이(Hey)정기예금",
+              "companyName": "수협은행",
+              "riskLevel": "LOW",
+              "riskReason": "헤이(Hey)정기예금은 우대조건이 없는 기본적인 정기예금 상품으로 저위험 상품입니다.",
+              "interestRate": "연 2.65~2.70%",
+              "dclsMonth": "202507",
+              "finCoNo": "0014807",
+              "finPrdtCd": "10120114700011"
+            }
+          ]
+        },
+        "curlExample": "curl -X GET https://api.banklab.app/api/typetest/result \
+  -H \"Authorization: Bearer {token}\""
+      },
+      "get-user-investment-type":{
+        "id": "get-user-investment-type",
+        "title": "사용자 투자 유형 조회",
+        "description": "JWT 토큰을 통해 사용자 정보를 추출하여 해당 사용자의 투자 유형을 조회합니다.",
+        "method": "GET",
+        "endpoint": "/api/typetest/user-type",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": "Bearer {token}",
+            "required": true,
+            "description": "JWT 액세스 토큰 (사용자 ID 포함)"
+          }
+        ],
+        "parameters": [],
+        "requestExample": null,
+        "responses": [
+          {
+            "status": "200 OK",
+            "description": "투자 유형 조회 성공"
+          },
+          {
+            "status": "401 Unauthorized",
+            "description": "인증 실패 또는 토큰 없음/만료"
+          },
+          {
+            "status": "404 Not Found",
+            "description": "해당 사용자의 투자유형 정보 없음"
+          }
+        ],
+        "responseExample": {
+          "userId": 1,
+          "investmentTypeId": 3,
+          "investmentTypeName": "공격형",
+          "investmentTypeDesc": "높은 수익률을 기대하며 위험을 감수할 수 있는 성향입니다. 주식, ETF, 레버리지 상품 등 변동성이 큰 상품에도 관심이 많습니다.",
+          "cumulativeViews": 1,
+          "message": "투자유형 조회 성공",
+          "updatedAt": "2025-08-08T09:34:44",
+          "recommendedProducts": null
+        },
+        "curlExample": "curl -X GET https://api.banklab.app/api/typetest/user-type \
+  -H \"Authorization: Bearer {token}\""
+      },
+      "question-list":{
+        "id": "question-list",
+        "title": "설문 질문 리스트",
+        "description": "사용자의 투자 성향 및 제약 조건 파악을 위한 설문 질문 리스트를 제공합니다.",
+        "method": "GET",
+        "endpoint": "/api/typetest/questions",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": "Bearer {token}",
+            "required": true,
+            "description": "JWT 액세스 토큰"
+          }
+        ],
+        "parameters": [],
+        "requestExample": null,
+        "responses": [
+          {
+            "status": "200 OK",
+            "description": "질문 리스트 반환 성공"
+          },
+          {
+            "status": "401 Unauthorized",
+            "description": "인증 실패 (토큰 없음 또는 만료)"
+          }
+        ],
+        "responseExample": {
+          "questions": [
+            {
+              "id": 1,
+              "questionText": "복권 당첨으로 1,000만원이 생겼습니다! 당신의 선택은?",
+              "choiceAText": "은행에 안전하게 넣고 이자 챙긴다",
+              "choiceBText": "주식·펀드 같은 성장 가능성 있는 상품에 도전",
+              "questionType": "PERSONALITY",
+              "isBlocking": false
+            },
+            {
+              "id": 2,
+              "questionText": "증시 폭락 뉴스 속보를 봤습니다.",
+              "choiceAText": "위험하니 당분간 투자를 미룬다",
+              "choiceBText": "오히려 기회라고 생각하고 추가 매수",
+              "questionType": "PERSONALITY",
+              "isBlocking": false
+            },
+            {
+              "id": 3,
+              "questionText": "보유한 투자 상품이 -10% 손실 중입니다.",
+              "choiceAText": "손실 확정하더라도 바로 정리하고 안전하게 이동",
+              "choiceBText": "버틴다, 오히려 추가 매수도 검토",
+              "questionType": "PERSONALITY",
+              "isBlocking": false
+            },
+            {
+              "id": 4,
+              "questionText": "당신의 과거 투자 경험은 어떤가요?",
+              "choiceAText": "예금, 적금 위주로 안전하게",
+              "choiceBText": "주식, 펀드 등 다양한 상품 경험",
+              "questionType": "PERSONALITY",
+              "isBlocking": false
+            },
+            {
+              "id": 5,
+              "questionText": "원금보장 없는 상품에 대한 생각은?",
+              "choiceAText": "무조건 원금 보장 필수",
+              "choiceBText": "높은 수익 가능성이 있으면 감수 가능",
+              "questionType": "CONSTRAINT",
+              "isBlocking": true
+            },
+            {
+              "id": 6,
+              "questionText": "친구가 변동성 큰 고위험 상품을 추천합니다.",
+              "choiceAText": "절대 안 해, 위험한 건 싫어",
+              "choiceBText": "조건 괜찮으면 투자 고려할 수 있음",
+              "questionType": "CONSTRAINT",
+              "isBlocking": true
+            },
+            {
+              "id": 7,
+              "questionText": "3년간 중도해지 불가 조건이 붙은 상품이 있습니다.",
+              "choiceAText": "언제든 꺼낼 수 있어야 한다, 가입 안 함",
+              "choiceBText": "수익률이 높으면 기다릴 수 있다",
+              "questionType": "CONSTRAINT",
+              "isBlocking": true
+            },
+            {
+              "id": 8,
+              "questionText": "투자 가능한 여유 자금 규모는?",
+              "choiceAText": "500만원 미만",
+              "choiceBText": "500만원 이상",
+              "questionType": "DETAIL",
+              "isBlocking": false
+            },
+            {
+              "id": 9,
+              "questionText": "목표 연간 수익률은?",
+              "choiceAText": "3% 이하 (안정형)",
+              "choiceBText": "3% 초과 (수익형)",
+              "questionType": "DETAIL",
+              "isBlocking": false
+            },
+            {
+              "id": 10,
+              "questionText": "투자 기간 계획은?",
+              "choiceAText": "1년 이하 (단기)",
+              "choiceBText": "1년 초과 (장기)",
+              "questionType": "DETAIL",
+              "isBlocking": false
+            },
+            {
+              "id": 11,
+              "questionText": "감당할 수 있는 최대 손실 폭은?",
+              "choiceAText": "5% 이하",
+              "choiceBText": "5% 초과",
+              "questionType": "DETAIL",
+              "isBlocking": false
+            },
+            {
+              "id": 12,
+              "questionText": "투자 스타일, 어떤 게 더 끌리나요?",
+              "choiceAText": "한번에 목돈 투자 (일시납)",
+              "choiceBText": "매월 일정금액 투자 (적립식)",
+              "questionType": "PREFERENCE",
+              "isBlocking": false
+            },
+            {
+              "id": 13,
+              "questionText": "투자상품 선택 시 우선순위는?",
+              "choiceAText": "안전성·원금보장",
+              "choiceBText": "높은 수익률·성장성",
+              "questionType": "PREFERENCE",
+              "isBlocking": false
+            }
+          ],
+          "success": true,
+          "message": "설문 질문 리스트를 성공적으로 불러왔습니다."
+        },
+        "curlExample": "curl -X GET https://api.banklab.app/api/typetest/questions \
+  -H \"Authorization: Bearer {token}\""
+      },
+      "submit-answer":{
+        "id": "submit-answers",
+        "title": "투자 성향 설문 응답 제출",
+        "description": "사용자의 투자 성향 설문 답변을 저장하고, 투자 유형을 분석합니다.",
+        "method": "POST",
+        "endpoint": "/api/typetest/submit",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json",
+            "required": true,
+            "description": "요청 본문은 JSON 형식"
+          },
+          {
+            "name": "Authorization",
+            "value": "Bearer {token}",
+            "required": true,
+            "description": "JWT 액세스 토큰"
+          }
+        ],
+        "parameters": [],
+        "requestExample": {
+          "answers": [
+            { "question_id": 1, "choice": "A" },
+            { "question_id": 2, "choice": "A" },
+            { "question_id": 3, "choice": "A" },
+            { "question_id": 4, "choice": "A" },
+            { "question_id": 5, "choice": "A" },
+            { "question_id": 6, "choice": "A" },
+            { "question_id": 7, "choice": "A" },
+            { "question_id": 8, "choice": "A" },
+            { "question_id": 9, "choice": "A" },
+            { "question_id": 10, "choice": "A" },
+            { "question_id": 11, "choice": "A" },
+            { "question_id": 12, "choice": "B" },
+            { "question_id": 13, "choice": "B" }
+          ]
+        },
+        "responses": [
+          {
+            "status": "200 OK",
+            "description": "응답 저장 및 투자 성향 분석 성공"
+          },
+          {
+            "status": "400 Bad Request",
+            "description": "질문 형식 오류 또는 응답 누락"
+          },
+          {
+            "status": "401 Unauthorized",
+            "description": "인증 실패"
+          }
+        ],
+        "responseExample": {
+          "userId": 1,
+          "investmentTypeId": 1,
+          "investmentTypeName": "안전형",
+          "message": "유형검사 답변 저장 및 투자유형 계산 완료"
+        },
+        "curlExample": "curl -X POST https://api.banklab.app//api/typetest/submit \
+  -H \"Content-Type: application/json\" \
+  -H \"Authorization: Bearer {token}\" \
+  -d '{\n    \"answers\": [\n      { \"question_id\": 1, \"choice\": \"A\" },\n      { \"question_id\": 2, \"choice\": \"A\" },\n      { \"question_id\": 3, \"choice\": \"A\" },\n      { \"question_id\": 4, \"choice": \"A\" },\n      { \"question_id\": 5, \"choice\": \"A\" },\n      { \"question_id\": 6, \"choice\": \"A\" },\n      { \"question_id": 7, \"choice\": \"A\" },\n      { \"question_id\": 8, \"choice\": \"A\" },\n      { \"question_id\": 9, \"choice\": \"A\" },\n      { \"question_id\": 10, \"choice\": \"A\" },\n      { \"question_id\": 11, \"choice\": \"A\" },\n      { \"question_id\": 12, \"choice\": \"B\" },\n      { \"question_id\": 13, \"choice\": \"B\" }\n    ]\n  }'"
+      }
+  }
+}
