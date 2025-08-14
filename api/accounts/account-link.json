@@ -35,13 +35,13 @@
       "name": "bankCode",
       "type": "string",
       "required": true,
-      "description": "은행 코드 (예: 0020-국민은행, 0003-기업은행, 0004-KB국민은행)"
+      "description": "은행 코드 (예시: 0004 - 국민은행)"
     }
   ],
   "requestExample": {
     "bankId": "myBankId123",
     "bankPassword": "myBankPassword!",
-    "bankCode": "0020"
+    "bankCode": "0004"
   },
   "responses": [
     {
@@ -77,9 +77,7 @@
       "connectedId": "abcd1234efgh5678"
     },
     "success": true,
-    "message": "계좌 연동이 완료되었습니다.",
-    "email": "admin@example.com",
-    "memberId": 1
+    "message": "계좌 연동이 완료되었습니다."
   },
   "curlExample": "curl -X POST https://api.banklab.app/api/account/link \n  -H \"Content-Type: application/json\" \n  -H \"Authorization: Bearer {token}\" \n  -d '{\"bankId\":\"myBankId123\",\"bankPassword\":\"myBankPassword!\",\"bankCode\":\"0020\"}'"
 }
